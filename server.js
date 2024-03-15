@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json()); // Add this line to parse JSON bodies
 app.use(express.static(__dirname));
+app.use(express.static('frontend'));
 
 const pool = new Pool({
     user: 'postgres',
