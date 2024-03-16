@@ -26,3 +26,8 @@ https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 9. node server.js
 
 10. Navigate to http://localhost:3000/ 
+
+Debugging:
+
+If you need to restart postgres server, please use the following command:
+command to turn on postgres server: pg_ctl.exe -D C:\Program Files\PostgreSQL\16\data
