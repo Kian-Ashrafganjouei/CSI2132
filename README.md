@@ -31,3 +31,9 @@ Debugging:
 
 If you need to restart postgres server, please use the following command:
 command to turn on postgres server: pg_ctl.exe -D C:\Program Files\PostgreSQL\16\data
+
+Frontend info
+
+employee password is 0000
+
+note: we will need to work closely together to figure out how to bridge the backend and frontend together

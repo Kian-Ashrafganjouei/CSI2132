@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Employee Dashboard</h1>
+    
+        <div class="select-wrapper">
+            <label for="options">Select an Booking:</label>
+            <select id="options">
+                <option value="option1">Booking 1</option>
+                <option value="option2">Booking 2</option>
+                <option value="option3">Booking 3</option>
+            </select>
+            <button type="button">Convert to Renting</button>
+        </div>
+        
+        <button type="button" class="new-booking-button" onclick="window.location.href='newRenting.html'">New Booking</button>
+    </div>
+
+    <script>
+        function promptPassword() {
+            var password = prompt("Please enter the password:");
+            if (password === "0000") {
+            } else {
+                alert("Incorrect password. Access denied.");
+                window.location.href = "admin-dashboard.html";
+            }
+        }
+        window.onload = function() {
+            promptPassword();
+        };
+    </script>
+</body>
+</html>
