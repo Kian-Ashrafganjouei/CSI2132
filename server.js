@@ -20,6 +20,19 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/frontend/index.html');
 });
 
+// Get all hotel chains
+app.get('/hotel_chains', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM hotel_chains');
+        res.json(result.rows);
+        client.release();
+    } catch (err) {
+        console.error('Error fetching hotel chains', err);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Get all hotels
 app.get('/hotels', async (req, res) => {
     try {
@@ -28,17 +41,32 @@ app.get('/hotels', async (req, res) => {
         res.json(result.rows);
         client.release();
     } catch (err) {
-        console.error('Error fetching hotels', err);
+        console.error('Error fetching hotel', err);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+// Add a new hotel
+app.post('/hotel_chain', async (req, res) => {
+    const { chain_name, phone_number, email_address, number_of_hotels  } = req.body;
+    try {
+        const client = await pool.connect();
+        const result = await client.query('INSERT INTO hotel_chains (chain_name, phone_number, email_address, number_of_hotels) VALUES ($1, $2, $3, $4)', [chain_name, phone_number, email_address, number_of_hotels]);
+        res.sendStatus(200);
+        client.release();
+    } catch (err) {
+        console.error('Error adding hotel chain', err);
         res.status(500).send('Server Error');
     }
 });
 
 // Add a new hotel
 app.post('/hotels', async (req, res) => {
-    const { hotelName, userInput } = req.body;
+    const { chain_name, category, numberOfRooms  } = req.body;
     try {
         const client = await pool.connect();
-        const result = await client.query('INSERT INTO hotels (hotel_name, user_input) VALUES ($1, $2)', [hotelName, userInput]);
+        const result = await client.query('INSERT INTO hotels (chain_name, category, number_of_rooms) VALUES ($1, $2, $3)', [chain_name, category, numberOfRooms]);
         res.sendStatus(200);
         client.release();
     } catch (err) {
