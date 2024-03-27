@@ -58,12 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     hotelList.innerHTML = '';
     
                     data.forEach(hotel => {
-    
-                        // const option = document.createElement('option');
-                        // option.value = chain.chain_name;
-                        // option.textContent = chain.chain_name;
-                        // chainNameSelect.appendChild(option);
-    
                         const item = document.createElement('div');
     
                         const hotelIDElement = document.createElement('p');
@@ -93,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(error => console.error('Error fetching hotel:', error));
         }
     
-    fetchHotels();
     fetchHotelChains();
+    fetchHotels();
 
     // Add new hotel chain
     hotelChainForm.addEventListener('submit', (event) => {
