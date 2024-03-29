@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.forEach(room => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${room.roomNumber}</td>
-                        <td>${room.floorNumber}</td>
-                        <td>${room.hotelID}</td>
+                        <td>${room.roomnumber}</td>
+                        <td>${room.floornumber}</td>
+                        <td>${room.hotelid}</td>
                         <td>${room.chain_name}</td>
                         <td>${room.amenities.join(', ')}</td>
-                        <td>${room.viewType}</td>
-                        <td>${room.canBeExtended ? 'Yes' : 'No'}</td>
-                        <td>${room.stringComment}</td>
-                        <td>${room.isRenting ? 'Yes' : 'No'}</td>
+                        <td>${room.viewtype}</td>
+                        <td>${room.canbeextended ? 'true' : 'false'}</td>
+                        <td>${room.stringcomment}</td>
+                        <td>${room.isrenting ? 'true' : 'false'}</td>
                         <td><button class="deleteBtn">Delete</button></td>
                         <td><button class="updateBtn">Update</button></td>
                     `;

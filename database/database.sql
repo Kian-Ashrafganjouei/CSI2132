@@ -37,7 +37,6 @@ CREATE TABLE room (
     roomNumber INT,
     floorNumber INT,
     hotelID INT REFERENCES hotel(hotel_id),
-    chain_name VARCHAR(100) REFERENCES hotel_chain(chain_name),
     amenities TEXT[],
     viewType VARCHAR(20) CHECK (viewType IN ('Mountain', 'Sea')),
     canBeExtended BOOLEAN,
@@ -217,19 +216,19 @@ INSERT INTO customer (customerName, emailAddress, phoneNumber, cardNumber, idTyp
 ('Customer 10', 'customer10@example.com', '0123456789', '012345678', 'Identity Card', '2024-03-28', 35);
 
 -- Insert rooms for multiple hotels at once
-INSERT INTO room (roomNumber, floorNumber, hotelID, chain_name, amenities, viewType, canBeExtended, stringComment, isRenting)
+INSERT INTO room (roomNumber, floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting)
 VALUES
     -- Room for the first hotel of Trader Bay chain
-    (101, 1, 1, 'Trader Bay', ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
+    (101, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
     
     -- Room for the first hotel of Hospitality Group chain
-    (101, 1, 4, 'Hospitality Group', ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
+    (102, 1, 4, ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
     
     -- Room for the first hotel of Sunset Resorts chain
-    (101, 1, 7, 'Sunset Resorts', ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
+    (103, 1, 7, ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
     
     -- Room for the first hotel of Grand Lodges chain
-    (101, 1, 10, 'Grand Lodges', ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
+    (104, 1, 10, ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false),
     
     -- Room for the first hotel of Pacific Hospitality chain
-    (113, 2, 13, 'Pacific Hospitality', ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false);
+    (113, 2, 13,  ARRAY['WiFi', 'TV', 'Mini Fridge'], 'Mountain', true, 'Room with a view of the mountains', false);
