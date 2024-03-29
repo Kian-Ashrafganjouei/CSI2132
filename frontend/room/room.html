@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Hotels - Manage Rooms</title>
+    <link rel="stylesheet">
+    <script src="room.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../employee/employee.html">Employee</a></li>
+                <li><a href="../hotel/hotel.html">Hotel</a></li>
+                <li><a href="./room.html">Room</a></li>
+                <li><a href="../customer/customer.html">Customer</a></li>
+                <li><a href="admin.html">Employee Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="margin-bottom: 20px;">Manage Rooms</h1>
+    <form id="roomForm" style="max-width: 400px; margin: 0 auto;">
+        <h1 style="margin-bottom: 20px;">Add A Room</h1>
+        <label for="roomNumber" style="display: block; margin-bottom: 5px;">Room Number:</label>
+        <input type="text" id="roomNumber" placeholder="Room Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="floorNumber" style="display: block; margin-bottom: 5px;">Floor Number:</label>
+        <input type="text" id="floorNumber" placeholder="Floor Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="hotelID" style="display: block; margin-bottom: 5px;">Hotel ID:</label>
+        <input type="text" id="hotelID" placeholder="Hotel ID" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="chainName" style="display: block; margin-bottom: 5px;">Chain Name:</label>
+        <input type="text" id="chainName" placeholder="Chain Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="amenities" style="display: block; margin-bottom: 5px;">Amenities:</label>
+        <input type="text" id="amenities" placeholder="Amenities (comma-separated)" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="viewType" style="display: block; margin-bottom: 5px;">View Type:</label>
+        <select id="viewType" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="Mountain">Mountain</option>
+            <option value="Sea">Sea</option>
+        </select>
+        <label for="canBeExtended" style="display: block; margin-bottom: 5px;">Can Be Extended:</label>
+        <input type="checkbox" id="canBeExtended" style="margin-bottom: 15px;">
+        <label for="stringComment" style="display: block; margin-bottom: 5px;">Comment:</label>
+        <textarea id="stringComment" placeholder="Enter a comment" style="width: 100%; padding: 8px; margin-bottom: 15px;"></textarea>
+        <label for="isRenting" style="display: block; margin-bottom: 5px;">Is Renting:</label>
+        <input type="checkbox" id="isRenting" style="margin-bottom: 15px;">
+        <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Room</button>
+    </form>
+    
+    
+<!-- Table to display existing rooms -->
+<h2>Existing Rooms</h2>
+<table id="roomTable">
+    <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Floor Number</th>
+            <th>Hotel ID</th>
+            <th>Chain Name</th>
+            <th>Amenities</th>
+            <th>View Type</th>
+            <th>Can Be Extended</th>
+            <th>Comment</th>
+            <th>Is Renting</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody id="roomTableBody">
+        <!-- Room data will be dynamically populated from the database -->
+    </tbody>
+</table>
+
+</body>
+</html>

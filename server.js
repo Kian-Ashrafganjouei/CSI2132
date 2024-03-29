@@ -327,3 +327,65 @@ app.delete('/customers', async (req, res) => {
     }
 });
 
+// ================================
+
+// Get all rooms
+app.get('/rooms', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM room');
+        res.json(result.rows);
+        client.release();
+    } catch (err) {
+        console.error('Error fetching rooms', err);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Add a new room
+app.post('/rooms', async (req, res) => {
+    const { roomNumber, floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
+    try {
+        const client = await pool.connect();
+        await client.query('INSERT INTO room (roomNumber, floorNumber, hotelID, chain_name, amenities, viewType, canBeExtended, stringComment, isRenting) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+            [roomNumber, floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting]);
+        console.log("ADDED ROOM")
+        res.sendStatus(200);
+        client.release();
+    } catch (err) {
+        console.error('Error adding room:', err);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Update a room
+app.put('/rooms/:roomNumber', async (req, res) => {
+    const roomNumber = req.params.roomNumber;
+    const { floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
+    try {
+        const client = await pool.connect();
+        await client.query('UPDATE room SET floorNumber = $1, hotelID = $2, chain_name = $3, amenities = $4, viewType = $5, canBeExtended = $6, stringComment = $7, isRenting = $8 WHERE roomNumber = $9',
+            [floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting, roomNumber]);
+        console.log("UPDATED ROOM " + roomNumber)
+        res.sendStatus(200);
+        client.release();
+    } catch (err) {
+        console.error('Error updating room:', err);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Delete a room
+app.delete('/rooms/:roomNumber', async (req, res) => {
+    const roomNumber = req.params.roomNumber;
+    try {
+        const client = await pool.connect();
+        await client.query('DELETE FROM room WHERE roomNumber = $1', [roomNumber]);
+        console.log("DELETED ROOM " + roomNumber)
+        res.sendStatus(200);
+        client.release();
+    } catch (err) {
+        console.error('Error deleting room:', err);
+        res.status(500).send('Server Error');
+    }
+});
