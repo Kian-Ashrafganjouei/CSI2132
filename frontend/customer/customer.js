@@ -29,12 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', function() {
                         const row = button.closest('tr');
-                        const customerId = row.querySelector('td:nth-child(1)').innerText;
-                        console.log('Deleting customer with ID:', customerId);
-                
+                        const customerName = row.querySelector('td:nth-child(1)').innerText;
+                        const emailAddress = row.querySelector('td:nth-child(2)').innerText;
+                        const phoneNumber = row.querySelector('td:nth-child(3)').innerText;
+
                         // Send DELETE request to the server
-                        fetch(`/customers/${customerId}`, {
-                            method: 'DELETE'
+                        fetch('/customers', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                customerName: customerName,
+                                emailAddress: emailAddress,
+                                phoneNumber: phoneNumber
+                            })
                         })
                         .then(response => {
                             if (response.ok) {
@@ -75,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             dateOfRegistration,
                             addressID
                         };
-                        fetch(`/customers/${customerId}`, {
+                        fetch(`/customers`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -110,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const idType = document.getElementById('idType').value;
         const dateOfRegistration = document.getElementById('dateOfRegistration').value;
         const addressID = document.getElementById('addressID').value;
+        console.log('ADDING CUSTOMER:', customerName, emailAddress, phoneNumber);
 
         // Create an object with customer data
         const customerData = {

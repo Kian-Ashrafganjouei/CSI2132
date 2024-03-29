@@ -277,8 +277,7 @@ app.post('/customers', async (req, res) => {
 });
 
 // Update a customer and their associated address
-app.put('/customers/:customerId', async (req, res) => {
-    const customerId = req.params.customerId;
+app.put('/customers', async (req, res) => {
     const { customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
 
@@ -289,16 +288,16 @@ app.put('/customers/:customerId', async (req, res) => {
         await client.query('BEGIN');
 
         // Update data in the address table
-        await client.query('UPDATE address SET streetName = $1, streetNumber = $2, postalCode = $3, unitNumber = $4, cityName = $5, countryName = $6 WHERE addressID = (SELECT addressID FROM customer WHERE customerId = $7)',
-            [streetName, streetNumber, postalCode, unitNumber, cityName, countryName, customerId]);
+        await client.query('UPDATE address SET streetName = $1, streetNumber = $2, postalCode = $3, unitNumber = $4, cityName = $5, countryName = $6 WHERE addressID = (SELECT addressID FROM customer WHERE customerName = $7 AND emailAddress = $8 AND phoneNumber = $9)',
+            [streetName, streetNumber, postalCode, unitNumber, cityName, countryName, customerName, emailAddress, phoneNumber]);
 
         // Update data in the customer table
-        await client.query('UPDATE customer SET customerName = $1, emailAddress = $2, phoneNumber = $3, cardNumber = $4, idType = $5, dateOfRegistration = $6 WHERE customerId = $7',
-            [customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, customerId]);
+        await client.query('UPDATE customer SET customerName = $1, emailAddress = $2, phoneNumber = $3, cardNumber = $4, idType = $5, dateOfRegistration = $6 WHERE customerName = $7 AND emailAddress = $8 AND phoneNumber = $9',
+            [customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, customerName, emailAddress, phoneNumber]);
 
         // Commit the transaction
         await client.query('COMMIT');
-        console.log("UPDATED CUSTOMER " + customerId)
+        console.log("UPDATED CUSTOMER " + customerName)
         res.sendStatus(200);
         client.release();
     } catch (err) {
@@ -309,16 +308,17 @@ app.put('/customers/:customerId', async (req, res) => {
     }
 });
 
+
 // Delete a customer
-app.delete('/customers/:customerId', async (req, res) => {
-    const customerId = req.params.customerId;
+app.delete('/customers', async (req, res) => {
+    const { customerName, emailAddress, phoneNumber } = req.body;
     try {
         const client = await pool.connect();
-        const result = await client.query('DELETE FROM customer WHERE customerId = $1', [customerId]);
+        const result = await client.query('DELETE FROM customer WHERE customerName = $1 AND emailAddress = $2 AND phoneNumber = $3', [customerName, emailAddress, phoneNumber]);
         if (result.rowCount === 1) {
             res.sendStatus(200); // Customer successfully deleted
         } else {
-            res.status(404).send('Customer not found'); // Customer with given ID not found
+            res.status(404).send('Customer not found'); // Customer with given identifiers not found
         }
         client.release();
     } catch (err) {
