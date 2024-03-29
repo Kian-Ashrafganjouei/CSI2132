@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Hotels - Manage Hotels</title>
+    <link rel="stylesheet">
+    <script src="hotel.js"></script>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../employee/employee.html">Employee</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="admin.html">Employee Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="margin-bottom: 20px;">Manage Hotels</h1>
+    <form id="hotelForm" style="max-width: 400px; margin: 0 auto;">
+        <h1 style="margin-bottom: 20px;">Add A Hotel</h1>
+        <label for="chain_name_dynamic" style="display: block; margin-bottom: 5px;">Hotel Chain:</label>
+        <select id="chain_name_dynamic" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <!-- Options will be dynamically populated from the database -->
+        </select>
+        <label for="category" style="display: block; margin-bottom: 5px;">Category (1 to 5):</label>
+        <select id="category" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input type="number" id="numberOfRooms" placeholder="Number of Rooms" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="streetName" style="display: block; margin-bottom: 5px;">Street Name:</label>
+        <input type="text" id="streetName" placeholder="Street Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="streetNumber" style="display: block; margin-bottom: 5px;">Street Number:</label>
+        <input type="text" id="streetNumber" placeholder="Street Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="postalCode" style="display: block; margin-bottom: 5px;">Postal Code:</label>
+        <input type="text" id="postalCode" placeholder="Postal Code" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="unitNumber" style="display: block; margin-bottom: 5px;">Unit Number:</label>
+        <input type="text" id="unitNumber" placeholder="Unit Number" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="cityName" style="display: block; margin-bottom: 5px;">City Name:</label>
+        <input type="text" id="cityName" placeholder="City Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <label for="countryName" style="display: block; margin-bottom: 5px;">Country Name:</label>
+        <input type="text" id="countryName" placeholder="Country Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Hotel</button>
+    </form>
+    
+    
+
+    <!-- Table to display existing hotels -->
+    <h2>Existing Hotels</h2>
+    <table id="hotelTable">
+        <thead>
+            <tr>
+                <th>Hotel ID</th>
+                <th>Hotel Chain</th>
+                <th>Category</th>
+                <th>Number of Rooms</th>
+                <th>Postal</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody id="hotelTableBody">
+            <!-- Hotels data will be dynamically populated from the database -->
+        </tbody>
+    </table>
+
+</body>
+</html>

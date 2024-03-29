@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Hotels - Manage Customers</title>
+    <!-- Add any required CSS files or stylesheets here -->
+    <link rel="stylesheet">
+    <!-- Include your JavaScript file for handling form submission and interactions -->
+    <script src="customer.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../employee/employee.html">Employee</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="admin.html">Employee Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="margin-bottom: 20px;">Manage Customers</h1>
+    <form id="customerForm" style="max-width: 400px; margin: 0 auto;">
+        <h1 style="margin-bottom: 20px;">Add A Customer</h1>
+        <input type="text" id="customerName" placeholder="Customer Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="email" id="emailAddress" placeholder="Email Address" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="tel" id="phoneNumber" placeholder="Phone Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="cardNumber" placeholder="Card Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <select id="idType" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="Driver Licence">Driver Licence</option>
+            <option value="Passport">Passport</option>
+            <option value="Health Card">Health Card</option>
+            <option value="SSN/SIN">SSN/SIN</option>
+            <option value="Identity Card">Identity Card</option>
+        </select>
+        <input type="date" id="dateOfRegistration" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <!-- Include address fields here -->
+        <!-- For simplicity, you can include the same address fields as in the hotel form -->
+        <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Customer</button>
+    </form>
+    
+    <!-- Table to display existing customers -->
+    <h2>Existing Customers</h2>
+    <table id="customerTable">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Card Number</th>
+                <th>ID Type</th>
+                <th>Date of Registration</th>
+                <!-- Add more columns as needed -->
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody id="customerTableBody">
+            <!-- Customers data will be dynamically populated from the database -->
+        </tbody>
+    </table>
+
+</body>
+</html>

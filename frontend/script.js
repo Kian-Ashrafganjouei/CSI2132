@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const hotelForm = document.getElementById('hotelForm');
-    const hotelChainForm = document.getElementById('hotelChainForm');
     const hotelList = document.getElementById('hotelList');
     const hotelChainList = document.getElementById('hotelChainList');
     const chainNameSelect = document.getElementById('chain_name_dynamic');
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     chainNameSelect.appendChild(option);
 
                     const item = document.createElement('div');
-
                     const chainNameElement = document.createElement('p');
                     chainNameElement.textContent = `Hotel Chain Name: ${chain.chain_name}`;
                     
@@ -90,53 +88,4 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchHotelChains();
     fetchHotels();
 
-    // Add new hotel chain
-    hotelChainForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const chain_name = document.getElementById('chain_name').value;
-        const phone_number = document.getElementById('phone_number').value;
-        const email_address = document.getElementById('email_address').value;
-        const number_of_hotels = document.getElementById('number_of_hotels').value;
-        fetch('/hotel_chain', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ chain_name, phone_number, email_address, number_of_hotels })
-        })
-        .then(response => {
-            if (response.ok) {
-                fetchHotels();
-                hotelChainForm.reset();
-            } else {
-                throw new Error('Failed to add hotel chain');
-            }
-        })
-        .catch(error => console.error('Error adding hotel chain:', error));
-    });
-
-
-    // Add new hotel
-    hotelForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const chain_name = document.getElementById('chain_name_dynamic').value;
-        const category = document.getElementById('category').value;
-        const numberOfRooms = document.getElementById('numberOfRooms').value;
-        fetch('/hotels', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ chain_name, category, numberOfRooms})
-        })
-        .then(response => {
-            if (response.ok) {
-                fetchHotels();
-                hotelChainForm.reset();
-            } else {
-                throw new Error('Failed to add hotel');
-            }
-        })
-        .catch(error => console.error('Error adding hotel:', error));
-    });
 });

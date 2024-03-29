@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Hotels - Manage Employees</title>
+    <link rel="stylesheet">
+    <script src="employee.js"></script> <!-- Assuming you have an employee.js file for handling JavaScript logic -->
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../hotel/hotel.html">Hotel</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="admin.html">Employee Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 style="margin-bottom: 20px;">Manage Employees</h1>
+    <form id="employeeForm" style="max-width: 400px; margin: 0 auto;">
+        <h1 style="margin-bottom: 20px;">Add An Employee</h1>
+        <input type="text" id="employeeName" placeholder="Employee Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <select id="role" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="receptionist">Receptionist</option>
+            <option value="room service">Room Service</option>
+            <option value="custodian">Custodian</option>
+            <option value="cook">Cook</option>
+            <option value="valet">Valet</option>
+        </select>
+        <label>Manager</label>
+        <select id="isManager" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
+        <input type="text" id="ssnNumber" placeholder="SSN Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="streetName" placeholder="Street Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="streetNumber" placeholder="Street Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="postalCode" placeholder="Postal Code" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="unitNumber" placeholder="Unit Number" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="cityName" placeholder="City Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <input type="text" id="countryName" placeholder="Country Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Employee</button>
+    </form>
+    
+    <!-- Table to display existing employees -->
+    <h2>Existing Employees</h2>
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Role</th>
+                <th>Is Manager</th>
+                <th>SSN Number</th>
+                <th>Postal</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+            <!-- Employees data will be dynamically populated from the database -->
+        </tbody>
+    </table>
+
+</body>
+</html>
