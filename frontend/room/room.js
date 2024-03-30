@@ -88,11 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         const amenities = document.getElementById('amenities').value.split(', ');
                         const viewType = document.getElementById('viewType').value;
+                        const price = document.getElementById('price').value;
+                        const capacity = document.getElementById('capacity').value;
                         const canBeExtended = document.getElementById('canBeExtended').value;
                         const stringComment = document.getElementById('stringComment').value;
                         const isRenting = document.getElementById('isRenting').value;
-                        const price = document.getElementById('price').value;
-                        const capacity = document.getElementById('capacity').value;
+                        
 
 
                         // Check if any of the fields are empty
@@ -107,11 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             hotelID,
                             amenities,
                             viewType,
+                            price,
+                            capacity,
                             canBeExtended,
                             stringComment,
-                            isRenting,
-                            price,
-                            capacity
+                            isRenting
                         };
                         fetch(`/rooms/${roomNumber}/${floorNumber}/${hotelID}`, {
                             method: 'PUT',
@@ -148,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const hotelID = document.getElementById('hotelID_dynamic').value;
         const amenities = document.getElementById('amenities').value.split(', ');
         const viewType = document.getElementById('viewType').value;
+        const price = document.getElementById('price').value;
+        const capacity = document.getElementById('capacity').value;
         const canBeExtended = document.getElementById('canBeExtended').value;
         const stringComment = document.getElementById('stringComment').value;
         const isRenting = document.getElementById('isRenting').value;
-        const price = document.getElementById('price').value;
-        const capacity = document.getElementById('capacity').value;
 
         // Check if any of the fields are empty
         if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !roomNumber  || !floorNumber || !price || !capacity) {
@@ -167,11 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             hotelID,
             amenities,
             viewType,
+            price,
+            capacity,
             canBeExtended,
             stringComment,
-            isRenting,
-            price,
-            capacity
+            isRenting
         };
         console.log(roomData)
 
