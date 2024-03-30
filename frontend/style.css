@@ -267,7 +267,7 @@ select option {
 }
 
 .grid-item:hover {
-    transform: scale(1.05); /* Scale up the grid item on hover */
+    transform: scale(1.05); 
 }
 
   
