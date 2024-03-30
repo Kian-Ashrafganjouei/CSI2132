@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="booking.css">
+    <script src="booking.js"></script>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../employee/employee.html">Employee</a></li>
+                <li><a href="../hotel/hotel.html">Hotel</a></li>
+                <li><a href="../room/room.html">Room</a></li>
+                <li><a href="../customer/customer.html">Customer</a></li>
+                <li><a href="./booking.html">Bookings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to the Employee Dashboard</h1>
+    
+        <div class="select-wrapper">
+            <label for="options">Select an Booking:</label>
+            <select id="options">
+                <!-- Options will be dynamically populated from the database -->
+            </select>
+            <button type="button">Convert to Renting</button>
+        </div>
+    </div>
+
+    <div class="new-booking-form">
+        <h2>Add a New Renting</h2>
+        <form id="newRentingForm">
+            <label for="customerName">Customer Name:</label>
+            <input type="text" id="customerName" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" required>
+
+            <label for="ssn">SSN:</label>
+            <input type="text" id="ssn" required>
+
+            <label for="hotelID">Hotel ID:</label>
+            <input type="text" id="hotelID" required>
+
+            <label for="roomNumber">Room Number:</label>
+            <input type="text" id="roomNumber" required>
+
+            <label for="floorNumber">Floor Number:</label>
+            <input type="text" id="floorNumber" required>
+
+            <button type="submit">Add Renting</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
