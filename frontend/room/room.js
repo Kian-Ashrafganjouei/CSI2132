@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                         // Check if any of the fields are empty
-                        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !row || !roomNumber  || !floorNumber) {
+                        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !roomNumber  || !floorNumber) {
                             console.error('Please fill out all fields before updating.');
                             return;
                         }
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isRenting = document.getElementById('isRenting').value;
 
         // Check if any of the fields are empty
-        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !row || !roomNumber  || !floorNumber) {
+        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !roomNumber  || !floorNumber) {
             console.error('Please fill out all fields before adding.');
             return;
         }
