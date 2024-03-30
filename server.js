@@ -33,6 +33,19 @@ app.get('/hotel_chains', async (req, res) => {
     }
 });
 
+// Get all hotel ids
+app.get('/hotel_ids', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM hotel');
+        res.json(result.rows);
+        client.release();
+    } catch (err) {
+        console.error('Error fetching hotel chains', err);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Get all hotels
 app.get('/hotels', async (req, res) => {
     try {
@@ -344,11 +357,11 @@ app.get('/rooms', async (req, res) => {
 
 // Add a new room
 app.post('/rooms', async (req, res) => {
-    const { roomNumber, floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
+    const { roomNumber, floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
     try {
         const client = await pool.connect();
-        await client.query('INSERT INTO room (roomNumber, floorNumber, hotelID, chain_name, amenities, viewType, canBeExtended, stringComment, isRenting) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-            [roomNumber, floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting]);
+        await client.query('INSERT INTO room (roomNumber, floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+            [roomNumber, floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting]);
         console.log("ADDED ROOM")
         res.sendStatus(200);
         client.release();
@@ -359,13 +372,13 @@ app.post('/rooms', async (req, res) => {
 });
 
 // Update a room
-app.put('/rooms/:roomNumber', async (req, res) => {
+app.put('/rooms/:roomNumber/:floorNumber', async (req, res) => {
     const roomNumber = req.params.roomNumber;
-    const { floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
+    const { floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
     try {
         const client = await pool.connect();
-        await client.query('UPDATE room SET floorNumber = $1, hotelID = $2, chain_name = $3, amenities = $4, viewType = $5, canBeExtended = $6, stringComment = $7, isRenting = $8 WHERE roomNumber = $9',
-            [floorNumber, hotelID, chainName, amenities, viewType, canBeExtended, stringComment, isRenting, roomNumber]);
+        await client.query('UPDATE room SET floorNumber = $1, hotelID = $2, amenities = $3, viewType = $4, canBeExtended = $5, stringComment = $6, isRenting = $7 WHERE roomNumber = $8',
+            [floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting, roomNumber]);
         console.log("UPDATED ROOM " + roomNumber)
         res.sendStatus(200);
         client.release();
@@ -375,13 +388,12 @@ app.put('/rooms/:roomNumber', async (req, res) => {
     }
 });
 
-// Delete a room
-app.delete('/rooms/:roomNumber', async (req, res) => {
-    const roomNumber = req.params.roomNumber;
+app.delete('/rooms/:roomNumber/:floorNumber', async (req, res) => {
+    const { roomNumber, floorNumber } = req.params;
     try {
         const client = await pool.connect();
-        await client.query('DELETE FROM room WHERE roomNumber = $1', [roomNumber]);
-        console.log("DELETED ROOM " + roomNumber)
+        await client.query('DELETE FROM room WHERE roomNumber = $1 AND floorNumber = $2', [roomNumber, floorNumber]);
+        console.log("DELETED ROOM " + roomNumber + " ON FLOOR " + floorNumber);
         res.sendStatus(200);
         client.release();
     } catch (err) {

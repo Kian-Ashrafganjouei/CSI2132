@@ -1,6 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const roomForm = document.getElementById('roomForm');
     const tbody = document.getElementById('roomTableBody');
+    const hotelIDInput = document.getElementById('hotelID_dynamic');
+
+    // Fetch hotel chains from server and populate select options
+    function fetchHotelIds() {
+        fetch('/hotel_ids')
+            .then(response => response.json())
+            .then(data => {
+                hotelIDInput.innerHTML = '';
+                data.forEach(hotel => {
+                    const option = document.createElement('option');
+                    option.value = hotel.hotel_id;
+                    option.textContent = hotel.hotel_id;
+                    hotelIDInput.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching hotel chains:', error));
+    }
 
     // Fetch rooms from server and display them
     function fetchRooms() {
@@ -14,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${room.roomnumber}</td>
                         <td>${room.floornumber}</td>
                         <td>${room.hotelid}</td>
-                        <td>${room.chain_name}</td>
                         <td>${room.amenities.join(', ')}</td>
                         <td>${room.viewtype}</td>
                         <td>${room.canbeextended ? 'true' : 'false'}</td>
@@ -32,10 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.addEventListener('click', function() {
                         const row = button.closest('tr');
                         const roomNumber = row.querySelector('td:nth-child(1)').innerText;
-                        console.log('Deleting room with room number:', roomNumber);
+                        const floorNumber = row.querySelector('td:nth-child(2)').innerText;
+
+                        console.log('Deleting room with room number:', roomNumber, ' on floor:', floorNumber);
                 
                         // Send DELETE request to the server
-                        fetch(`/rooms/${roomNumber}`, {
+                        fetch(`/rooms/${roomNumber}/${floorNumber}`, {
                             method: 'DELETE'
                         })
                         .then(response => {
@@ -56,30 +74,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.addEventListener('click', function() {
                         const row = button.closest('tr');
                         const roomNumber = row.querySelector('td:nth-child(1)').innerText;
-                        console.log('Updating room with room number:', roomNumber);
-
-                        // Retrieve other room details here
                         const floorNumber = row.querySelector('td:nth-child(2)').innerText;
-                        const hotelID = row.querySelector('td:nth-child(3)').innerText;
-                        const chainName = row.querySelector('td:nth-child(4)').innerText;
-                        const amenities = row.querySelector('td:nth-child(5)').innerText.split(', ');
-                        const viewType = row.querySelector('td:nth-child(6)').innerText;
-                        const canBeExtended = row.querySelector('td:nth-child(7)').innerText === 'Yes';
-                        const stringComment = row.querySelector('td:nth-child(8)').innerText;
-                        const isRenting = row.querySelector('td:nth-child(9)').innerText === 'Yes';
+
+                        document.getElementById('roomNumber').value = roomNumber;
+                        document.getElementById('floorNumber').value = floorNumber;
+
+                        console.log('Updating room with room number:', roomNumber, ' on floor:', floorNumber);
+
+                        const hotelID = document.getElementById('hotelID_dynamic').value;
+                        const amenities = document.getElementById('amenities').value.split(', ');
+                        const viewType = document.getElementById('viewType').value;
+                        const canBeExtended = document.getElementById('canBeExtended').value;
+                        const stringComment = document.getElementById('stringComment').value;
+                        const isRenting = document.getElementById('isRenting').value;
+
+
+                        // Check if any of the fields are empty
+                        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !row || !roomNumber  || !floorNumber) {
+                            console.error('Please fill out all fields before updating.');
+                            return;
+                        }
 
                         // Construct the room data object
                         const roomData = {
                             floorNumber,
                             hotelID,
-                            chainName,
                             amenities,
                             viewType,
                             canBeExtended,
                             stringComment,
                             isRenting
                         };
-                        fetch(`/rooms/${roomNumber}`, {
+                        fetch(`/rooms/${roomNumber}/${floorNumber}`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -104,32 +130,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and display existing rooms
     fetchRooms();
+    fetchHotelIds();
 
     // Add event listener to room form for submitting new room data
     roomForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const roomNumber = document.getElementById('roomNumber').value;
         const floorNumber = document.getElementById('floorNumber').value;
-        const hotelID = document.getElementById('hotelID').value;
-        const chainName = ''; document.getElementById('chainName').value;
-        const amenities = []; document.getElementById('amenities').value.split(', ');
-        const viewType = ''; document.getElementById('viewType').value;
-        const canBeExtended = false; document.getElementById('canBeExtended').checked;
-        const stringComment = ''; document.getElementById('stringComment').value;
-        const isRenting = false; document.getElementById('isRenting').checked;
-        
+        const hotelID = document.getElementById('hotelID_dynamic').value;
+        const amenities = document.getElementById('amenities').value.split(', ');
+        const viewType = document.getElementById('viewType').value;
+        const canBeExtended = document.getElementById('canBeExtended').value;
+        const stringComment = document.getElementById('stringComment').value;
+        const isRenting = document.getElementById('isRenting').value;
+
+        // Check if any of the fields are empty
+        if (!hotelID || !amenities || !viewType || !canBeExtended || !stringComment || !isRenting || !row || !roomNumber  || !floorNumber) {
+            console.error('Please fill out all fields before adding.');
+            return;
+        }
+
         // Create an object with room data
         const roomData = {
             roomNumber,
             floorNumber,
             hotelID,
-            chainName,
             amenities,
             viewType,
             canBeExtended,
             stringComment,
             isRenting
         };
+        console.log(roomData)
 
         fetch('/rooms', {
             method: 'POST',

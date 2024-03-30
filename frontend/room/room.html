@@ -30,9 +30,9 @@
         <label for="floorNumber" style="display: block; margin-bottom: 5px;">Floor Number:</label>
         <input type="text" id="floorNumber" placeholder="Floor Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <label for="hotelID" style="display: block; margin-bottom: 5px;">Hotel ID:</label>
-        <input type="text" id="hotelID" placeholder="Hotel ID" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
-        <label for="chainName" style="display: block; margin-bottom: 5px;">Chain Name:</label>
-        <input type="text" id="chainName" placeholder="Chain Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+        <select id="hotelID_dynamic" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <!-- Options will be dynamically populated from the database -->
+        </select>
         <label for="amenities" style="display: block; margin-bottom: 5px;">Amenities:</label>
         <input type="text" id="amenities" placeholder="Amenities (comma-separated)" style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <label for="viewType" style="display: block; margin-bottom: 5px;">View Type:</label>
@@ -41,11 +41,17 @@
             <option value="Sea">Sea</option>
         </select>
         <label for="canBeExtended" style="display: block; margin-bottom: 5px;">Can Be Extended:</label>
-        <input type="checkbox" id="canBeExtended" style="margin-bottom: 15px;">
+        <select id="canBeExtended" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
         <label for="stringComment" style="display: block; margin-bottom: 5px;">Comment:</label>
         <textarea id="stringComment" placeholder="Enter a comment" style="width: 100%; padding: 8px; margin-bottom: 15px;"></textarea>
         <label for="isRenting" style="display: block; margin-bottom: 5px;">Is Renting:</label>
-        <input type="checkbox" id="isRenting" style="margin-bottom: 15px;">
+        <select id="isRenting" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
         <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Room</button>
     </form>
     
@@ -58,7 +64,6 @@
             <th>Room Number</th>
             <th>Floor Number</th>
             <th>Hotel ID</th>
-            <th>Chain Name</th>
             <th>Amenities</th>
             <th>View Type</th>
             <th>Can Be Extended</th>
