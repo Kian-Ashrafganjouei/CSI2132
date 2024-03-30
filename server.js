@@ -401,3 +401,43 @@ app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+// Add a new room
+app.post('/search_rooms', async (req, res) => {
+    const { startDate, endDate, hotelID, roomCapacity, area, hotelChain, hotelCategory, viewType, minRooms, maxRooms, minRoomPrice, maxRoomPrice } = req.body;
+    try {
+        const client = await pool.connect();
+        // Construct the SQL query dynamically based on the provided search parameters
+
+        let query = 'SELECT room.* FROM room JOIN hotel ON room.hotelID = hotel.hotel_id JOIN address ON hotel.addressID = address.addressID WHERE 1 = 1'; // Start with a base query
+        // Add conditions based on the provided search parameters
+        if (viewType) query += ` AND room.viewType = '${viewType}'`;
+        if (minRoomPrice) query += ` AND room.price >= ${minRoomPrice}`;
+        if (maxRoomPrice) query += ` AND room.price <= ${maxRoomPrice}`;
+        if (roomCapacity) query += ` AND room.capacity = '${roomCapacity}'`;
+        if (hotelID) query += ` AND room.hotelID = ${hotelID}`; // Include hotelID filter
+        if (hotelChain) query += ` AND hotel.chain_name = '${hotelChain}'`; // Include hotelChain filter
+        if (hotelCategory) query += ` AND hotel.category = ${hotelCategory}`; // Include hotelCategory filter
+        if (area) query += ` AND address.postalCode = '${area}'`; // Include area filter (assuming postalCode represents area)
+        // Check for booking conflicts with the provided date range
+        if (startDate && endDate) {
+            query += ` AND NOT EXISTS (
+                            SELECT *
+                            FROM book 
+                            WHERE book.roomNumber = room.roomNumber 
+                            AND book.floorNumber = room.floorNumber 
+                            AND book.hotelID = room.hotelID 
+                            AND (startDate <= '${endDate}' AND endDate >= '${startDate}')
+                        )`;
+        }
+
+        console.error('Performing:', query);
+        const result = await client.query(query); // Execute the constructed query
+
+        res.json(result.rows); // Send the filtered rooms data as JSON response
+        client.release();
+    } catch (err) {
+        console.error('Error fetching rooms:', err);
+        res.status(500).send('Server Error');
+    }
+});

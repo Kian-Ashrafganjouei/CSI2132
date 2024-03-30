@@ -281,3 +281,17 @@ VALUES
     (501, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 120, 'Quad', true, 'Room with a view of the mountains and air conditioning', false),
     (502, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 140, 'Quad', true, 'Room with a view of the sea and balcony', false),
     (503, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 105, 'Quad', true, 'Room with a mountain view and bathtub', false);
+
+-- Insert bookings
+INSERT INTO book (startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID)
+VALUES
+    ('2024-04-01', '2024-04-05', 'Customer 1', 'customer1@example.com', '1234567890', 101, 1, 1),
+    ('2024-04-02', '2024-04-06', 'Customer 2', 'customer2@example.com', '2345678901', 102, 1, 1),
+    ('2024-04-03', '2024-04-07', 'Customer 3', 'customer3@example.com', '3456789012', 103, 1, 1),
+    ('2024-04-04', '2024-04-08', 'Customer 4', 'customer4@example.com', '4567890123', 101, 1, 2),
+    ('2024-04-05', '2024-04-09', 'Customer 5', 'customer5@example.com', '5678901234', 102, 1, 2),
+    ('2024-04-06', '2024-04-10', 'Customer 6', 'customer6@example.com', '6789012345', 103, 1, 2),
+    ('2024-04-07', '2024-04-11', 'Customer 7', 'customer7@example.com', '7890123456', 101, 1, 3),
+    ('2024-04-08', '2024-04-12', 'Customer 8', 'customer8@example.com', '8901234567', 102, 1, 3),
+    ('2024-04-09', '2024-04-13', 'Customer 9', 'customer9@example.com', '9012345678', 103, 1, 3),
+    ('2024-04-10', '2024-04-14', 'Customer 10', 'customer10@example.com', '0123456789', 101, 1, 4);
