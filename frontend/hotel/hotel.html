@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Hotels - Manage Hotels</title>
-    <link rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
     <script src="hotel.js"></script>
 
 </head>
@@ -53,9 +53,8 @@
         <input type="text" id="countryName" placeholder="Country Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Hotel</button>
     </form>
-    
-    
 
+    <section>
     <!-- Table to display existing hotels -->
     <h2>Existing Hotels</h2>
     <table id="hotelTable">
@@ -74,6 +73,10 @@
             <!-- Hotels data will be dynamically populated from the database -->
         </tbody>
     </table>
-
+</section>
+<section>
+    <h2 style="text-align: center;">Aggregated Capacity Per hotel</h2>
+<div id="aggregatedCapacityGrid" class="grid-container"></div>
+</section>
 </body>
 </html>

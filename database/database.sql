@@ -282,6 +282,91 @@ VALUES
     (502, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 140, 'Quad', true, 'Room with a view of the sea and balcony', false),
     (503, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 105, 'Quad', true, 'Room with a mountain view and bathtub', false);
 
+
+-- View 1: Number of available rooms per area
+CREATE VIEW available_rooms_per_area AS
+SELECT a.cityName AS area,
+       COUNT(r.roomNumber) AS available_rooms
+FROM room r
+JOIN hotel h ON r.hotelID = h.hotel_id
+JOIN address a ON h.addressID = a.addressID
+LEFT JOIN book b ON r.roomNumber = b.roomNumber AND r.floorNumber = b.floorNumber
+WHERE b.roomNumber IS NULL AND b.floorNumber IS NULL
+GROUP BY a.cityName;
+
+-- View 2: Aggregated capacity of all rooms in a specific hotel
+CREATE OR REPLACE VIEW hotel_aggregated_capacity AS
+SELECT 
+    h.hotel_id,
+    h.chain_name,
+    SUM(
+        CASE 
+            WHEN r.capacity = 'Single' THEN 1
+            WHEN r.capacity = 'Double' THEN 2
+            WHEN r.capacity = 'Quad' THEN 4
+            ELSE 0
+        END
+    ) AS total_capacity
+FROM 
+    hotel h
+JOIN 
+    room r ON h.hotel_id = r.hotelID
+LEFT JOIN 
+    book b ON r.roomNumber = b.roomNumber AND r.floorNumber = b.floorNumber
+GROUP BY 
+    h.hotel_id, 
+    h.chain_name;
+
+
+CREATE OR REPLACE FUNCTION enforce_room_existence()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM room
+        WHERE roomNumber = NEW.roomNumber
+        AND floorNumber = NEW.floorNumber
+        AND hotelID = NEW.hotelID
+    ) THEN
+        RAISE EXCEPTION 'Cannot book non-existent room';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER enforce_room_existence_trigger
+BEFORE INSERT ON book
+FOR EACH ROW
+EXECUTE FUNCTION enforce_room_existence();
+
+CREATE OR REPLACE FUNCTION update_number_of_hotels()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE hotel_chain
+        SET number_of_hotels = number_of_hotels + 1
+        WHERE chain_name = NEW.chain_name;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE hotel_chain
+        SET number_of_hotels = number_of_hotels - 1
+        WHERE chain_name = OLD.chain_name;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_number_of_hotels_trigger
+AFTER INSERT OR DELETE ON hotel
+FOR EACH ROW
+EXECUTE FUNCTION update_number_of_hotels();
+
+
+CREATE INDEX idx_chain_name ON hotel_chain (chain_name);
+CREATE INDEX idx_hotel_id ON hotel (hotel_id);
+CREATE INDEX idx_customer_identifier ON customer (customerName, emailAddress, phoneNumber);
+CREATE INDEX idx_employee_identifier ON employee (employeeName, ssnNumber);
+CREATE INDEX idx_room_identifier ON room (roomNumber, floorNumber, hotelID);
+
+
 -- Insert bookings
 INSERT INTO book (startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID)
 VALUES

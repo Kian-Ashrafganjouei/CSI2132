@@ -46,6 +46,36 @@ app.get('/hotel_ids', async (req, res) => {
     }
 });
 
+// GET endpoint to fetch data from available_rooms_per_area view
+app.get('/available_rooms_per_area', async (req, res) => {
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM available_rooms_per_area');
+      const data = result.rows;
+      client.release(); // Release the client back to the pool
+  
+      res.json(data); // Send the data as JSON response
+    } catch (error) {
+      console.error('Error fetching data from available_rooms_per_area:', error);
+      res.status(500).send('Internal Server Error'); // Send a 500 error response if there's an error
+    }
+  });
+
+  app.get('/hotel_aggregated_capacity', async (req, res) => {
+    try {
+      const query = `
+      SELECT hotel_id, total_capacity
+      FROM hotel_aggregated_capacity;
+      `;
+  
+      const { rows } = await pool.query(query);
+      res.json(rows);
+    } catch (error) {
+      console.error('Error fetching hotel aggregated capacity:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 // Get all hotels
 app.get('/hotels', async (req, res) => {
     try {

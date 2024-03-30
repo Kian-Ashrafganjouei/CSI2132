@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const hotelForm = document.getElementById('hotelForm');
     const chainNameSelect = document.getElementById('chain_name_dynamic');
     const tbody = document.getElementById('hotelTableBody');
+    const aggregatedCapacityList = document.getElementById('aggregatedCapacityList');
+
+    
 
     // Fetch hotel chains from server and populate select options
     function fetchHotelChains() {
@@ -18,7 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error fetching hotel chains:', error));
     }
+    
+    function fetchAggregatedCapacity() {
+        fetch('/hotel_aggregated_capacity')
+            .then(response => response.json())
+            .then(data => {
+                const gridContainer = document.getElementById('aggregatedCapacityGrid');
+                gridContainer.innerHTML = ''; // Clear existing data
+    
+                // Loop through each hotel and create a grid item for it
+                data.forEach(hotel => {
+                    const gridItem = document.createElement('div');
+                    gridItem.classList.add('grid-item');
+                    gridItem.innerHTML = `
+                        <h3>Hotel ID: ${hotel.hotel_id}</h3>
+                        <p>Total Capacity: ${hotel.total_capacity}</p>
+                    `;
 
+                    gridContainer.appendChild(gridItem);
+                });
+            })
+            .catch(error => console.error('Error fetching aggregated capacity:', error));
+    }    
+    
+    
+    
+    
     // Fetch hotels from server and display them
     function fetchHotels() {
         fetch('/hotels')
@@ -129,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate hotel chains select options and fetch hotels
     fetchHotelChains();
     fetchHotels();
+    fetchAggregatedCapacity();
 
 // Add event listener to hotel form for submitting new hotel data
 hotelForm.addEventListener('submit', (event) => {
