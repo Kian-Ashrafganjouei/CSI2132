@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${room.hotelid}</td>
                         <td>${room.amenities.join(', ')}</td>
                         <td>${room.viewtype}</td>
+                        <td>${room.price}</td>
+                        <td>${room.capacity}</td>
                         <td>${room.canbeextended ? 'true' : 'false'}</td>
                         <td>${room.stringcomment}</td>
                         <td>${room.isrenting ? 'true' : 'false'}</td>
-                        <td>${room.price}</td>
-                        <td>${room.capacity}</td>
                         <td><button class="deleteBtn">Delete</button></td>
                         <td><button class="updateBtn">Update</button></td>
                     `;
