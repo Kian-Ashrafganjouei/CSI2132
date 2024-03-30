@@ -372,12 +372,12 @@ app.post('/rooms', async (req, res) => {
 });
 
 // Update a room
-app.put('/rooms/:roomNumber/:floorNumber', async (req, res) => {
+app.put('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
     const roomNumber = req.params.roomNumber;
     const { floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
     try {
         const client = await pool.connect();
-        await client.query('UPDATE room SET floorNumber = $1, hotelID = $2, amenities = $3, viewType = $4, canBeExtended = $5, stringComment = $6, isRenting = $7 WHERE roomNumber = $8',
+        await client.query('UPDATE room SET amenities = $3, viewType = $4, canBeExtended = $5, stringComment = $6, isRenting = $7 WHERE roomNumber = $8 AND hotelID = $2 AND floorNumber = $1',
             [floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting, roomNumber]);
         console.log("UPDATED ROOM " + roomNumber)
         res.sendStatus(200);
@@ -388,11 +388,11 @@ app.put('/rooms/:roomNumber/:floorNumber', async (req, res) => {
     }
 });
 
-app.delete('/rooms/:roomNumber/:floorNumber', async (req, res) => {
-    const { roomNumber, floorNumber } = req.params;
+app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
+    const { roomNumber, floorNumber, hotelID } = req.params;
     try {
         const client = await pool.connect();
-        await client.query('DELETE FROM room WHERE roomNumber = $1 AND floorNumber = $2', [roomNumber, floorNumber]);
+        await client.query('DELETE FROM room WHERE roomNumber = $1 AND floorNumber = $2 AND hotelID = $3', [roomNumber, floorNumber, hotelID]);
         console.log("DELETED ROOM " + roomNumber + " ON FLOOR " + floorNumber);
         res.sendStatus(200);
         client.release();
