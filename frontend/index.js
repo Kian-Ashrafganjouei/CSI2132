@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             let phoneNumber = prompt('Enter phone number:');
             // Validate phone number length
-            const phoneRegex = /^\d{9}$/;
+            const phoneRegex = /^\d{10}$/;
             while (!phoneRegex.test(phoneNumber)) {
                 phoneNumber = prompt('Please enter a valid 9-digit phone number:');
             }
@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(bookParams)
+                
             })
             .then(response => {
                 if (response.ok) {
