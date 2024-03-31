@@ -17,13 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach(room => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${room.roomNumber}</td>
-                    <td>${room.floorNumber}</td>
-                    <td>${room.hotelID}</td>
-                    <td>${room.hotelNumOfRooms}</td>
-                    <td>${room.hotelCategory}</td>
-                    <td>${room.chainName}</td>
-                    <td>${room.viewType}</td>
+                    <td>${room.roomnumber}</td>
+                    <td>${room.floornumber}</td>
+                    <td>${room.hotelid}</td>
+                    <td>${room.number_of_rooms}</td>
+                    <td>${room.category}</td>
+                    <td>${room.chain_name}</td>
+                    <td>${room.postalcode}</td>
+                    <td>${room.viewtype}</td>
                     <td>${room.price}</td>
                     <td>${room.capacity}</td>
                     <td><button class="bookRoom">Book</button></td>

@@ -432,20 +432,19 @@ app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
     }
 });
 
-// Add a new room
+// Search for a room
 app.post('/search_rooms', async (req, res) => {
-    const { startDate, endDate, hotelID, roomCapacity, area, hotelChain, hotelCategory, viewType, minRooms, maxRooms, minRoomPrice, maxRoomPrice } = req.body;
+    const { startDate, endDate, roomCapacity, area, hotelChain, hotelCategory, viewType, minRooms, maxRooms, minRoomPrice, maxRoomPrice } = req.body;
     try {
         const client = await pool.connect();
         // Construct the SQL query dynamically based on the provided search parameters
 
-        let query = 'SELECT room.*, hotel.category AS category FROM room JOIN hotel ON room.hotelID = hotel.hotel_id JOIN address ON hotel.addressID = address.addressID WHERE 1 = 1'; // Start with a base query
+        let query = 'SELECT room.*, hotel.category AS category, hotel.number_of_rooms AS number_of_rooms, hotel.chain_name AS chain_name, address.postalCode AS postalcode FROM room JOIN hotel ON room.hotelID = hotel.hotel_id JOIN address ON hotel.addressID = address.addressID WHERE 1 = 1'; // Start with a base query
         // Add conditions based on the provided search parameters
         if (viewType) query += ` AND room.viewType = '${viewType}'`;
         if (minRoomPrice) query += ` AND room.price >= ${minRoomPrice}`;
         if (maxRoomPrice) query += ` AND room.price <= ${maxRoomPrice}`;
         if (roomCapacity) query += ` AND room.capacity = '${roomCapacity}'`;
-        if (hotelID) query += ` AND room.hotelID = ${hotelID}`; // Include hotelID filter
         if (hotelChain) query += ` AND hotel.chain_name = '${hotelChain}'`; // Include hotelChain filter
         if (hotelCategory) query += ` AND hotel.category = ${hotelCategory}`; // Include hotelCategory filter
         if (area) query += ` AND address.postalCode = '${area}'`; // Include area filter (assuming postalCode represents area)
