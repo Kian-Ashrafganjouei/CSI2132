@@ -29,47 +29,47 @@
         <div class="card-container" id="availableRoomsPerAreaList"></div>
     </section>
 
-    <form id="hotelFom">
-        <h1>Add A Hotel</h1>
+
+    <form id="hotelRoomSearch">
+        <h1>Hotel Room Search</h1>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
+    
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
+    
+        <label for="roomCapacity">Room Capacity:</label>
+        <select id="roomCapacity">
+            <option value=""></option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Quad">Quad</option>
+        </select>
+
+        <label for="postal_dynamic" style="display: block; margin-bottom: 5px;">Postals:</label>
+        <select id="postal_dynamic" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <!-- Options will be dynamically populated from the database -->
+        </select>
+
         <label for="chain_name_dynamic">Hotel Chain</label>
-        <select id="chain_name_dynamic" required>
+        <select id="chain_name_dynamic">
             <!-- Options will be dynamically populated from the database -->
 
         </select>
-        <label for="category">Category (1 to 5):</label>
-        <select id="category" required>
+    
+        <label for="hotelCategory">Hotel Category:</label>
+        <select id="hotelCategory">
+            <option value=""></option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
-        <input type="number" id="numberOfRooms" placeholder="Number of Rooms" required>
-        <button type="submit">Add Hotel</button>
-    </form>
 
-    <form id="hotelRoomSearch">
-        <h1>Hotel Room Search</h1>
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" required>
-    
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" required>
-    
-        <label for="roomCapacity">Room Capacity:</label>
-        <input type="number" id="roomCapacity" placeholder="Room Capacity">
-    
-        <label for="area">Area:</label>
-        <input type="text" id="area" placeholder="Area">
-    
-        <label for="hotelChain">Hotel Chain:</label>
-        <input type="text" id="hotelChain" placeholder="Hotel Chain">
-    
-        <label for="hotelCategory">Hotel Category:</label>
-        <input type="text" id="hotelCategory" placeholder="Hotel Category">
-    
         <label for="viewType">View Type:</label>
         <select id="viewType">
+            <option value=""></option>
             <option value="Mountain">Mountain</option>
             <option value="Sea">Sea</option>
         </select>
