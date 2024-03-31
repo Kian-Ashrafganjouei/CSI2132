@@ -38,8 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener to search form for submitting search criteria
     searchForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        const startDate = document.getElementById('startDate').value || null;
-        const endDate = document.getElementById('endDate').value || null;
+
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+
+        // Get the current date
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        // Convert input date strings to Date objects
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        // Validate start date is in the future
+        if (startDate <= currentDate) {
+            alert('Start date must be in the future.');
+            return;
+        }
+
+        // Validate end date is not before start date
+        if (endDate < startDate) {
+            alert('End date cannot be before start date.');
+            return;
+        }
+        
         const roomCapacity = document.getElementById('roomCapacity').value || null;
         const area = document.getElementById('area').value || null;
         const hotelChain = document.getElementById('hotelChain').value || null;
@@ -52,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create an object with search parameters
         const searchParams = {
-            startDate,
-            endDate,
+            startDate: startDateInput.value,
+            endDate: endDateInput.value,
             roomCapacity,
             area,
             hotelChain,
@@ -77,9 +99,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const hotelID = event.target.dataset.hotel;
 
             // Prompt user for customer information
-            const customerName = prompt('Enter customer name:');
-            const emailAddress = prompt('Enter email address:');
-            const phoneNumber = prompt('Enter phone number:');
+            let customerName = prompt('Enter customer name:');
+            let emailAddress = prompt('Enter email address:');
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            while (!emailRegex.test(emailAddress)) {
+                emailAddress = prompt('Please enter a valid email address in the format name@domain.tld:');
+            }
+
+            let phoneNumber = prompt('Enter phone number:');
+            // Validate phone number length
+            const phoneRegex = /^\d{9}$/;
+            while (!phoneRegex.test(phoneNumber)) {
+                phoneNumber = prompt('Please enter a valid 9-digit phone number:');
+            }
 
             if (!customerName || !emailAddress || !phoneNumber) {
                 alert('Please provide all customer information.');
