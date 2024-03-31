@@ -92,75 +92,126 @@ VALUES
     ('Grand Lodges', '111-222-3333', 'info@grandlodges.com', 12),
     ('Pacific Hospitality', '777-888-9999', 'info@pacifichospitality.com', 20);
 
--- Insert addresses for Trader Bay hotels
+-- Insert additional addresses for Trader Bay hotels with modified street names and real country names, some unchanged postal codes
 INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
 VALUES
-    ('123 Main Street', '1', '12345', NULL, 'Tradersville', 'Country A'),  -- Address for the first Trader Bay hotel
-    ('456 Oak Avenue', '10', '54321', NULL, 'Tradersville', 'Country A'),  -- Address for the second Trader Bay hotel
-    ('789 Elm Road', '5', '67890', NULL, 'Tradersville', 'Country A');     -- Address for the third Trader Bay hotel
+    ('Pine Grove', '2', '12345', NULL, 'Port Harbor', 'United States'),  -- Address for the fourth Trader Bay hotel
+    ('Ocean View', '20', '12345', NULL, 'Port Harbor', 'United States'),  -- Address for the fifth Trader Bay hotel
+    ('Maple Lane', '15', '67890', NULL, 'Green Valley', 'Australia'),     -- Address for the sixth Trader Bay hotel
+    ('Sunset Boulevard', '30', '86420', NULL, 'Sunset Beach', 'United Kingdom'),  -- Address for the seventh Trader Bay hotel
+    ('Mountain View', '25', '09876', NULL, 'Mountainview', 'New Zealand'),  -- Address for the eighth Trader Bay hotel
+    ('River Road', '35', '13579', NULL, 'Riverside', 'France'),  -- Address for the ninth Trader Bay hotel
+    ('Lake Street', '40', '75319', NULL, 'Sunset Valley', 'Germany'),  -- Address for the tenth Trader Bay hotel
+    ('Highland Avenue', '45', '95173', NULL, 'Lakeview', 'Italy');     -- Address for the eleventh Trader Bay hotel
 
--- Insert addresses for Hospitality Group hotels
+-- Insert additional addresses for Hospitality Group hotels with modified street names and real country names, some unchanged postal codes
 INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
 VALUES
-    ('111 Pine Street', '20', '13579', NULL, 'Hospitalityville', 'Country B'),  -- Address for the first Hospitality Group hotel
-    ('222 Cedar Avenue', '30', '97531', NULL, 'Hospitalityville', 'Country B'),  -- Address for the second Hospitality Group hotel
-    ('333 Maple Road', '25', '24680', NULL, 'Hospitalityville', 'Country B');     -- Address for the third Hospitality Group hotel
+    ('Cedar Lane', '40', '23456', NULL, 'Greenville', 'Canada'),  -- Address for the fourth Hospitality Group hotel
+    ('Maple Avenue', '50', '23456', NULL, 'Greenville', 'Canada'),  -- Address for the fifth Hospitality Group hotel
+    ('Oak Street', '45', '24680', NULL, 'Oakville', 'Australia'),     -- Address for the sixth Hospitality Group hotel
+    ('Elm Drive', '60', '79420', NULL, 'Crack Town', 'United Kingdom'),  -- Address for the seventh Hospitality Group hotel
+    ('River Street', '55', '79420', NULL, 'Crack Town', 'United Kingdom'),  -- Address for the eighth Hospitality Group hotel
+    ('Forest Road', '65', '13579', NULL, 'Riverside', 'France'),  -- Address for the ninth Hospitality Group hotel
+    ('Sunset Drive', '70', '75319', NULL, 'Sunset Valley', 'Germany'),  -- Address for the tenth Hospitality Group hotel
+    ('Lakeview Avenue', '75', '95173', NULL, 'Lakeview', 'Italy');     -- Address for the eleventh Hospitality Group hotel
 
--- Insert addresses for Sunset Resorts hotels
+-- Insert additional addresses for Sunset Resorts hotels with different cities and modified street names, real country names, and varying postal codes
 INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
 VALUES
-    ('444 Sunset Boulevard', '40', '86420', NULL, 'Sunsetville', 'Country C'),  -- Address for the first Sunset Resorts hotel
-    ('555 Sunrise Street', '50', '09876', NULL, 'Sunsetville', 'Country C'),  -- Address for the second Sunset Resorts hotel
-    ('666 Dusk Avenue', '45', '13579', NULL, 'Sunsetville', 'Country C');     -- Address for the third Sunset Resorts hotel
+    ('Ocean View Drive', '60', '12345', NULL, 'Port Harbor', 'United States'),  -- Address for the fourth Sunset Resorts hotel
+    ('Hilltop Avenue', '70', '75319', NULL, 'Mountainville', 'Canada'),  -- Address for the fifth Sunset Resorts hotel
+    ('Beachfront Road', '65', '75319', NULL, 'Mountainville', 'Canada'),     -- Address for the sixth Sunset Resorts hotel
+    ('Cliffside Lane', '80', '35791', NULL, 'Clifftown', 'United Kingdom'),  -- Address for the seventh Sunset Resorts hotel
+    ('Seaside Boulevard', '75', '64208', NULL, 'Oceanview', 'New Zealand'),  -- Address for the eighth Sunset Resorts hotel
+    ('Mountain View Avenue', '85', '18642', NULL, 'Hilltop', 'France'),  -- Address for the ninth Sunset Resorts hotel
+    ('Lakeside Drive', '90', '51937', NULL, 'Lakeland', 'Germany'),  -- Address for the tenth Sunset Resorts hotel
+    ('Riverside Terrace', '95', '27483', NULL, 'Riverfront', 'Italy');     -- Address for the eleventh Sunset Resorts hotel
 
--- Insert addresses for Grand Lodges hotels
+-- Insert additional addresses for Grand Lodges hotels with different cities and modified street names, real country names, and varying postal codes
 INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
 VALUES
-    ('777 Forest Lane', '60', '75319', NULL, 'Grandville', 'Country D'),  -- Address for the first Grand Lodges hotel
-    ('888 Mountain Road', '70', '95173', NULL, 'Grandville', 'Country D'),  -- Address for the second Grand Lodges hotel
-    ('999 Lake Avenue', '65', '35791', NULL, 'Grandville', 'Country D');     -- Address for the third Grand Lodges hotel
+    ('Evergreen Lane', '80', '12345', NULL, 'Port Harbor', 'United States'),  -- Address for the fourth Grand Lodges hotel
+    ('Valley View Drive', '90', '18642', NULL, 'Valleytown', 'United States'),  -- Address for the fifth Grand Lodges hotel
+    ('River Bend Road', '85', '51937', NULL, 'Riverdale', 'Canada'),     -- Address for the sixth Grand Lodges hotel
+    ('Forest Hill Drive', '95', '27483', NULL, 'Riverfront', 'Italy'),  -- Address for the seventh Grand Lodges hotel
+    ('Meadowbrook Lane', '100', '74592', NULL, 'Meadowview', 'Australia'),  -- Address for the eighth Grand Lodges hotel
+    ('Mountain View Road', '105', '83642', NULL, 'Mountainville', 'Australia'),  -- Address for the ninth Grand Lodges hotel
+    ('Lakeside Drive', '110', '62938', NULL, 'Sunset Beach', 'United Kingdom'),  -- Address for the tenth Grand Lodges hotel
+    ('Sunset Boulevard', '115', '62938', NULL, 'Sunset Beach', 'United Kingdom');  -- Address for the eleventh Grand Lodges hotel
 
--- Insert addresses for Pacific Hospitality hotels
+-- Insert additional addresses for Pacific Hospitality hotels with different cities and modified street names, real country names, and varying postal codes
 INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
 VALUES
-    ('101 Ocean Boulevard', '80', '24680', NULL, 'Pacificville', 'Country E'),  -- Address for the first Pacific Hospitality hotel
-    ('202 Bay Street', '90', '86420', NULL, 'Pacificville', 'Country E'),  -- Address for the second Pacific Hospitality hotel
-    ('303 Sea Road', '85', '97531', NULL, 'Pacificville', 'Country E');     -- Address for the third Pacific Hospitality hotel
+    ('Marine Drive', '110', '12345', NULL, 'Port Harbor', 'United States'),  -- Address for the fourth Pacific Hospitality hotel
+    ('Harbor View Avenue', '120', '23232', NULL, 'Harbor City', 'United States'),  -- Address for the fifth Pacific Hospitality hotel
+    ('Coastal Highway', '115', '98765', NULL, 'Coastalton', 'Australia'),     -- Address for the sixth Pacific Hospitality hotel
+    ('Beachfront Road', '125', '98765', NULL, 'Coastalton', 'Australia'),  -- Address for the seventh Pacific Hospitality hotel
+    ('Island Avenue', '130', '86421', NULL, 'Islandia', 'Canada'),  -- Address for the eighth Pacific Hospitality hotel
+    ('Seaview Terrace', '135', '13579', NULL, 'Seaville', 'Canada'),  -- Address for the ninth Pacific Hospitality hotel
+    ('Coral Reef Lane', '140', '97532', NULL, 'Coral Cove', 'United Kingdom'),  -- Address for the tenth Pacific Hospitality hotel
+    ('Lighthouse Road', '145', '86422', NULL, 'Lighthouse Point', 'United Kingdom');  -- Address for the eleventh Pacific Hospitality hotel
+
 
 -- Insert hotels for "Trader Bay" chain
 INSERT INTO hotel (category, number_of_rooms, chain_name, addressID)
 VALUES
-    (3, 3, 'Trader Bay', 1),  -- AddressID 1 is assumed to be for Trader Bay
-    (4, 3, 'Trader Bay', 2),
-    (2, 3, 'Trader Bay', 3);
+    (3, 5, 'Trader Bay', 1),
+    (4, 5, 'Trader Bay', 2),
+    (2, 5, 'Trader Bay', 3),
+    (3, 5, 'Trader Bay', 4),
+    (5, 5, 'Trader Bay', 5),
+    (2, 5, 'Trader Bay', 6),
+    (4, 5, 'Trader Bay', 7),
+    (2, 5, 'Trader Bay', 8);
 
 -- Insert hotels for "Hospitality Group" chain
 INSERT INTO hotel (category, number_of_rooms, chain_name, addressID)
 VALUES
-    (5, 3, 'Hospitality Group', 4),  -- AddressID 4 is assumed to be for Hospitality Group
-    (3, 3, 'Hospitality Group', 5),
-    (4, 3, 'Hospitality Group', 6);
+    (5, 5, 'Hospitality Group', 9),  
+    (3, 5, 'Hospitality Group', 10),
+    (4, 5, 'Hospitality Group', 11),  
+    (3, 5, 'Hospitality Group', 12),
+    (1, 5, 'Hospitality Group', 13),  
+    (3, 5, 'Hospitality Group', 14),
+    (2, 5, 'Hospitality Group', 15),  
+    (3, 5, 'Hospitality Group', 16);
 
 -- Insert hotels for "Sunset Resorts" chain
 INSERT INTO hotel (category, number_of_rooms, chain_name, addressID)
 VALUES
-    (4, 3, 'Sunset Resorts', 7),  -- AddressID 7 is assumed to be for Sunset Resorts
-    (3, 3, 'Sunset Resorts', 8),
-    (2, 3, 'Sunset Resorts', 9);
+    (5, 5, 'Sunset Resorts', 17),  
+    (3, 5, 'Sunset Resorts', 18),
+    (4, 5, 'Sunset Resorts', 19),  
+    (3, 5, 'Sunset Resorts', 20),
+    (1, 5, 'Sunset Resorts', 21),  
+    (3, 5, 'Sunset Resorts', 22),
+    (2, 5, 'Sunset Resorts', 23),  
+    (3, 5, 'Sunset Resorts', 24);
 
 -- Insert hotels for "Grand Lodges" chain
 INSERT INTO hotel (category, number_of_rooms, chain_name, addressID)
 VALUES
-    (3, 3, 'Grand Lodges', 10),  -- AddressID 10 is assumed to be for Grand Lodges
-    (4, 3, 'Grand Lodges', 11),
-    (5, 3, 'Grand Lodges', 12);
+    (5, 5, 'Grand Lodges', 25),  
+    (3, 5, 'Grand Lodges', 26),
+    (4, 5, 'Grand Lodges', 27),  
+    (3, 5, 'Grand Lodges', 28),
+    (1, 5, 'Grand Lodges', 29),  
+    (3, 5, 'Grand Lodges', 30),
+    (2, 5, 'Grand Lodges', 31),  
+    (3, 5, 'Grand Lodges', 32);
 
 -- Insert hotels for "Pacific Hospitality" chain
 INSERT INTO hotel (category, number_of_rooms, chain_name, addressID)
 VALUES
-    (5, 3, 'Pacific Hospitality', 13),  -- AddressID 13 is assumed to be for Pacific Hospitality
-    (4, 3, 'Pacific Hospitality', 14),
-    (3, 3, 'Pacific Hospitality', 15);
+    (5, 5, 'Pacific Hospitality', 33),  
+    (3, 5, 'Pacific Hospitality', 34),
+    (4, 5, 'Pacific Hospitality', 35),  
+    (3, 5, 'Pacific Hospitality', 36),
+    (1, 5, 'Pacific Hospitality', 37),  
+    (3, 5, 'Pacific Hospitality', 38),
+    (2, 5, 'Pacific Hospitality', 39),  
+    (3, 5, 'Pacific Hospitality', 40);
     
 
 -- Insert additional default addresses
@@ -180,16 +231,16 @@ VALUES
 -- Insert additional default employees
 INSERT INTO employee (employeeName, role, isManager, ssnNumber, addressID)
 VALUES
-    ('Mark Johnson', 'receptionist', false, '123456789', 16),   
-    ('Emily Davis', 'room service', false, '987654321', 17),    
-    ('David Wilson', 'custodian', false, '123123123', 18),     
-    ('Sarah Martinez', 'receptionist', false, '123456789', 19), 
-    ('Michael Anderson', 'room service', false, '987654321', 20), 
-    ('Jessica Thomas', 'custodian', false, '123123123', 21),      
-    ('Daniel Jackson', 'receptionist', false, '123456789', 22), 
-    ('Linda White', 'room service', false, '987654321', 23),    
-    ('Christopher Harris', 'custodian', false, '123123123', 24), 
-    ('Amanda Lee', 'receptionist', false, '123456789', 25);     
+    ('Mark Johnson', 'receptionist', false, '123456789', 41),   
+    ('Emily Davis', 'room service', false, '987654321', 42),    
+    ('David Wilson', 'custodian', false, '123123123', 43),     
+    ('Sarah Martinez', 'receptionist', false, '123456789', 44), 
+    ('Michael Anderson', 'room service', false, '987654321', 45), 
+    ('Jessica Thomas', 'custodian', false, '123123123', 46),      
+    ('Daniel Jackson', 'receptionist', false, '123456789', 47), 
+    ('Linda White', 'room service', false, '987654321', 48),    
+    ('Christopher Harris', 'custodian', false, '123123123', 49), 
+    ('Amanda Lee', 'receptionist', false, '123456789', 50);     
 
 
 -- Insert 10 new addresses
@@ -207,79 +258,259 @@ INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName,
 
 -- Insert 10 new customers with the inserted addresses
 INSERT INTO customer (customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, addressID) VALUES
-('Customer 1', 'customer1@example.com', '1234567890', '123456789', 'Driver Licence', '2024-03-28', 26),
-('Customer 2', 'customer2@example.com', '2345678901', '234567890', 'Passport', '2024-03-28', 27),
-('Customer 3', 'customer3@example.com', '3456789012', '345678901', 'Health Card', '2024-03-28', 28),
-('Customer 4', 'customer4@example.com', '4567890123', '456789012', 'SSN/SIN', '2024-03-28', 29),
-('Customer 5', 'customer5@example.com', '5678901234', '567890123', 'Identity Card', '2024-03-28', 30),
-('Customer 6', 'customer6@example.com', '6789012345', '678901234', 'Driver Licence', '2024-03-28', 31),
-('Customer 7', 'customer7@example.com', '7890123456', '789012345', 'Passport', '2024-03-28', 32),
-('Customer 8', 'customer8@example.com', '8901234567', '890123456', 'Health Card', '2024-03-28', 33),
-('Customer 9', 'customer9@example.com', '9012345678', '901234567', 'SSN/SIN', '2024-03-28', 34),
-('Customer 10', 'customer10@example.com', '0123456789', '012345678', 'Identity Card', '2024-03-28', 35);
+('Customer 1', 'customer1@example.com', '1234567890', '123456789', 'Driver Licence', '2024-03-28', 51),
+('Customer 2', 'customer2@example.com', '2345678901', '234567890', 'Passport', '2024-03-28', 52),
+('Customer 3', 'customer3@example.com', '3456789012', '345678901', 'Health Card', '2024-03-28', 53),
+('Customer 4', 'customer4@example.com', '4567890123', '456789012', 'SSN/SIN', '2024-03-28', 54),
+('Customer 5', 'customer5@example.com', '5678901234', '567890123', 'Identity Card', '2024-03-28', 55),
+('Customer 6', 'customer6@example.com', '6789012345', '678901234', 'Driver Licence', '2024-03-28', 56),
+('Customer 7', 'customer7@example.com', '7890123456', '789012345', 'Passport', '2024-03-28', 57),
+('Customer 8', 'customer8@example.com', '8901234567', '890123456', 'Health Card', '2024-03-28', 58),
+('Customer 9', 'customer9@example.com', '9012345678', '901234567', 'SSN/SIN', '2024-03-28', 59),
+('Customer 10', 'customer10@example.com', '0123456789', '012345678', 'Identity Card', '2024-03-28', 60);
 
 -- Insert rooms for multiple hotels at once
 INSERT INTO room (roomNumber, floorNumber, hotelID, amenities, viewType, price, capacity, canBeExtended, stringComment, isRenting)
 VALUES
     (101, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
-    (102, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
-    (103, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (102, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+    (201, 2, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (202, 2, 1, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
 
-    (101, 1, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
-    (102, 1, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (101, 1, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
     (103, 1, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 2, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 2, ARRAY['WiFi', 'TV'], 'Mountain', 90, 'Single', true, 'Small room with a mountain dew', false),
 
-    (101, 1, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
+    (101, 1, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
     (102, 1, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
     (103, 1, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (303, 3, 3, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (101, 1, 4, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
-    (102, 1, 4, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
-    (103, 1, 4, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 4, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 4, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 4, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 4, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 4, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (201, 2, 5, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 110, 'Single', true, 'Room with a view of the mountains and balcony', false),
-    (202, 2, 5, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 130, 'Single', true, 'Room with a view of the sea and air conditioning', false),
-    (203, 2, 5, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 95, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 5, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 5, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 5, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 5, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 5, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (201, 2, 6, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 110, 'Single', true, 'Room with a view of the mountains and balcony', false),
-    (202, 2, 6, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 130, 'Single', true, 'Room with a view of the sea and air conditioning', false),
-    (203, 2, 6, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 95, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 6, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 6, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 6, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 6, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 6, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (301, 3, 7, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 105, 'Single', true, 'Room with a view of the mountains and air conditioning', false),
-    (302, 3, 7, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 125, 'Single', true, 'Room with a view of the sea and balcony', false),
-    (303, 3, 7, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 95, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 7, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 7, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 7, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 7, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 7, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (301, 3, 8, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 105, 'Single', true, 'Room with a view of the mountains and air conditioning', false),
-    (302, 3, 8, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 125, 'Single', true, 'Room with a view of the sea and balcony', false),
-    (303, 3, 8, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 95, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 8, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 8, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 8, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 8, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 8, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (301, 3, 9, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 105, 'Double', true, 'Room with a view of the mountains and air conditioning', false),
-    (302, 3, 9, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 125, 'Double', true, 'Room with a view of the sea and balcony', false),
-    (303, 3, 9, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 95, 'Double', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 9, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 9, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 9, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 9, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 9, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (401, 4, 10, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 115, 'Double', true, 'Room with a view of the mountains and balcony', false),
-    (402, 4, 10, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 135, 'Double', true, 'Room with a view of the sea and air conditioning', false),
-    (403, 4, 10, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 100, 'Double', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 10, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 10, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 10, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 10, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 10, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
 
-    (401, 4, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 115, 'Double', true, 'Room with a view of the mountains and balcony', false),
-    (402, 4, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 135, 'Double', true, 'Room with a view of the sea and air conditioning', false),
-    (403, 4, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 100, 'Double', true, 'Room with a mountain view and bathtub', false),
-    
-    (401, 4, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 125, 'Double', true, 'Room with a view of the mountains and balcony', false),
-    (402, 4, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 135, 'Double', true, 'Room with a view of the sea and air conditioning', false),
-    (403, 4, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 100, 'Double', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
+    (102, 1, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+    (201, 2, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (202, 2, 11, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
 
-    (401, 4, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Mountain', 135, 'Double', true, 'Room with a view of the mountains and balcony', false),
-    (402, 4, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Sea', 135, 'Double', true, 'Room with a view of the sea and air conditioning', false),
-    (403, 4, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 100, 'Double', true, 'Room with a mountain view and bathtub', false),
+    (101, 1, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 12, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 12, ARRAY['WiFi', 'TV'], 'Mountain', 90, 'Single', true, 'Small room with a mountain dew', false),
 
-    (501, 5, 14, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 120, 'Quad', true, 'Room with a view of the mountains and air conditioning', false),
-    (502, 5, 14, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 140, 'Quad', true, 'Room with a view of the sea and balcony', false),
-    (503, 5, 14, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 105, 'Quad', true, 'Room with a mountain view and bathtub', false),
-    
-    (501, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 120, 'Quad', true, 'Room with a view of the mountains and air conditioning', false),
-    (502, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 140, 'Quad', true, 'Room with a view of the sea and balcony', false),
-    (503, 5, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 105, 'Quad', true, 'Room with a mountain view and bathtub', false);
+    (101, 1, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (103, 1, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (303, 3, 13, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 14, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 14, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 14, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 14, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 14, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 15, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 15, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 15, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 15, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 16, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 16, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 16, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 16, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 16, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 17, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 17, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 17, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 17, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 17, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 18, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 18, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 18, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 18, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 18, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 19, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 19, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 19, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 19, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 19, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 20, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 20, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 20, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 20, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 20, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 21, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
+    (102, 1, 21, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 21, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+    (203, 2, 21, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (202, 2, 21, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 22, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 22, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 22, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 22, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 22, ARRAY['WiFi', 'TV'], 'Mountain', 90, 'Single', true, 'Small room with a mountain dew', false),
+
+    (101, 1, 23, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 23, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (103, 1, 23, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 23, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (303, 3, 23, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 24, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 24, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (204, 2, 24, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (203, 2, 24, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 24, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 25, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 25, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 25, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 25, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 25, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 26, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 26, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 26, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 26, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 26, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 27, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 27, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 27, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 27, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 27, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 28, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 28, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 28, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 28, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 28, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 29, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 29, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 29, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 29, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 29, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 30, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 30, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 30, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 30, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 30, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 31, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Single', true, 'Room with a view of the mountains', false),
+    (102, 1, 31, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 31, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+    (201, 2, 31, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (202, 2, 31, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 32, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 32, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Double', true, 'Room with a view of the sea', false),
+    (103, 1, 32, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 32, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 32, ARRAY['WiFi', 'TV'], 'Mountain', 90, 'Single', true, 'Small room with a mountain dew', false),
+
+    (101, 1, 33, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 33, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Single', true, 'Room with a view of the sea', false),
+    (103, 1, 33, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (202, 2, 33, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (303, 3, 33, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 34, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 34, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 34, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 34, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 34, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 35, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 35, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 35, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 35, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 35, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 36, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 36, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 36, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 36, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 36, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 37, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 37, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 37, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 37, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 37, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 38, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 38, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 38, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 38, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 38, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 39, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 39, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (204, 2, 39, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (203, 2, 39, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 39, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false),
+
+    (101, 1, 40, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Air Conditioning'], 'Mountain', 100, 'Double', true, 'Room with a view of the mountains', false),
+    (102, 1, 40, ARRAY['WiFi', 'Mini Fridge', 'Balcony'], 'Sea', 120, 'Quad', true, 'Room with a view of the sea', false),
+    (203, 2, 40, ARRAY['WiFi', 'TV', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (204, 2, 40, ARRAY['WiFi', 'TV', 'Mini Fridge', 'Bathtub'], 'Mountain', 90, 'Single', true, 'Room with a mountain view and bathtub', false),
+    (303, 3, 40, ARRAY['WiFi', 'Mini Fridge', 'Bathtub'], 'Mountain', 150, 'Quad', true, 'Room with a mountain view and bathtub', false);
 
 -- Insert bookings
 INSERT INTO book (startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID)

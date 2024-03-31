@@ -50,7 +50,7 @@ app.get('/hotel_ids', async (req, res) => {
 app.get('/all_postals', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT postalCode FROM address');
+        const result = await client.query('SELECT DISTINCT address.postalCode FROM hotel JOIN address ON hotel.addressID = address.addressID');
         res.json(result.rows); // Extract postal codes from the result and send as JSON response
         client.release();
     } catch (err) {
