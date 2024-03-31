@@ -69,8 +69,8 @@ CREATE TABLE employee (
     addressID INT REFERENCES address(addressID)
 );
 
--- Booking
 CREATE TABLE book (
+    bookingID SERIAL PRIMARY KEY, -- Add a booking ID as primary key
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     customerName VARCHAR(100) NOT NULL,
@@ -79,7 +79,6 @@ CREATE TABLE book (
     roomNumber INT,
     floorNumber INT,
     hotelID INT REFERENCES hotel(hotel_id),
-    PRIMARY KEY (roomNumber, floorNumber, hotelID), -- Primary key declaration
     FOREIGN KEY (roomNumber, floorNumber, hotelID) REFERENCES room(roomNumber, floorNumber, hotelID),
     FOREIGN KEY (customerName, emailAddress, phoneNumber) REFERENCES customer(customerName, emailAddress, phoneNumber)
 );

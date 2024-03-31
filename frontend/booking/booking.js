@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const optionsDropdown = document.getElementById('options');
     const convertButton = document.getElementById('convert-button'); // Fix: Use getElementById instead of querySelector
+    const tbody = document.getElementById('bookingTableBody');
 
     // Fetch booking options from the server
     fetch('/bookings')
@@ -11,11 +12,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Populate dropdown with booking options
             data.forEach(booking => {
+                console.log(booking)
                 const option = document.createElement('option');
-                option.value = `${booking.roomnumber}-${booking.floornumber}-${booking.hotelid}`; // Concatenate room number, floor number, and hotel ID
-                option.textContent = `Room ${booking.roomnumber}, Floor ${booking.floornumber}, Hotel ${booking.hotelid}`; // Example display text
+                option.value = `${booking.bookingid}-${booking.roomnumber}-${booking.floornumber}-${booking.hotelid}`; // Concatenate room number, floor number, and hotel ID
+                option.textContent = `Booking ${booking.bookingid} Room ${booking.roomnumber}, Floor ${booking.floornumber}, Hotel ${booking.hotelid}`; // Example display text
                 optionsDropdown.appendChild(option);
             });
+
+
+            data.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${booking.bookingid}</td>
+                    <td>${booking.startdate}</td>
+                    <td>${booking.enddate}</td>
+                    <td>${booking.customername}</td>
+                    <td>${booking.emailaddress}</td>
+                    <td>${booking.phonenumber}</td>
+                    <td>${booking.roomnumber}</td>
+                    <td>${booking.floornumber}</td>
+                    <td>${booking.hotelid}</td>
+                    <td><button class="deleteBtn">Delete</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+
+
+            // Add event listeners to delete buttons after creating them
+            const deleteButtons = document.querySelectorAll('.deleteBtn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = button.closest('tr');
+                    const bookingId = row.querySelector('td:nth-child(1)').innerText; // Assuming the booking ID is in the first column
+
+                    // Send DELETE request to the server
+                    fetch(`/bookings/${bookingId}`, { // Adjust the endpoint URL
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Booking successfully deleted');
+                            // Optionally, you can remove the row from the table
+                            row.remove();
+                            showSuccessMessage('Booking successfully removed');
+                        } else {
+                            console.error('Failed to delete booking');
+                        }
+                    })
+                    .catch(error => console.error('Error deleting booking:', error));
+                });
+            });
+
         })
         .catch(error => console.error('Error fetching booking options:', error));
 
@@ -23,9 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     convertButton.addEventListener('click', () => {
         // Get selected booking info from dropdown
         const selectedBookingInfo = optionsDropdown.value.split('-');
-        const roomNumber = selectedBookingInfo[0];
-        const floorNumber = selectedBookingInfo[1];
-        const hotelID = selectedBookingInfo[2];
+        const roomNumber = selectedBookingInfo[1];
+        const floorNumber = selectedBookingInfo[2];
+        const hotelID = selectedBookingInfo[3];
         
         // Perform conversion operation or any other action based on the selected booking
         console.log('Selected Booking: Room', roomNumber, ', Floor', floorNumber, ', Hotel', hotelID);

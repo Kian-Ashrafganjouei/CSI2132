@@ -544,3 +544,101 @@ app.post('/convert', async (req, res) => {
         res.sendStatus(500); // Send an error response
     }
 });
+// Rent without inserting details first
+app.post('/bookings', async (req, res) => {
+    const { customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, roomNumber, floorNumber, hotelID } = req.body;
+    let client;
+
+    try {
+        client = await pool.connect(); // Assign client inside try block
+
+        // Start a transaction
+        await client.query('BEGIN');
+
+        // Insert address data
+        const addressQuery = `
+            INSERT INTO address (streetName, streetNumber, postalCode, unitNumber, cityName, countryName)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING addressID
+        `;
+        const addressValues = [req.body.address.streetName, req.body.address.streetNumber, req.body.address.postalCode, req.body.address.unitNumber, req.body.address.cityName, req.body.address.countryName];
+        const { rows: addressRows } = await client.query(addressQuery, addressValues);
+        const addressId = addressRows[0].addressid;
+
+        // Insert customer data
+        const customerQuery = `
+            INSERT INTO customer (customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, addressID)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+        `;
+        const customerValues = [customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, addressId];
+        const { rows: customerRows } = await client.query(customerQuery, customerValues);
+
+        // Update the isRenting field of the room to true
+        await client.query(
+            `UPDATE room 
+             SET isRenting = true 
+             WHERE roomNumber = $1 AND floorNumber = $2 AND hotelID = $3`,
+            [roomNumber, floorNumber, hotelID]
+        );
+
+        // Commit the transaction
+        await client.query('COMMIT');
+
+        res.status(200).json('Created address, customer, and rented the room'); // Send the newly created customer and address IDs as JSON response
+
+    } catch (err) {
+        // Rollback the transaction in case of error
+        if (client) {
+            await client.query('ROLLBACK');
+        }
+
+        console.error('Error booking room:', err);
+        res.status(500).send('Server Error');
+    } finally {
+        if (client) {
+            client.release(); // Release client in finally block
+        }
+    }
+});
+
+// Delete a booking by ID
+app.delete('/bookings/:bookingId', async (req, res) => {
+    const bookingId = req.params.bookingId;
+    let client; // Declare client variable
+
+    try {
+        client = await pool.connect(); // Assign client inside try block
+
+        // Start a transaction
+        await client.query('BEGIN');
+
+        // Check if the booking exists
+        const checkBookingQuery = 'SELECT * FROM book WHERE bookingID = $1';
+        const { rowCount } = await client.query(checkBookingQuery, [bookingId]);
+
+        // If booking does not exist, return 404
+        if (rowCount === 0) {
+            res.status(404).send('Booking not found');
+            return;
+        }
+
+        // Delete the booking
+        await client.query('DELETE FROM book WHERE bookingID = $1', [bookingId]);
+
+        // Commit the transaction
+        await client.query('COMMIT');
+
+        res.sendStatus(200); // Send success response
+    } catch (err) {
+        // Rollback the transaction in case of error
+        await client.query('ROLLBACK');
+
+        console.error('Error deleting booking:', err);
+        res.status(500).send('Server Error');
+    } finally {
+        if (client) {
+            client.release(); // Release client connection
+        }
+    }
+});
+

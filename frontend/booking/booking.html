@@ -67,6 +67,28 @@
             <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Create renting</button>
         </form>
     </div>
+
+        <!-- Table to display existing customers -->
+        <h2>Existing Bookings</h2>
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Room Number</th>
+                    <th>floor Number</th>
+                    <th>hotel ID</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="bookingTableBody">
+                <!-- Booking data will be dynamically populated from the database -->
+            </tbody>
+        </table>
 </div>
 </body>
 </html>
