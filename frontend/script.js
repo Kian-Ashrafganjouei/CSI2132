@@ -5,49 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chainNameSelect = document.getElementById('chain_name_dynamic');
     const availableRoomsPerAreaList = document.getElementById('availableRoomsPerAreaList');
 
-    // Fetch hotels from server and display them
-    function fetchHotelChains() {
-        fetch('/hotel_chains')
-            .then(response => response.json())
-            .then(data => {
-                hotelChainList.innerHTML = '';
-                chainNameSelect.innerHTML = '';
-
-                data.forEach(chain => {
-
-                    const option = document.createElement('option');
-                    option.value = chain.chain_name;
-                    option.textContent = chain.chain_name;
-                    chainNameSelect.appendChild(option);
-
-                    const item = document.createElement('div');
-                    const chainNameElement = document.createElement('p');
-                    chainNameElement.textContent = `Hotel Chain Name: ${chain.chain_name}`;
-                    
-
-                    const phoneNumberElement = document.createElement('p');
-                    phoneNumberElement.textContent = `Phone Number: ${chain.phone_number}`;
-                    
-                    const emailAddressElement = document.createElement('p');
-                    emailAddressElement.textContent = `Email Address: ${chain.email_address}`;
-                    
-                    const numberOfHotelsElement = document.createElement('p');
-                    numberOfHotelsElement.textContent = `Number of Hotels: ${chain.number_of_hotels}`;
-                    
-                    // Append each element to the item container
-                    item.appendChild(chainNameElement);
-                    item.appendChild(phoneNumberElement);
-                    item.appendChild(emailAddressElement);
-                    item.appendChild(numberOfHotelsElement);
-                    
-                    // Append the item container to the hotelChainList
-                    hotelChainList.appendChild(item);
-                    // Add a line break after appending the item container
-                    hotelChainList.appendChild(document.createElement('br'));
-                });
-            })
-            .catch(error => console.error('Error fetching hotel chains:', error));
-    }
 
         // Fetch hotels from server and display them
         function fetchHotels() {

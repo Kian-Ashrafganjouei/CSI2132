@@ -1,6 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('hotelRoomSearch');
     const tbody = document.getElementById('searchResultsBody');
+    const chainNameSelect = document.getElementById('chain_name_dynamic');
+    const postalDyanmic = document.getElementById('postal_dynamic');
+
+
+    // Fetch hotel chains from server and populate select options
+    function fetchHotelChains() {
+        fetch('/hotel_chains')
+            .then(response => response.json())
+            .then(data => {
+
+                chainNameSelect.innerHTML = '';
+                const empty = document.createElement('option');
+                empty.value = '';
+                empty.textContent = '';
+                chainNameSelect.appendChild(empty);
+
+                data.forEach(chain => {
+                    const option = document.createElement('option');
+                    option.value = chain.chain_name;
+                    option.textContent = chain.chain_name;
+                    chainNameSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching hotel chains:', error));
+    }
+
+    // Fetch postals from server and populate select options
+    function fetchPostals() {
+        fetch('/all_postals')
+            .then(response => response.json())
+            .then(data => {
+                
+                postalDyanmic.innerHTML = '';
+                const empty = document.createElement('option');
+                empty.value = '';
+                empty.textContent = '';
+                postalDyanmic.appendChild(empty);
+
+                data.forEach(address => {
+                    const option = document.createElement('option');
+                    option.value = address.postalcode;
+                    option.textContent = address.postalcode;
+                    postalDyanmic.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching Postals:', error));
+    }
+    
+
 
     // Function to fetch and display search results
     function fetchResults(searchParams) {
@@ -63,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const roomCapacity = document.getElementById('roomCapacity').value || null;
-        const area = document.getElementById('area').value || null;
-        const hotelChain = document.getElementById('hotelChain').value || null;
+        const area = document.getElementById('postal_dynamic').value || null;
+        const hotelChain = document.getElementById('chain_name_dynamic').value || null;
         const hotelCategory = document.getElementById('hotelCategory').value || null;
         const viewType = document.getElementById('viewType').value || null;
         const minRooms = document.getElementById('minRooms').value || null;
@@ -90,6 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fetch and display search results
         fetchResults(searchParams);
     });
+    fetchHotelChains();
+    fetchPostals();
 
     // Add event listener to dynamically created book buttons
     tbody.addEventListener('click', (event) => {
