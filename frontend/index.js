@@ -119,4 +119,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     fetchHotelChains();
     fetchPostals();
+
+    // Add event listener to dynamically created book buttons
+    tbody.addEventListener('click', (event) => {
+        if (event.target.classList.contains('bookRoom')) {
+            const roomNumber = event.target.dataset.room;
+            const floorNumber = event.target.dataset.floor;
+            const hotelID = event.target.dataset.hotel;
+
+            // Prompt user for customer information
+            const customerName = prompt('Enter customer name:');
+            const emailAddress = prompt('Enter email address:');
+            const phoneNumber = prompt('Enter phone number:');
+
+            if (!customerName || !emailAddress || !phoneNumber) {
+                alert('Please provide all customer information.');
+                return;
+            }
+
+            // Create an object with booking parameters
+            const bookParams = {
+                startDate,
+                endDate,
+                customerName,
+                emailAddress,
+                phoneNumber,
+                roomNumber,
+                floorNumber,
+                hotelID
+            };
+
+            console.log('Booking room:', bookParams);
+
+            // Fetch and book the room
+            fetch('/book_room', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bookParams)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Room successfully booked');
+                } else {
+                    throw new Error('Failed to book room');
+                }
+            })
+            .catch(error => console.error('Error booking room:', error));
+        }
+    });
 });
