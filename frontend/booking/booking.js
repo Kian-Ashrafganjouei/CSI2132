@@ -117,22 +117,3 @@ document.addEventListener('DOMContentLoaded', () => {
           .catch(error => console.error('Error adding new renting:', error));
       });
   });
-
-
-
-
-
-
-
-  const customerName = document.getElementById('customerName').value;
-  const emailAddress = document.getElementById('emailAddress').value;
-  const phoneNumber = document.getElementById('phoneNumber').value;
-  const cardNumber = document.getElementById('cardNumber').value;
-  const idType = document.getElementById('idType').value;
-  const dateOfRegistration = document.getElementById('dateOfRegistration').value;
-  const streetName = document.getElementById('streetName').value;
-  const streetNumber = document.getElementById('streetNumber').value;
-  const postalCode = document.getElementById('postalCode').value;
-  const unitNumber = document.getElementById('unitNumber').value;
-  const cityName = document.getElementById('cityName').value;
-  const countryName = document.getElementById('countryName').value;
