@@ -229,8 +229,12 @@ select option {
     position: relative;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .card-container:hover {
-    animation: stack-move 5s linear infinite; 
+    animation: stack-move 15s linear infinite; 
 }
 
 @keyframes stack-move {
