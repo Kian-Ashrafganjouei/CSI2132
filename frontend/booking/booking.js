@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 console.log('Converted Successfully');
                 // Optionally, perform any additional actions after adding the booking
+                showSuccessMessage('Successfully Converted');
             } else {
                 console.error('Failed to convert');
             }
@@ -110,10 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
               if (response.ok) {
                   console.log('New renting added successfully');
                   // Optionally, perform any additional actions after adding the booking
+                  showSuccessMessage('Renting successfully added');
               } else {
                   console.error('Failed to add new renting');
               }
           })
           .catch(error => console.error('Error adding new renting:', error));
       });
+
+      function showSuccessMessage(message) {
+        const successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.textContent = message;
+            successAlert.style.display = 'block';
+        }
+        
+        // Hide the alert after 3 seconds
+        setTimeout(() => {
+            successAlert.style.display = 'none';
+        }, 3000);
+    }
   });

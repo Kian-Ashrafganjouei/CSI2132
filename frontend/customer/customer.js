@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const customerForm = document.getElementById('customerForm');
     const tbody = document.getElementById('customerTableBody');
+    const successMessage = document.getElementById('successMessage');
 
     // Fetch customers from server and display them
     function fetchCustomers() {
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 console.log('Customer successfully deleted');
                                 // Optionally, you can remove the row from the table
                                 row.remove();
+                                showSuccessMessage('Customer successfully removed');
                             } else {
                                 console.error('Failed to delete customer');
                             }
@@ -115,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(response => {
                             if (response.ok) {
                                 fetchCustomers(); // Fetch and display updated customer list
+                                showSuccessMessage('Customer successfully updated');
                             } else {
                                 throw new Error('Failed to update customer');
                             }
@@ -127,6 +130,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching customers:', error));
     }
 
+    function showSuccessMessage(message) {
+        const successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.textContent = message;
+            successAlert.style.display = 'block';
+        }
+        
+        // Hide the alert after 3 seconds
+        setTimeout(() => {
+            successAlert.style.display = 'none';
+        }, 3000);
+    }
     // Fetch customers on page load
     fetchCustomers();
 
@@ -176,6 +191,7 @@ customerForm.addEventListener('submit', (event) => {
         if (response.ok) {
             fetchCustomers(); // Fetch and display updated customer list
             customerForm.reset(); // Clear form fields
+            showSuccessMessage('Customer successfully added');
         } else {
             throw new Error('Failed to add customer');
         }

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const employeeForm = document.getElementById('employeeForm');
     const tbody = document.getElementById('employeeTableBody');
+    const successMessage = document.getElementById('successMessage');
 
     // Fetch employees from server and display them
     function fetchEmployees() {
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 console.log('Employee successfully deleted');
                                 // Optionally, you can remove the row from the table
                                 row.remove();
+                                showSuccessMessage('Employee successfully deleted');
                             } else {
                                 console.error('Failed to delete employee');
                             }
@@ -101,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (response.ok) {
                                 fetchEmployees(); // Fetch and display updated employee list
                                 employeeForm.reset(); // Clear form fields
+                                showSuccessMessage('Employee successfully updated');
                             } else {
                                 throw new Error('Failed to update employee');
                             }
@@ -112,6 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error fetching employees:', error));
     }
+
+    function showSuccessMessage(message) {
+        const successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.textContent = message;
+            successAlert.style.display = 'block';
+        }
+        
+        // Hide the alert after 3 seconds
+        setTimeout(() => {
+            successAlert.style.display = 'none';
+        }, 3000);
+    }
+     
 
     // Populate employee roles select options and fetch employees
     fetchEmployees();
@@ -159,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 fetchEmployees(); // Fetch and display updated employee list
                 employeeForm.reset(); // Clear form fields
+                showSuccessMessage('Employee successfully added');
             } else {
                 throw new Error('Failed to add employee');
             }

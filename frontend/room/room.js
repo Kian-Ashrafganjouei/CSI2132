@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 console.log('Room successfully deleted');
                                 // Optionally, you can remove the row from the table
                                 row.remove();
+                                showSuccessMessage('Room successfully deleted');
                             } else {
                                 console.error('Failed to delete room');
                             }
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (response.ok) {
                                 fetchRooms(); // Fetch and display updated room list
                                 roomForm.reset(); // Clear form fields
+                                showSuccessMessage('Room successfully updated');
                             } else {
                                 throw new Error('Failed to update room');
                             }
@@ -137,6 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching rooms:', error));
     }
 
+    function showSuccessMessage(message) {
+        const successAlert = document.getElementById('successAlert');
+        if (successAlert) {
+            successAlert.textContent = message;
+            successAlert.style.display = 'block';
+        }
+        
+        // Hide the alert after 3 seconds
+        setTimeout(() => {
+            successAlert.style.display = 'none';
+        }, 3000);
+    }
     // Fetch and display existing rooms
     fetchRooms();
     fetchHotelIds();
@@ -187,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 fetchRooms(); // Fetch and display updated room list
                 roomForm.reset(); // Clear form fields
+                showSuccessMessage('Room successfully added');
             } else {
                 throw new Error('Failed to add room');
             }
