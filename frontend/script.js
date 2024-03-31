@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching available rooms per area:', error));
     }
 
-
     fetchAvailableRoomsPerArea();
     // fetchHotelChains();
     // fetchHotels();
