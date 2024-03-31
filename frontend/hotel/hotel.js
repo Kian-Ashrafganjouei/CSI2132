@@ -24,28 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function fetchAggregatedCapacity() {
         fetch('/hotel_aggregated_capacity')
-            .then(response => response.json())
-            .then(data => {
-                const gridContainer = document.getElementById('aggregatedCapacityGrid');
-                gridContainer.innerHTML = ''; // Clear existing data
-    
-                // Loop through each hotel and create a grid item for it
-                data.forEach(hotel => {
-                    const gridItem = document.createElement('div');
-                    gridItem.classList.add('grid-item');
-                    gridItem.innerHTML = `
-                        <h3>Hotel ID: ${hotel.hotel_id}</h3>
-                        <p>Total Capacity: ${hotel.total_capacity}</p>
-                    `;
-
-                    gridContainer.appendChild(gridItem);
-                });
-            })
-            .catch(error => console.error('Error fetching aggregated capacity:', error));
-    }    
-    
-    
-    
+          .then(response => response.json())
+          .then(data => {
+            const gridContainer = document.getElementById('aggregatedCapacityGrid');
+            gridContainer.innerHTML = ''; // Clear existing data
+      
+            // Sort the data array by hotel_id in ascending order
+            data.sort((a, b) => a.hotel_id - b.hotel_id);
+      
+            // Loop through each hotel and create a grid item for it
+            data.forEach(hotel => {
+              const gridItem = document.createElement('div');
+              gridItem.classList.add('grid-item');
+              gridItem.innerHTML = `
+                <h3>Hotel ID: ${hotel.hotel_id}</h3>
+                <p>Total Capacity: ${hotel.total_capacity}</p>
+              `;
+              gridContainer.appendChild(gridItem);
+            });
+          })
+          .catch(error => console.error('Error fetching aggregated capacity:', error));
+      }   
     
     // Fetch hotels from server and display them
     function fetchHotels() {
