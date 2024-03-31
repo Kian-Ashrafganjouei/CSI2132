@@ -37,3 +37,11 @@ Frontend info
 employee password is 0000
 
 note: we will need to work closely together to figure out how to bridge the backend and frontend together
+
+
+Running Curl Querries:
+curl -X POST -H "Content-Type: application/json" -d "{\"hotelChain\": \"Trader Bay\", \"viewType\": \"Mountain\", \"minRoomPrice\": 100, \"roomCapacity\": \"Double\", \"hotelChain\": \"Sunset Resorts\", \"hotelCategory\": \"\"}" http://localhost:3000/search_rooms
+
+curl -X POST -H "Content-Type: application/json" -d "{\"hotelChain\": \"\", \"viewType\": \"Mountain\", \"minRoomPrice\": 100, \"roomCapacity\": \"Single\", \"area\": \"12345\", \"hotelCategory\": \"\"}" http://localhost:3000/search_rooms
+
+curl -X POST -H "Content-Type: application/json" -d "{\"startDate\": \"2024-04-7\", \"endDate\": \"2024-04-9\", \"hotelID\": \"1\"}" http://localhost:3000/search_rooms
