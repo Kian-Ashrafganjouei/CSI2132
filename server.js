@@ -511,3 +511,36 @@ app.post('/book_room', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+// Get all rooms
+app.get('/bookings', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM book');
+        res.json(result.rows);
+        client.release();
+    } catch (err) {
+        console.error('Error fetching rooms', err);
+        res.status(500).send('Server Error');
+    }
+});
+
+app.post('/convert', async (req, res) => {
+    try {
+        const { roomNumber, floorNumber, hotelID } = req.body;
+
+        // Execute SQL update statement to toggle isRenting field
+        await pool.query(
+            `UPDATE room 
+             SET isRenting = NOT isRenting 
+             WHERE roomNumber = $1 AND floorNumber = $2 AND hotelID = $3`,
+            [roomNumber, floorNumber, hotelID]
+        );
+
+        console.log('Booking converted successfully');
+        res.sendStatus(200); // Send a success response
+    } catch (error) {
+        console.error('Error converting:', error);
+        res.sendStatus(500); // Send an error response
+    }
+});
