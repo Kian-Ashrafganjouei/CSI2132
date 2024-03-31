@@ -57,25 +57,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-      // Add event listener to new booking form for submitting new booking data
+      // Add event listener to new renting form for submitting new renting data
       const newRentingForm = document.getElementById('newRentingForm');
       newRentingForm.addEventListener('submit', event => {
           event.preventDefault();
           const customerName = document.getElementById('customerName').value;
-          const email = document.getElementById('email').value;
-          const ssn = document.getElementById('ssn').value;
+          const emailAddress = document.getElementById('emailAddress').value;
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          const cardNumber = document.getElementById('cardNumber').value;
+          const idType = document.getElementById('idType').value;
+          const dateOfRegistration = document.getElementById('dateOfRegistration').value;
+          const streetName = document.getElementById('streetName').value;
+          const streetNumber = document.getElementById('streetNumber').value;
+          const postalCode = document.getElementById('postalCode').value;
+          const unitNumber = document.getElementById('unitNumber').value;
+          const cityName = document.getElementById('cityName').value;
+          const countryName = document.getElementById('countryName').value;
           const hotelID = document.getElementById('hotelID').value;
           const roomNumber = document.getElementById('roomNumber').value;
           const floorNumber = document.getElementById('floorNumber').value;
   
           // Create an object with new booking data
-          const newBookingData = {
+          const newRentingData = {
               customerName,
-              email,
-              ssn,
-              hotelID,
-              roomNumber,
-              floorNumber
+              emailAddress,
+              phoneNumber,
+              cardNumber,
+              idType,
+              dateOfRegistration,
+              address: {
+                streetName,
+                streetNumber,
+                postalCode,
+                unitNumber,
+                cityName,
+                countryName
+            },
+            hotelID,
+            roomNumber,
+            floorNumber
           };
   
           // Send new booking data to the server
@@ -84,16 +104,35 @@ document.addEventListener('DOMContentLoaded', () => {
               headers: {
                   'Content-Type': 'application/json'
               },
-              body: JSON.stringify(newBookingData)
+              body: JSON.stringify(newRentingData)
           })
           .then(response => {
               if (response.ok) {
-                  console.log('New booking added successfully');
+                  console.log('New renting added successfully');
                   // Optionally, perform any additional actions after adding the booking
               } else {
-                  console.error('Failed to add new booking');
+                  console.error('Failed to add new renting');
               }
           })
-          .catch(error => console.error('Error adding new booking:', error));
+          .catch(error => console.error('Error adding new renting:', error));
       });
   });
+
+
+
+
+
+
+
+  const customerName = document.getElementById('customerName').value;
+  const emailAddress = document.getElementById('emailAddress').value;
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  const cardNumber = document.getElementById('cardNumber').value;
+  const idType = document.getElementById('idType').value;
+  const dateOfRegistration = document.getElementById('dateOfRegistration').value;
+  const streetName = document.getElementById('streetName').value;
+  const streetNumber = document.getElementById('streetNumber').value;
+  const postalCode = document.getElementById('postalCode').value;
+  const unitNumber = document.getElementById('unitNumber').value;
+  const cityName = document.getElementById('cityName').value;
+  const countryName = document.getElementById('countryName').value;

@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     fetchAvailableRoomsPerArea();
-    fetchHotelChains();
-    fetchHotels();
+    // fetchHotelChains();
+    // fetchHotels();
 
 });

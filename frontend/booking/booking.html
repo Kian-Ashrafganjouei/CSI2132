@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Dashboard</title>
-    <link rel="stylesheet" href="booking.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="booking.js"></script>
 
 </head>
@@ -38,30 +38,35 @@
     </div>
 
     <div class="new-booking-form">
-        <h2>Add a New Renting</h2>
-        <form id="newRentingForm">
-            <label for="customerName">Customer Name:</label>
-            <input type="text" id="customerName" required>
-
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" required>
-
-            <label for="ssn">SSN:</label>
-            <input type="text" id="ssn" required>
-
-            <label for="hotelID">Hotel ID:</label>
-            <input type="text" id="hotelID" required>
-
-            <label for="roomNumber">Room Number:</label>
-            <input type="text" id="roomNumber" required>
-
-            <label for="floorNumber">Floor Number:</label>
-            <input type="text" id="floorNumber" required>
-
-            <button type="submit">Add Renting</button>
+        <h2>Add a New Renting (walk in customer)</h2>
+        <form id="customerForm" style="max-width: 400px; margin: 0 auto;">
+            <h1 style="margin-bottom: 20px;">Add A Customer</h1>
+            <input type="text" id="customerName" placeholder="Customer Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="email" id="emailAddress" placeholder="Email Address" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="tel" id="phoneNumber" placeholder="Phone Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="cardNumber" placeholder="Card Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <select id="idType" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+                <option value="Driver Licence">Driver Licence</option>
+                <option value="Passport">Passport</option>
+                <option value="Health Card">Health Card</option>
+                <option value="SSN/SIN">SSN/SIN</option>
+                <option value="Identity Card">Identity Card</option>
+            </select>
+            <input type="date" id="dateOfRegistration" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="streetName" placeholder="Street Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="streetNumber" placeholder="Street Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="postalCode" placeholder="Postal Code" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="unitNumber" placeholder="Unit Number" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="cityName" placeholder="City Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="text" id="countryName" placeholder="Country Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <!-- New fields -->
+            <input type="text" id="hotelID" placeholder="Hotel ID" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="number" id="floorNumber" placeholder="Floor Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <input type="number" id="roomNumber" placeholder="Room Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            <!-- End of new fields -->
+            <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Customer</button>
         </form>
     </div>
 </div>
-
 </body>
 </html>
