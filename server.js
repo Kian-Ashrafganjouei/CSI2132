@@ -439,7 +439,7 @@ app.post('/search_rooms', async (req, res) => {
         const client = await pool.connect();
         // Construct the SQL query dynamically based on the provided search parameters
 
-        let query = 'SELECT room.* FROM room JOIN hotel ON room.hotelID = hotel.hotel_id JOIN address ON hotel.addressID = address.addressID WHERE 1 = 1'; // Start with a base query
+        let query = 'SELECT room.*, hotel.category AS category FROM room JOIN hotel ON room.hotelID = hotel.hotel_id JOIN address ON hotel.addressID = address.addressID WHERE 1 = 1'; // Start with a base query
         // Add conditions based on the provided search parameters
         if (viewType) query += ` AND room.viewType = '${viewType}'`;
         if (minRoomPrice) query += ` AND room.price >= ${minRoomPrice}`;
