@@ -76,20 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${room.viewtype}</td>
                     <td>${room.price}</td>
                     <td>${room.capacity}</td>
-                    <td><button class="bookRoom">Book</button></td>
-                `;
+                    <td><button class="bookRoom" data-room="${room.roomnumber}" data-floor="${room.floornumber}" data-hotel="${room.hotelid}">Book</button></td>                `;
                 tbody.appendChild(row);
             });
         })
         .catch(error => console.error('Error fetching search results:', error));
     }
 
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+
     // Add event listener to search form for submitting search criteria
     searchForm.addEventListener('submit', (event) => {
         event.preventDefault();
-
-        const startDateInput = document.getElementById('startDate');
-        const endDateInput = document.getElementById('endDate');
 
         // Get the current date
         const currentDate = new Date();
@@ -148,33 +147,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const roomNumber = event.target.dataset.room;
             const floorNumber = event.target.dataset.floor;
             const hotelID = event.target.dataset.hotel;
-
+    
+            // Retrieve start date and end date from inputs
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+    
             // Prompt user for customer information
             let customerName = prompt('Enter customer name:');
             let emailAddress = prompt('Enter email address:');
-
+    
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             while (!emailRegex.test(emailAddress)) {
                 emailAddress = prompt('Please enter a valid email address in the format name@domain.tld:');
             }
-
+    
             let phoneNumber = prompt('Enter phone number:');
             // Validate phone number length
             const phoneRegex = /^\d{9}$/;
             while (!phoneRegex.test(phoneNumber)) {
                 phoneNumber = prompt('Please enter a valid 9-digit phone number:');
             }
-
+    
             if (!customerName || !emailAddress || !phoneNumber) {
                 alert('Please provide all customer information.');
                 return;
             }
-
+    
             // Create an object with booking parameters
             const bookParams = {
-                startDate,
-                endDate,
+                startDate: startDateInput.value,
+                endDate: endDateInput.value,
                 customerName,
                 emailAddress,
                 phoneNumber,
@@ -182,9 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 floorNumber,
                 hotelID
             };
-
+    
             console.log('Booking room:', bookParams);
-
+    
             // Fetch and book the room
             fetch('/book_room', {
                 method: 'POST',
