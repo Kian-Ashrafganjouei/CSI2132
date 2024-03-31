@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const optionsDropdown = document.getElementById('options');
+    const convertButton = document.getElementById('convert-button'); // Fix: Use getElementById instead of querySelector
 
     // Fetch booking options from the server
     fetch('/bookings')
@@ -11,15 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Populate dropdown with booking options
             data.forEach(booking => {
                 const option = document.createElement('option');
-                option.value = `${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`; // Concatenate room number, floor number, and hotel ID
-                option.textContent = `Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`; // Example display text
+                option.value = `${booking.roomnumber}-${booking.floornumber}-${booking.hotelid}`; // Concatenate room number, floor number, and hotel ID
+                option.textContent = `Room ${booking.roomnumber}, Floor ${booking.floornumber}, Hotel ${booking.hotelid}`; // Example display text
                 optionsDropdown.appendChild(option);
             });
         })
         .catch(error => console.error('Error fetching booking options:', error));
 
     // Add event listener to convert button
-    const convertButton = document.querySelector('.convert-button');
     convertButton.addEventListener('click', () => {
         // Get selected booking info from dropdown
         const selectedBookingInfo = optionsDropdown.value.split('-');
@@ -29,6 +29,32 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Perform conversion operation or any other action based on the selected booking
         console.log('Selected Booking: Room', roomNumber, ', Floor', floorNumber, ', Hotel', hotelID);
+
+          // Create an object with new booking data
+          const convertData = {
+            roomNumber,
+            floorNumber,
+            hotelID
+        };
+
+        // Send new booking data to the server
+        fetch('/convert', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(convertData)
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Converted Successfully');
+                // Optionally, perform any additional actions after adding the booking
+            } else {
+                console.error('Failed to convert');
+            }
+        })
+        .catch(error => console.error('Error converting:', error));
+
     });
 
       // Add event listener to new booking form for submitting new booking data
