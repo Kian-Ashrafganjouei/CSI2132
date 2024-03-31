@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Hotels - Manage Customers</title>
+    <title>E-Hotels - Register Yourself</title>
     <!-- Add any required CSS files or stylesheets here -->
     <link rel="stylesheet" href="../style.css">
     <!-- Include your JavaScript file for handling form submission and interactions -->
-    <script src="customer.js" defer></script>
+    <script src="register.js" defer></script>
 </head>
 <body>
     <nav class="navbar">
@@ -18,16 +18,16 @@
                 <li><a href="../employee/employee.html">Employee</a></li>
                 <li><a href="../hotel/hotel.html">Hotel</a></li>
                 <li><a href="../room/room.html">Room</a></li>
-                <li><a href="./customer.html">Customer</a></li>
+                <li><a href="../customer.html">Customer</a></li>
                 <li><a href="../booking/booking.html">Bookings</a></li>
-                <li><a href="../register/register.html">Register Yourself</a></li>
+                <li><a href="./register.html">Register Yourself</a></li>
             </ul>
         </div>
     </nav>
 
-    <h1 style="margin-bottom: 20px;">Manage Customers</h1>
+    <h1 style="margin-bottom: 20px;">Register Yourself With Us</h1>
     <form id="customerForm" style="max-width: 400px; margin: 0 auto;">
-        <h1 style="margin-bottom: 20px;">Add A Customer</h1>
+        <h1 style="margin-bottom: 20px;">Please input your information</h1>
         <input type="text" id="customerName" placeholder="Customer Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <input type="email" id="emailAddress" placeholder="Email Address" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <input type="tel" id="phoneNumber" placeholder="Phone Number" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
@@ -50,27 +50,8 @@
         <input type="text" id="countryName" placeholder="Country Name" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
         <button type="submit" style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; margin-bottom: 15px;">Add Customer</button>
     </form>
-    
-    <!-- Table to display existing customers -->
-    <h2>Existing Customers</h2>
-    <table id="customerTable">
-        <thead>
-            <tr>
-                <th>Customer Name</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-                <th>Card Number</th>
-                <th>ID Type</th>
-                <th>Date of Registration</th>
-                <!-- Add more columns as needed -->
-                <th>Delete</th>
-                <th>Update</th>
-            </tr>
-        </thead>
-        <tbody id="customerTableBody">
-            <!-- Customers data will be dynamically populated from the database -->
-        </tbody>
-    </table>
-
+    <div id="successMessage" style="display: none; text-align: center; color: green; margin-top: 20px;">
+        Customer added successfully!
+    </div>
 </body>
 </html>

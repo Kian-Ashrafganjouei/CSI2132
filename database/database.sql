@@ -52,7 +52,7 @@ CREATE TABLE customer (
     customerName VARCHAR(100),
     emailAddress VARCHAR(255),
     phoneNumber VARCHAR(10),
-    cardNumber VARCHAR(9) NOT NULL CHECK (LENGTH(cardNumber) = 9),
+    cardNumber VARCHAR(100) NOT NULL,
     idType VARCHAR(20) CHECK (idType IN ('Driver Licence', 'Passport', 'Health Card', 'SSN/SIN', 'Identity Card')),
     dateOfRegistration DATE NOT NULL,
     PRIMARY KEY (customerName, emailAddress, phoneNumber),
