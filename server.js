@@ -484,39 +484,26 @@ app.post('/search_rooms', async (req, res) => {
     }
 });
 
-// Add booking route
+// Add booking route without availability check
 app.post('/book_room', async (req, res) => {
-    const { startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID } = req.body.bookParams;
+    const { startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID } = req.body;
+    console.log(roomNumber)
+    console.log(floorNumber)
+    console.log(hotelID)
+
     try {
         const client = await pool.connect();
 
-        // Check if the room is available for booking within the specified date range
-        const availabilityCheckQuery = `
-            SELECT *
-            FROM book 
-            WHERE roomNumber = $1 
-            AND floorNumber = $2 
-            AND hotelID = $3 
-            AND ($4 <= endDate AND $5 >= startDate)
+        // Insert booking details into the database
+        const insertBookingQuery = `
+            INSERT INTO book (startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING *
         `;
-        const availabilityCheckValues = [roomNumber, floorNumber, hotelID, startDate, endDate];
-        const availabilityResult = await client.query(availabilityCheckQuery, availabilityCheckValues);
+        const insertBookingValues = [startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID];
+        const insertedBooking = await client.query(insertBookingQuery, insertBookingValues);
 
-        if (availabilityResult.rows.length > 0) {
-            // Room is already booked for some part of the specified date range
-            res.status(400).json({ error: 'Room is not available for the specified date range' });
-        } else {
-            // Room is available, proceed with booking
-            const insertBookingQuery = `
-                INSERT INTO book (startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                RETURNING *
-            `;
-            const insertBookingValues = [startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID];
-            const insertedBooking = await client.query(insertBookingQuery, insertBookingValues);
-
-            res.json(insertedBooking.rows[0]); // Send the booked room details as JSON response
-        }
+        res.json('Success'); // Send the booked room details as JSON response
 
         client.release();
     } catch (err) {
