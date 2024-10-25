@@ -1,0 +1,101 @@
+/* App.css */
+:root {
+  --primary: #34495e;
+  --primary-dark: rgb(58, 58, 58);
+  --secondary: #ee8484;
+  --light-grey: #727272;
+  --olive: #3f3f3f;
+  --blue: #81bee0;
+  --red: #ff6961;
+  --ash: #657d7b;
+  --white: #1d1d1d;
+  --text-white: #282828;
+  --bg-primary: #fdfdfd;
+  --bg-secondary: #f3f3f3;
+  --success: #2ec952;
+  --info: rgb(23, 162, 184);
+  --info-dark: #0f6674;
+  --info-light: #4eb9d0;
+  --black: #000;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --notify: #026fcf;
+  --font-main: "Archivo Narrow", sans-serif;
+  --font-secondary: "Julius Sans One", sans-serif;
+  --text-white: #ffffff;
+  --sidebar-width: 300px;
+  --nav-padding: 40px;
+  --nav-height: 70px;
+  --footer-height: 250px;
+  --main-height: calc(100vh - var(--nav-height));
+  --puzzle-width: 180px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.app {
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: var(--font-main) !important;
+}
+.app {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #34495e;
+  color: white;
+  padding: 1rem;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  list-style-type: none;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.nav-links a:hover {
+  background-color: #2c3e50;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+}
+
+.dashboard-main {
+  display: flex;
+  gap: 2rem;
+}
+
+.dashboard-main > * {
+  width: 45%;
+  flex: 1;
+}

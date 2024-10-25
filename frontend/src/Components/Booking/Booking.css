@@ -1,0 +1,62 @@
+/* Booking.css */
+
+.booking-dashboard {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.booking-dashboard h1 {
+  color: #34495e;
+  font-weight: 600;
+}
+
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.select-wrapper label {
+  font-size: 1.1rem;
+  color: #34495e;
+}
+
+.select-wrapper select,
+.select-wrapper button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.success-alert {
+  background-color: #27ae60;
+  color: white;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.booking-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.booking-table th {
+  background-color: #34495e;
+  color: #fff;
+}

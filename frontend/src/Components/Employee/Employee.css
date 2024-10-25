@@ -1,0 +1,68 @@
+/* Employee.css */
+
+.employee-dashboard {
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.employee-form {
+  margin-bottom: 2rem;
+}
+
+.employee-form h2 {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 1rem;
+}
+
+.employee-form input,
+.employee-form select,
+.employee-form button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.employee-form button {
+  background-color: #34495e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.employee-form button:hover {
+  background-color: #2c3e50;
+}
+
+.employee-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.employee-table th {
+  background-color: #34495e;
+  color: #fff;
+}
+
+.alert {
+  padding: 1rem;
+  background-color: #27ae60;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 1rem;
+}

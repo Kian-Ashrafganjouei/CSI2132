@@ -1,0 +1,42 @@
+/* ReusableForm.css */
+
+.reusable-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--bg-primary);
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reusable-form h1 {
+  font-size: 1.5em;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 45%;
+}
+
+.reusable-form button {
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  font-weight: bold;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reusable-form button:hover {
+  background-color: #45a049;
+}
