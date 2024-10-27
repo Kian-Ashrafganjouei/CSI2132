@@ -1,13 +1,53 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+        // Check authentication status first
+        try {
+            const authResponse = await fetch('/auth-status');
+            const authData = await authResponse.json();
+            
+            if (!authData.isAuthenticated) {
+                // Redirect to Kinde login if not authenticated
+                window.location.href = '/api/auth/login';
+                return;
+            }
+        } catch (error) {
+            console.error('Error checking authentication:', error);
+            return;
+        }
+    
     const searchForm = document.getElementById('hotelRoomSearch');
     const tbody = document.getElementById('searchResultsBody');
     const chainNameSelect = document.getElementById('chain_name_dynamic');
     const postalDyanmic = document.getElementById('postal_dynamic');
 
+        // Add logout button to your UI
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <div style="display: flex; justify-content: flex-end; padding: 1rem;">
+                <button onclick="window.location.href='/api/auth/logout'">Logout</button>
+            </div>
+        `;
+        document.body.insertBefore(header, document.body.firstChild);
+
+
+    async function fetchWithAuth(url, options = {}) {
+        try {
+            const response = await fetch(url, options);
+            if (response.status === 401) {
+                // Redirect to login if unauthorized
+                window.location.href = '/api/auth/login';
+                return null;
+            }
+            return response;
+        } catch (error) {
+            console.error('Fetch error:', error);
+            throw error;
+        }
+    }
+
 
     // Fetch hotel chains from server and populate select options
     function fetchHotelChains() {
-        fetch('/hotel_chains')
+        fetchWithAuth('/hotel_chains')
             .then(response => response.json())
             .then(data => {
 
@@ -29,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch postals from server and populate select options
     function fetchPostals() {
-        fetch('/all_postals')
+        fetchWithAuth('/all_postals')
             .then(response => response.json())
             .then(data => {
                 
@@ -53,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch and display search results
     function fetchResults(searchParams) {
-        fetch('/search_rooms', {
+        fetchWithAuth('/search_rooms', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

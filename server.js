@@ -1,10 +1,26 @@
 const express = require('express');
 const { Pool } = require('pg');
+const { setupKinde, protectRoute, getUser } = require("@kinde-oss/kinde-node-express");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json()); // Add this line to parse JSON bodies
+// Kinde configuration
+const kindeConfig = {
+    clientId: "673afe8b63984349b3ac31864ef465d0",
+    issuerBaseUrl: "https://hospitalityhomies.kinde.com",
+    siteUrl: "http://localhost:3000",
+    secret: "sQJkYcepXfkCH93A42w5OK0JvCNSdoIHfb6DDrFJ0bWmy0kYfOu",
+    redirectUrl: "http://localhost:3000/kinde_callback",
+    postLogoutRedirectUrl: "http://localhost:3000",
+    unAuthorisedUrl: "http://localhost:3000/unauthorized",
+    grantType: "PKCE"
+};
+
+// Setup Kinde
+setupKinde(kindeConfig, app);
+
+app.use(express.json());
 app.use(express.static(__dirname));
 app.use(express.static('frontend'));
 
@@ -16,12 +32,23 @@ const pool = new Pool({
     port: 5432,
 });
 
+// Auth status endpoint
+app.get('/auth-status', async (req, res) => {
+    try {
+        const user = await getUser(req);
+        res.json({ isAuthenticated: !!user, user });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to get auth status' });
+    }
+});
+
+// Protected routes - Add protectRoute middleware to routes that need authentication
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/frontend/index.html');
 });
 
 // Get all hotel chains
-app.get('/hotel_chains', async (req, res) => {
+app.get('/hotel_chains', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM hotel_chain');
@@ -34,7 +61,7 @@ app.get('/hotel_chains', async (req, res) => {
 });
 
 // Get all hotel ids
-app.get('/hotel_ids', async (req, res) => {
+app.get('/hotel_ids', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM hotel');
@@ -47,7 +74,7 @@ app.get('/hotel_ids', async (req, res) => {
 });
 
 // Get all postal codes
-app.get('/all_postals', async (req, res) => {
+app.get('/all_postals', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT DISTINCT address.postalCode FROM hotel JOIN address ON hotel.addressID = address.addressID');
@@ -60,7 +87,7 @@ app.get('/all_postals', async (req, res) => {
 });
 
 // GET endpoint to fetch data from available_rooms_per_area view
-app.get('/available_rooms_per_area', async (req, res) => {
+app.get('/available_rooms_per_area', protectRoute, async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM available_rooms_per_area');
@@ -74,7 +101,7 @@ app.get('/available_rooms_per_area', async (req, res) => {
     }
   });
 
-  app.get('/hotel_aggregated_capacity', async (req, res) => {
+  app.get('/hotel_aggregated_capacity', protectRoute, async (req, res) => {
     try {
       const query = `
       SELECT hotel_id, total_capacity
@@ -90,7 +117,7 @@ app.get('/available_rooms_per_area', async (req, res) => {
   });
 
 // Get all hotels
-app.get('/hotels', async (req, res) => {
+app.get('/hotels', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT hotel.*, address.postalCode FROM hotel JOIN address ON hotel.addressID = address.addressID');
@@ -104,7 +131,7 @@ app.get('/hotels', async (req, res) => {
 
 
 // Add a new hotel
-app.post('/hotels', async (req, res) => {
+app.post('/hotels', protectRoute, async (req, res) => {
     const { chain_name, category, numberOfRooms, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
     try {
@@ -134,7 +161,7 @@ app.post('/hotels', async (req, res) => {
 });
 
 // Update a hotel and its associated address
-app.put('/hotels/:hotelId', async (req, res) => {
+app.put('/hotels/:hotelId', protectRoute, async (req, res) => {
     const hotelId = req.params.hotelId;
     const { chain_name, category, numberOfRooms, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
@@ -168,7 +195,7 @@ app.put('/hotels/:hotelId', async (req, res) => {
 
 
 // Delete a hotel
-app.delete('/hotels/:hotelId', async (req, res) => {
+app.delete('/hotels/:hotelId', protectRoute, async (req, res) => {
     const hotelId = req.params.hotelId;
     try {
         const client = await pool.connect();
@@ -191,7 +218,7 @@ app.listen(port, () => {
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Get all employees
-app.get('/employees', async (req, res) => {
+app.get('/employees', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT employee.*, address.postalCode FROM employee JOIN address ON employee.addressID = address.addressID');
@@ -204,7 +231,7 @@ app.get('/employees', async (req, res) => {
 });
 
 // Add a new employee
-app.post('/employees', async (req, res) => {
+app.post('/employees', protectRoute, async (req, res) => {
     const { employeeName, role, isManager, ssnNumber, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
     try {
@@ -236,7 +263,7 @@ app.post('/employees', async (req, res) => {
 });
 
 // Update an employee and their associated address
-app.put('/employees/:employeeId', async (req, res) => {
+app.put('/employees/:employeeId', protectRoute, async (req, res) => {
     const employeeId = req.params.employeeId;
     const { employeeName, role, isManager, ssnNumber, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
@@ -269,7 +296,7 @@ app.put('/employees/:employeeId', async (req, res) => {
 });
 
 // Delete an employee
-app.delete('/employees/:employeeId', async (req, res) => {
+app.delete('/employees/:employeeId', protectRoute, async (req, res) => {
     const employeeId = req.params.employeeId;
     try {
         const client = await pool.connect();
@@ -288,7 +315,7 @@ app.delete('/employees/:employeeId', async (req, res) => {
 
 //----------------------------------------------------------------------------------------------------------------------
 // Get all customers
-app.get('/customers', async (req, res) => {
+app.get('/customers', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT customer.*, address.postalCode FROM customer JOIN address ON customer.addressID = address.addressID');
@@ -301,7 +328,7 @@ app.get('/customers', async (req, res) => {
 });
 
 // Add a new customer
-app.post('/customers', async (req, res) => {
+app.post('/customers', protectRoute, async (req, res) => {
     const { customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
     try {
@@ -333,7 +360,7 @@ app.post('/customers', async (req, res) => {
 });
 
 // Update a customer and their associated address
-app.put('/customers', async (req, res) => {
+app.put('/customers', protectRoute, async (req, res) => {
     const { customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, address } = req.body;
     const { streetName, streetNumber, postalCode, unitNumber, cityName, countryName } = address;
 
@@ -366,7 +393,7 @@ app.put('/customers', async (req, res) => {
 
 
 // Delete a customer
-app.delete('/customers', async (req, res) => {
+app.delete('/customers', protectRoute, async (req, res) => {
     const { customerName, emailAddress, phoneNumber } = req.body;
     try {
         const client = await pool.connect();
@@ -386,7 +413,7 @@ app.delete('/customers', async (req, res) => {
 // ================================
 
 // Get all rooms
-app.get('/rooms', async (req, res) => {
+app.get('/rooms', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM room');
@@ -399,7 +426,7 @@ app.get('/rooms', async (req, res) => {
 });
 
 // Add a new room
-app.post('/rooms', async (req, res) => {
+app.post('/rooms', protectRoute, async (req, res) => {
     const { roomNumber, floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
     try {
         const client = await pool.connect();
@@ -415,7 +442,7 @@ app.post('/rooms', async (req, res) => {
 });
 
 // Update a room
-app.put('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
+app.put('/rooms/:roomNumber/:floorNumber/:hotelID', protectRoute, async (req, res) => {
     const roomNumber = req.params.roomNumber;
     const { floorNumber, hotelID, amenities, viewType, canBeExtended, stringComment, isRenting } = req.body;
     try {
@@ -431,7 +458,7 @@ app.put('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
     }
 });
 
-app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
+app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', protectRoute, async (req, res) => {
     const { roomNumber, floorNumber, hotelID } = req.params;
     try {
         const client = await pool.connect();
@@ -446,7 +473,7 @@ app.delete('/rooms/:roomNumber/:floorNumber/:hotelID', async (req, res) => {
 });
 
 // Search for a room
-app.post('/search_rooms', async (req, res) => {
+app.post('/search_rooms', protectRoute, async (req, res) => {
     const { startDate, endDate, roomCapacity, area, hotelChain, hotelCategory, viewType, minRooms, maxRooms, minRoomPrice, maxRoomPrice } = req.body;
     try {
         const client = await pool.connect();
@@ -485,7 +512,7 @@ app.post('/search_rooms', async (req, res) => {
 });
 
 // Add booking route without availability check
-app.post('/book_room', async (req, res) => {
+app.post('/book_room', protectRoute, async (req, res) => {
     const { startDate, endDate, customerName, emailAddress, phoneNumber, roomNumber, floorNumber, hotelID } = req.body;
     console.log(roomNumber)
     console.log(floorNumber)
@@ -513,7 +540,7 @@ app.post('/book_room', async (req, res) => {
 });
 
 // Get all rooms
-app.get('/bookings', async (req, res) => {
+app.get('/bookings', protectRoute, async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM book');
@@ -525,7 +552,7 @@ app.get('/bookings', async (req, res) => {
     }
 });
 
-app.post('/convert', async (req, res) => {
+app.post('/convert', protectRoute, async (req, res) => {
     try {
         const { roomNumber, floorNumber, hotelID } = req.body;
 
@@ -545,7 +572,7 @@ app.post('/convert', async (req, res) => {
     }
 });
 // Rent without inserting details first
-app.post('/bookings', async (req, res) => {
+app.post('/bookings', protectRoute, async (req, res) => {
     const { customerName, emailAddress, phoneNumber, cardNumber, idType, dateOfRegistration, roomNumber, floorNumber, hotelID } = req.body;
     let client;
 
@@ -602,7 +629,7 @@ app.post('/bookings', async (req, res) => {
 });
 
 // Delete a booking by ID
-app.delete('/bookings/:bookingId', async (req, res) => {
+app.delete('/bookings/:bookingId', protectRoute, async (req, res) => {
     const bookingId = req.params.bookingId;
     let client; // Declare client variable
 
@@ -641,4 +668,3 @@ app.delete('/bookings/:bookingId', async (req, res) => {
         }
     }
 });
-
