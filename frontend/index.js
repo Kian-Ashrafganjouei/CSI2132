@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             if (!authData.isAuthenticated) {
                 // Redirect to Kinde login if not authenticated
-                window.location.href = '/api/auth/login';
+                window.location.href = '/login';
                 return;
             }
         } catch (error) {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch(url, options);
             if (response.status === 401) {
                 // Redirect to login if unauthorized
-                window.location.href = '/api/auth/login';
+                window.location.href = '/login';
                 return null;
             }
             return response;
