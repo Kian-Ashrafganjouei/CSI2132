@@ -1,7 +1,5 @@
 // EmployeeDashboard.js
 import React, { useEffect, useState } from "react";
-import EmployeeForm from "./EmployeeForm";
-import EmployeeTable from "./EmployeeTable";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Employee.css";
@@ -109,18 +107,22 @@ const tableColumns = [
 const EmployeeDashboard = () => {
   const [employees, setEmployees] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchEmployees();
   }, []);
 
   const fetchEmployees = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/employees");
       const data = await response.json();
       setEmployees(data);
     } catch (error) {
       console.error("Error fetching employees:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -190,6 +192,7 @@ const EmployeeDashboard = () => {
             onUpdate: handleUpdateEmployee,
           }}
           title="Employee List"
+          loading={loading}
         />
       </div>
 

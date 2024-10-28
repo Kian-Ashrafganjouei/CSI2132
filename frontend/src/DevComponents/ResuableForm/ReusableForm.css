@@ -24,6 +24,10 @@
   flex: 45%;
 }
 
+.form-group.textarea {
+  flex: 100%;
+}
+
 .reusable-form button {
   padding: 10px;
   font-size: 1rem;

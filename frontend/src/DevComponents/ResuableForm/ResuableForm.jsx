@@ -36,7 +36,7 @@ const ReusableForm = ({
     <form onSubmit={handleSubmit} className="reusable-form">
       <h1>{title}</h1>
       {formConfig.map((field) => (
-        <div key={field.id} className="form-group">
+        <div key={field.label} className={`form-group ${field.type}`}>
           {field.type === "select" ? (
             <Input
               type={field.type}
@@ -49,6 +49,7 @@ const ReusableForm = ({
             />
           ) : field.type === "textarea" ? (
             <Input
+              label={field.label}
               type={field.type}
               id={field.id}
               placeholder={field.placeholder}

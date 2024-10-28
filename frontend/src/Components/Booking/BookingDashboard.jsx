@@ -1,17 +1,92 @@
-// BookingDashboard.js
 import React, { useEffect, useState } from "react";
-import NewRentingForm from "./NewRentingForm";
-import BookingTable from "./BookingTable";
+import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
+import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Input from "../../DevComponents/Input/Input";
 import "./Booking.css";
+
+const tableColumns = [
+  { header: "Booking ID", accessor: "bookingID" },
+  { header: "Start Date", accessor: "startDate" },
+  { header: "End Date", accessor: "endDate" },
+  { header: "Customer Name", accessor: "customerName" },
+  { header: "Email", accessor: "emailAddress" },
+  { header: "Phone", accessor: "phoneNumber" },
+  { header: "Room Number", accessor: "roomNumber" },
+  { header: "Floor Number", accessor: "floorNumber" },
+  { header: "Hotel ID", accessor: "hotelID" },
+];
 
 const BookingDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState("");
+  const [hotelIds, setHotelIds] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const formConfig = [
+    {
+      label: "Customer Name",
+      id: "customerName",
+      type: "text",
+      placeholder: "Enter customer name",
+      required: true,
+    },
+    {
+      label: "Email Address",
+      id: "emailAddress",
+      type: "email",
+      placeholder: "Enter email address",
+      required: true,
+    },
+    {
+      label: "Phone Number",
+      id: "phoneNumber",
+      type: "tel",
+      placeholder: "Enter phone number",
+      required: true,
+    },
+    {
+      label: "Room Number",
+      id: "roomNumber",
+      type: "text",
+      placeholder: "Enter room number",
+      required: true,
+    },
+    {
+      label: "Floor Number",
+      id: "floorNumber",
+      type: "text",
+      placeholder: "Enter floor number",
+      required: true,
+    },
+    {
+      label: "Hotel ID",
+      id: "hotelID",
+      type: "select",
+      options: hotelIds.map((hotel) => ({
+        label: hotel,
+        value: hotel,
+      })), // Dynamically populated from state
+      required: true,
+    },
+    { label: "Start Date", id: "startDate", type: "date", required: true },
+    { label: "End Date", id: "endDate", type: "date", required: true },
+  ];
 
   useEffect(() => {
-    fetchBookings();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      fetchBookings();
+      fetchHotelIds();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchBookings = async () => {
     try {
@@ -21,6 +96,20 @@ const BookingDashboard = () => {
     } catch (error) {
       console.error("Error fetching booking options:", error);
     }
+  };
+
+  const fetchHotelIds = async () => {
+    try {
+      const response = await fetch("/hotels");
+      const data = await response.json();
+      setHotelIds(data.map((hotel) => hotel.hotel_id));
+    } catch (error) {
+      console.error("Error fetching hotel ids:", error);
+    }
+  };
+
+  const handleAddRenting = async (formData) => {
+    // Add new booking/renting logic here
   };
 
   const handleConvertBooking = async () => {
@@ -63,32 +152,41 @@ const BookingDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>Convert Renting / Not Renting</h1>
       <div className="select-wrapper">
-        <label>Select a Booking:</label>
-        <select
+        <h1>Convert Renting / Not Renting</h1>
+
+        <Input
+          id={"bookingID"}
           value={selectedBooking}
-          onChange={(e) => setSelectedBooking(e.target.value)}
-        >
-          {bookings.map((booking) => (
-            <option
-              key={booking.bookingid}
-              value={`${booking.bookingid}-${booking.roomnumber}-${booking.floornumber}-${booking.hotelid}`}
-            >
-              Booking {booking.bookingid} Room {booking.roomnumber}, Floor{" "}
-              {booking.floornumber}, Hotel {booking.hotelid}
-            </option>
-          ))}
-        </select>
+          label={"Select a Booking"}
+          type="select"
+          options={bookings.map((booking) => ({
+            label: `${booking.customerName} Booking ${booking.bookingID} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
+            value: `${booking.bookingID}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
+          }))}
+          onInputChange={(value) => setSelectedBooking(value)}
+        />
         <button onClick={handleConvertBooking}>
           Convert Renting/Not Renting
         </button>
       </div>
+      <div className="dashboard-main">
+        <ReusableForm
+          formConfig={formConfig}
+          title="Add An Immediate Renting"
+          onSubmit={handleAddRenting}
+        />
+        <ReusableTable
+          columns={tableColumns}
+          data={bookings}
+          actions={{ onEdit: () => {}, onDelete: handleDeleteBooking }}
+          title="Booking List"
+          loading={loading}
+        />
+      </div>
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>
       )}
-      <NewRentingForm fetchBookings={fetchBookings} />
-      <BookingTable bookings={bookings} handleDelete={handleDeleteBooking} />
     </div>
   );
 };

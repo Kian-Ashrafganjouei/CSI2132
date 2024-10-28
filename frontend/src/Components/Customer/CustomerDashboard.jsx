@@ -1,6 +1,5 @@
 // CustomerDashboard.js
 import React, { useEffect, useState } from "react";
-import CustomerTable from "./CustomerTable";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Customer.css";
@@ -108,6 +107,7 @@ const tableColumns = [
 const CustomerDashboard = () => {
   const [customers, setCustomers] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCustomers();
@@ -120,6 +120,8 @@ const CustomerDashboard = () => {
       setCustomers(data);
     } catch (error) {
       console.error("Error fetching customers:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -190,6 +192,8 @@ const CustomerDashboard = () => {
             onEdit: handleUpdateCustomer,
             onDelete: handleDeleteCustomer,
           }}
+          title="Customers"
+          loading={loading}
         />
       </div>
       {successMessage && (

@@ -171,7 +171,7 @@ const Input = ({
   };
 
   return (
-    <form
+    <div
       id="input-container"
       data-testid="input-container"
       className={`input-container ${
@@ -190,7 +190,7 @@ const Input = ({
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          placeholder={placeholder}
+          // placeholder={placeholder}
         />
       )}
       {type === "select" && (
@@ -222,7 +222,6 @@ const Input = ({
           autoComplete={type}
         />
       )}
-
       <label htmlFor={label} aria-labelledby={label}>
         {label}
       </label>
@@ -245,7 +244,7 @@ const Input = ({
           ))}
         </ul>
       )}
-    </form>
+    </div>
   );
 };
 

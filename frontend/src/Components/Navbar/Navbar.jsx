@@ -1,12 +1,18 @@
 // components/NavBar.js
 import React from "react";
+import "./Navbar.css";
 
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">E-Hotels</div>
+      <div className="logo">
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/hotelhub.png`}
+          alt="HotelHub"
+        />
+      </div>
       <ul className="nav-links">
         <li>
           <Link to="/">Home</Link>

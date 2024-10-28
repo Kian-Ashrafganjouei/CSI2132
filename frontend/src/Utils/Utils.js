@@ -8,8 +8,9 @@ export const AggregatedCapacity = ({ capacityData }) => {
       <div className="grid-container">
         {capacityData.map((hotel) => (
           <div className="grid-item" key={hotel.hotel_id}>
+            <h2>{hotel.chain_name}</h2>
             <h3>Hotel ID: {hotel.hotel_id}</h3>
-            <p>Total Capacity: {hotel.total_capacity}</p>
+            <p>Total Capacity: {hotel.number_of_rooms}</p>
           </div>
         ))}
       </div>

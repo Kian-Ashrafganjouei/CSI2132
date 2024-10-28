@@ -25,9 +25,9 @@
   --text-white: #ffffff;
   --sidebar-width: 300px;
   --nav-padding: 40px;
-  --nav-height: 70px;
-  --footer-height: 250px;
-  --main-height: calc(100vh - var(--nav-height));
+  --nav-height: 100px;
+  --footer-height: 50px;
+  --main-height: calc(100vh - var(--nav-height) - var(--footer-height));
   --puzzle-width: 180px;
 }
 
@@ -53,41 +53,11 @@ html {
   color: #333;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  background-color: #34495e;
-  color: white;
-  padding: 1rem;
-}
-
-.navbar .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links {
-  display: flex;
-  list-style-type: none;
-  gap: 15px;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem;
-}
-
-.nav-links a:hover {
-  background-color: #2c3e50;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
 .content {
   margin: 0 auto;
   padding: 1rem;
   background-color: var(--bg-primary);
+  height: var(--main-height);
 }
 
 .dashboard-main {
@@ -98,4 +68,9 @@ html {
 .dashboard-main > * {
   width: 45%;
   flex: 1;
+}
+
+h1 {
+  margin-block-end: 0px;
+  margin-block-start: 0px;
 }

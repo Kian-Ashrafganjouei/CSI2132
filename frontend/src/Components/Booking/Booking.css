@@ -1,17 +1,16 @@
 /* Booking.css */
 
 .booking-dashboard {
-  max-width: 900px;
   margin: 2rem auto;
   padding: 1rem;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .booking-dashboard h1 {
   color: #34495e;
   font-weight: 600;
+  margin: 0px;
 }
 
 .select-wrapper {
@@ -19,14 +18,10 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 1.5rem;
+  width: 50%;
+  margin: 2em auto;
 }
 
-.select-wrapper label {
-  font-size: 1.1rem;
-  color: #34495e;
-}
-
-.select-wrapper select,
 .select-wrapper button {
   padding: 0.8rem;
   font-size: 1rem;

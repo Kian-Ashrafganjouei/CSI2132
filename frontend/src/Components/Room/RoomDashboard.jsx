@@ -1,18 +1,167 @@
 // RoomDashboard.js
 import React, { useEffect, useState } from "react";
-import RoomForm from "./RoomForm";
-import RoomTable from "./RoomTable";
+import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
+import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Room.css";
+
+const tableColumns = [
+  { header: "Room Number", accessor: "roomNumber" },
+  { header: "Floor Number", accessor: "floorNumber" },
+  { header: "Hotel ID", accessor: "hotelID" },
+  {
+    header: "Amenities",
+    accessor: "amenities",
+    transform: (value) => value.join(", "),
+  },
+  { header: "View Type", accessor: "viewType" },
+  { header: "Price", accessor: "price" },
+  { header: "Capacity", accessor: "capacity" },
+  {
+    header: "Can Be Extended",
+    accessor: "canBeExtended",
+    transform: (value) => (value ? "Yes" : "No"),
+  },
+  { header: "Comments", accessor: "stringComment" },
+  {
+    header: "Is Renting",
+    accessor: "isRenting",
+    transform: (value) => (value ? "Yes" : "No"),
+  },
+];
 
 const RoomDashboard = () => {
   const [rooms, setRooms] = useState([]);
   const [hotelIds, setHotelIds] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const formConfig = [
+    {
+      label: "Room Number",
+      id: "roomNumber",
+      type: "text",
+      placeholder: "Enter room number",
+      required: true,
+    },
+    {
+      label: "Floor Number",
+      id: "floorNumber",
+      type: "text",
+      placeholder: "Enter floor number",
+      required: true,
+    },
+    {
+      label: "Hotel ID",
+      id: "hotelID",
+      type: "select",
+      options: hotelIds.map((hotel) => ({
+        label: hotel,
+        value: hotel,
+      })), // Dynamically populated from state
+      required: true,
+    },
+    {
+      label: "Amenities",
+      id: "amenities",
+      type: "text",
+      placeholder: "Enter amenities (comma-separated)",
+    },
+    {
+      label: "View Type",
+      id: "viewType",
+      type: "select",
+      options: [
+        {
+          label: "City",
+          value: "City",
+        },
+        {
+          label: "Mountain",
+          value: "Mountain",
+        },
+        {
+          label: "Sea",
+          value: "Sea",
+        },
+        {
+          label: "Garden",
+          value: "Garden",
+        },
+      ], // Customize as needed
+      required: true,
+    },
+    {
+      label: "Price",
+      id: "price",
+      type: "number",
+      placeholder: "Enter room price",
+      required: true,
+    },
+    {
+      label: "Capacity",
+      id: "capacity",
+      type: "select",
+      options: [
+        {
+          value: "Single",
+          label: "Single",
+        },
+        {
+          value: "Double",
+          label: "Double",
+        },
+        {
+          value: "Suite",
+          label: "Suite",
+        },
+        {
+          value: "Penthouse",
+          label: "Penthouse",
+        },
+      ], // Customize as needed
+      required: true,
+    },
+    {
+      label: "Can Be Extended",
+      id: "canBeExtended",
+      type: "select",
+      options: [
+        { label: "Yes", value: true },
+        { label: "No", value: false },
+      ],
+      required: true,
+    },
+    {
+      label: "Comments",
+      id: "stringComment",
+      type: "textarea",
+    },
+    {
+      label: "Is Renting",
+      id: "isRenting",
+      type: "select",
+      options: [
+        { label: "Yes", value: true },
+        { label: "No", value: false },
+      ],
+      required: true,
+    },
+  ];
 
   useEffect(() => {
-    fetchRooms();
-    fetchHotelIds();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      fetchRooms();
+      fetchHotelIds();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchRooms = async () => {
     try {
@@ -26,9 +175,10 @@ const RoomDashboard = () => {
 
   const fetchHotelIds = async () => {
     try {
-      const response = await fetch("/hotel_ids");
+      const response = await fetch("/hotels");
       const data = await response.json();
       setHotelIds(data.map((hotel) => hotel.hotel_id));
+      console.log("Hotel IDs:", hotelIds);
     } catch (error) {
       console.error("Error fetching hotel ids:", error);
     }
@@ -97,14 +247,25 @@ const RoomDashboard = () => {
   };
 
   return (
-    <div className="room-dashboard">
+    <div className="dashboard">
       <h1>Manage Rooms</h1>
-      <RoomForm onAddRoom={handleAddRoom} hotelIds={hotelIds} />
-      <RoomTable
-        rooms={rooms}
-        onDeleteRoom={handleDeleteRoom}
-        onUpdateRoom={handleUpdateRoom}
-      />
+      <div className="dashboard-main">
+        <ReusableForm
+          formConfig={formConfig}
+          onSubmit={handleAddRoom}
+          title="Add a Room"
+        />
+        <ResuableTable
+          columns={tableColumns}
+          data={rooms}
+          title="Room List"
+          options={{
+            onDelete: handleDeleteRoom,
+            onUpdate: handleUpdateRoom,
+          }}
+        />
+      </div>
+
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>
       )}
