@@ -12,7 +12,6 @@
   font-family: var(--font-secondary);
   background-color: var(--bg-primary);
   border-top: 2px solid var(--primary);
-  margin-top: 50px;
   z-index: 100;
   padding-top: 10px;
 }

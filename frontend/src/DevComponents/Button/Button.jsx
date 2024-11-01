@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDidMountEffect } from "../../Utils";
+import { useDidMountEffect } from "../Utils";
 import "./Button.css";
 
 /**

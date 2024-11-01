@@ -17,7 +17,7 @@ import "./Footer.css"; // Import the CSS file for the footer
  * - JSX for rendering the footer with the copyright notice.
  */
 
-const Footer = () => {
+const Footer = ({ company = "" }) => {
   // const location = useLocation();
   // const isCalendar =
   //   location.pathname.includes("/admin") ||
@@ -73,7 +73,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-foot">
-        <p>© 2024 Timeslot. All rights reserved.</p>
+        <p>© 2024 {company}. All rights reserved.</p>
       </div>
     </footer>
   );

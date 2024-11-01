@@ -9,7 +9,7 @@ const NavBar = () => {
     <nav className="navbar">
       <div className="logo">
         <img
-          src={`${process.env.PUBLIC_URL}/assets/hotelhub.png`}
+          src={`${process.env.PUBLIC_URL}/assets/icons/hotel.svg`}
           alt="HotelHub"
         />
       </div>

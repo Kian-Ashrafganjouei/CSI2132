@@ -11,7 +11,7 @@
   --white: #1d1d1d;
   --text-white: #282828;
   --bg-primary: #fdfdfd;
-  --bg-secondary: #f3f3f3;
+  --bg-secondary: #d4d4d4;
   --success: #2ec952;
   --info: rgb(23, 162, 184);
   --info-dark: #0f6674;
@@ -22,12 +22,12 @@
   --notify: #026fcf;
   --font-main: "Archivo Narrow", sans-serif;
   --font-secondary: "Julius Sans One", sans-serif;
-  --text-white: #ffffff;
+  --text-white: #505050;
   --sidebar-width: 300px;
   --nav-padding: 40px;
   --nav-height: 100px;
   --footer-height: 50px;
-  --main-height: calc(100vh - var(--nav-height) - var(--footer-height));
+  --main-height: calc(100vh - var(--nav-height));
   --puzzle-width: 180px;
 }
 
@@ -55,9 +55,8 @@ html {
 
 .content {
   margin: 0 auto;
-  padding: 1rem;
   background-color: var(--bg-primary);
-  height: var(--main-height);
+  min-height: var(--main-height);
 }
 
 .dashboard-main {
@@ -73,4 +72,15 @@ html {
 h1 {
   margin-block-end: 0px;
   margin-block-start: 0px;
+}
+
+.company-title {
+  font-family: var(--font-secondary);
+
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.company-title > span {
+  color: var(--secondary);
 }

@@ -7,6 +7,7 @@ import RoomDashboard from "./Components/Room/RoomDashboard";
 import BookingDashboard from "./Components/Booking/BookingDashboard";
 import LandingPage from "./Views/LandingPage";
 import NavBar from "./Components/Navbar/Navbar";
+import Footer from "./DevComponents/Footer/Footer";
 import "./App.css";
 import CustomerDashboard from "./Components/Customer/CustomerDashboard";
 
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="*" element={<h1>Page Not Found</h1>} />
           </Routes>
         </div>
+        <Footer company="HOTELHOMIES" />
       </div>
     </Router>
   );
