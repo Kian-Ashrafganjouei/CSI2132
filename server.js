@@ -1,12 +1,21 @@
 const express = require('express');
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
+const session = require('express-session');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json()); // Add this line to parse JSON bodies
+app.use(express.json());
 app.use(express.static(__dirname));
 app.use(express.static('frontend'));
+
+app.use(session({
+    secret: 'meowmeow',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
 
 const pool = new Pool({
     user: 'postgres',
@@ -15,6 +24,113 @@ const pool = new Pool({
     password: 'admin',
     port: 5432,
 });
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+        client.release();
+        
+        if (result.rows.length === 0) {
+            return res.status(400).json({ error: 'Invalid username or password' });
+        }
+
+        const user = result.rows[0];
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            return res.status(400).json({ error: 'Invalid username or password' });
+        }
+
+        if (user) {
+            req.session.username = user.username;
+            req.session.role = user.role;
+            res.json({ message: 'Login successful', username: user.username, role: user.role });
+        } else {
+            res.status(401).json({ error: 'Invalid username or password' });
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// User logout
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to log out' });
+        }
+        res.clearCookie('connect.sid'); // Clears the session cookie
+        res.json({ message: 'Logout successful' });
+    });
+});
+
+// User registration
+app.post('/registeruser', async (req, res) => {
+    const { username, password, role } = req.body;
+
+    try {
+        const client = await pool.connect();
+
+        // Check if the username is already taken
+        const checkUser = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+        if (checkUser.rows.length > 0) {
+            client.release();
+            return res.status(400).json({ error: 'Username is already taken' });
+        }
+
+        // Hash the password
+        const password_hash = await bcrypt.hash(password, 10);
+
+        // Insert new user into the database
+        const userRole = role || 'customer'; // Default to "customer" if role not provided
+        await client.query(
+            'INSERT INTO users (username, password_hash, role, dateOfRegistration) VALUES ($1, $2, $3, CURRENT_DATE)',
+            [username, password_hash, userRole]
+        );
+
+        client.release();
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        console.error('Error during registration:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/api/users', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT userID, username, role FROM users');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+app.put('/api/users/:username', async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const result = await pool.query(
+            'UPDATE users SET role = $1 WHERE username = $2 AND role = $3 RETURNING *',
+            ['admin', username, 'customer']
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(400).json({ error: 'User is already an admin or does not exist' });
+        }
+        
+        res.json({ message: 'User role updated to admin', user: result.rows[0] });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/frontend/index.html');

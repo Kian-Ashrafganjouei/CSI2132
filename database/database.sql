@@ -47,6 +47,20 @@ CREATE TABLE room (
     PRIMARY KEY (roomNumber, floorNumber, hotelID)
 );
 
+CREATE TABLE users (
+    userID SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) CHECK (role IN ('admin', 'customer')) DEFAULT 'customer',
+    dateOfRegistration DATE NOT NULL DEFAULT CURRENT_DATE
+);
+
+INSERT INTO users (username, password_hash, role)
+VALUES ('admin', '$2a$10$U29udovqX740E3onmjDQkuUix3B75AgUSTi9zBuyzG3lsNGO/aV9q', 'admin');
+
+INSERT INTO users (username, password_hash, role)
+VALUES ('customer', '$2a$10$BR8un50x83zw0Ad9E5bOiOlAV39hve7QYTzyj92aPxHVHIB4KrAyy', 'customer');
+
 -- Customer
 CREATE TABLE customer (
     customerName VARCHAR(100),

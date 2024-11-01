@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portal</title>
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">E-Hotels</div>
+            <ul class="nav-links">
+                <li><a href="../booking/booking.html">Bookings</a></li>
+                <li><a href="../hotel/hotel.html">Hotels</a></li>
+                <li><a href="../room/room.html">Rooms</a></li>
+                <li><a href="../customer/customer.html">Customers</a></li>
+                <li><a href="../employee/employee.html">Employees</a></li>
+                <li><a href="../portal/portal.html">Portal</a></li>
+                <li><a href="../admin-dashboard/admin-dashboard.html">Dash</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div>
+        <h2>User Portal</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                <!-- User rows will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/users');
+                const users = await response.json();
+
+                const userTable = document.getElementById('userTable');
+                userTable.innerHTML = ''; // Clear existing rows
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>${user.role}</td>
+                        <td>
+                            ${
+                            user.role === 'customer' ? 
+                                `<button class="btn" onclick="promoteToAdmin('${user.username}')">Make Admin</button>` : 
+                                `<div></div>`
+                            }
+                        </td>
+                    `;
+                    userTable.appendChild(row);
+                });
+            } catch (err) {
+                console.error('Failed to load users:', err);
+            }
+        }
+
+        async function promoteToAdmin(username) {
+            try {
+                const response = await fetch(`/api/users/${username}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                    loadUsers(); // Reload users after update
+                } else {
+                    alert(result.error);
+                }
+            } catch (err) {
+                console.error('Failed to promote user:', err);
+            }
+        }
+
+        // Load users when the page loads
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+
+</body>
+</html>

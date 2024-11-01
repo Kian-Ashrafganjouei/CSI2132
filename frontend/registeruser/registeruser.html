@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+    <style>
+        /* General styles for the body */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Style the registration form container */
+        #registerForm {
+            background-color: #ffffff;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Style input fields */
+        #registerForm input[type="text"],
+        #registerForm input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        /* Add a subtle effect to input fields on focus */
+        #registerForm input[type="text"]:focus,
+        #registerForm input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Style the submit button */
+        #registerForm button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        #registerForm button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 500px) {
+            #registerForm {
+                padding: 20px 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            #registerForm button[type="submit"] {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="usernameRegister" placeholder="Username" required>
+            <input type="password" id="passwordRegister" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle registration
+        document.getElementById('registerForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const username = document.getElementById('usernameRegister').value;
+            const password = document.getElementById('passwordRegister').value;
+
+            const response = await fetch('/registeruser', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                alert(result.error);
+            }
+
+            window.location.replace('http://localhost:3000/');
+        });
+    </script>
+
+</body>
+</html>
