@@ -78,7 +78,7 @@ const Input = ({
 
     setInputValue(newValue);
     if (onInputChange) {
-      onInputChange(newValue);
+      onInputChange(id, newValue);
     }
     setHasChanged(true);
   };

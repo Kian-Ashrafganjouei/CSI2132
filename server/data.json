@@ -1,0 +1,204 @@
+{
+  "hotel_chains": [
+    {
+      "chain_name": "LuxuryStays"
+    },
+    {
+      "chain_name": "ComfortInn"
+    },
+    {
+      "chain_name": "EcoLodge"
+    }
+  ],
+  "hotels": [
+    {
+      "id": 1,
+      "chain_name": "LuxuryStays",
+      "category": 5,
+      "number_of_rooms": 120,
+      "address": {
+        "street_name": "Main St",
+        "street_number": "123",
+        "postal_code": "10001",
+        "city": "New York",
+        "country": "USA"
+      }
+    },
+    {
+      "id": 2,
+      "chain_name": "ComfortInn",
+      "category": 4,
+      "number_of_rooms": 80,
+      "address": {
+        "street_name": "Elm St",
+        "street_number": "456",
+        "postal_code": "20001",
+        "city": "Washington",
+        "country": "USA"
+      }
+    },
+    {
+      "chain_name": "LuxuryStays",
+      "category": 1,
+      "number_of_rooms": "2",
+      "address": {
+        "street_name": "2",
+        "street_number": "2",
+        "postal_code": "2",
+        "unit_number": "2",
+        "city": "2",
+        "country": "2"
+      },
+      "id": 4
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "employeeName": "Alice Johnson",
+      "role": "Receptionist",
+      "isManager": false,
+      "ssnNumber": "123-45-6789",
+      "address": {
+        "streetName": "Pine Ave",
+        "streetNumber": "789",
+        "postalCode": "10001",
+        "unitNumber": "102",
+        "cityName": "New York",
+        "countryName": "USA"
+      }
+    },
+    {
+      "id": 2,
+      "employeeName": "Bob Smith",
+      "role": "Custodian",
+      "isManager": true,
+      "ssnNumber": "987-65-4321",
+      "address": {
+        "streetName": "Maple Rd",
+        "streetNumber": "123",
+        "postalCode": "20001",
+        "unitNumber": "203",
+        "cityName": "Washington",
+        "countryName": "USA"
+      }
+    },
+    {
+      "employeeName": "2",
+      "role": "Receptionist",
+      "isManager": "True",
+      "ssnNumber": "2",
+      "streetName": "2",
+      "streetNumber": "2",
+      "postalCode": "2",
+      "unitNumber": "2",
+      "cityName": "2",
+      "countryName": "2"
+    }
+  ],
+  "customers": [
+    {
+      "customerName": "Charlie Davis",
+      "emailAddress": "charlie@example.com",
+      "phoneNumber": "555-123-4567",
+      "cardNumber": "4111-1111-1111-1111",
+      "idType": "Passport",
+      "dateOfRegistration": "2022-09-15",
+      "address": {
+        "streetName": "Birch Lane",
+        "streetNumber": "789",
+        "postalCode": "10001",
+        "unitNumber": "103",
+        "cityName": "New York",
+        "countryName": "USA"
+      }
+    },
+    {
+      "customerName": "Diana Lee",
+      "emailAddress": "diana@example.com",
+      "phoneNumber": "555-987-6543",
+      "cardNumber": "4222-2222-2222-2222",
+      "idType": "Driver Licence",
+      "dateOfRegistration": "2023-01-10",
+      "address": {
+        "streetName": "Spruce St",
+        "streetNumber": "456",
+        "postalCode": "20001",
+        "unitNumber": "204",
+        "cityName": "Washington",
+        "countryName": "USA"
+      }
+    },
+    {
+      "customerName": "2",
+      "emailAddress": "2@2",
+      "phoneNumber": "222-222-2222",
+      "cardNumber": "2",
+      "idType": "Driver Licence",
+      "dateOfRegistration": "2024-10-29",
+      "streetName": "2",
+      "streetNumber": "2",
+      "postalCode": "2",
+      "unitNumber": "2",
+      "cityName": "2",
+      "countryName": "2"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 101,
+      "floorNumber": 1,
+      "hotelID": 1,
+      "amenities": [
+        "TV",
+        "WiFi",
+        "Mini Fridge"
+      ],
+      "viewType": "Mountain",
+      "price": 150,
+      "capacity": "double",
+      "canBeExtended": true,
+      "stringComment": "Corner room with a view",
+      "isRenting": false
+    },
+    {
+      "roomNumber": 202,
+      "floorNumber": 2,
+      "hotelID": 2,
+      "amenities": [
+        "WiFi",
+        "Air Conditioning"
+      ],
+      "viewType": "Sea",
+      "price": 200,
+      "capacity": "single",
+      "canBeExtended": false,
+      "stringComment": "Sea view with private balcony",
+      "isRenting": true
+    }
+  ],
+  "bookings": [
+    {
+      "bookingID": 1,
+      "startDate": "2023-10-01",
+      "endDate": "2023-10-05",
+      "customerName": "Charlie Davis",
+      "emailAddress": "charlie@example.com",
+      "phoneNumber": "555-123-4567",
+      "roomNumber": 101,
+      "floorNumber": 1,
+      "hotelID": 1
+    },
+    {
+      "bookingID": 2,
+      "startDate": "2023-11-15",
+      "endDate": "2023-11-20",
+      "customerName": "Diana Lee",
+      "emailAddress": "diana@example.com",
+      "phoneNumber": "555-987-6543",
+      "roomNumber": 202,
+      "floorNumber": 2,
+      "hotelID": 2
+    }
+  ]
+}

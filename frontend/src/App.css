@@ -1,7 +1,7 @@
 /* App.css */
 :root {
   --primary: #34495e;
-  --primary-dark: rgb(58, 58, 58);
+  --primary-dark: #3a3a3a;
   --secondary: #ee8484;
   --light-grey: #727272;
   --olive: #3f3f3f;
@@ -26,7 +26,7 @@
   --sidebar-width: 300px;
   --nav-padding: 40px;
   --nav-height: 100px;
-  --footer-height: 50px;
+  --footer-height: 20px;
   --main-height: calc(100vh - var(--nav-height));
   --puzzle-width: 180px;
 }

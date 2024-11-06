@@ -1,5 +1,4 @@
 const express = require("express");
-const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
 
@@ -11,25 +10,31 @@ app.use(express.json());
 app.use(express.static(__dirname));
 app.use(express.static("frontend"));
 
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "hotel_database",
-  password: "admin",
-  port: 5432,
-});
+// Path to the JSON file
+const dataFilePath = path.join(__dirname, "data.json");
+
+// Load data from JSON file
+const loadData = () => {
+  try {
+    const data = fs.readFileSync(dataFilePath);
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Failed to load data from JSON file:", error);
+    return {};
+  }
+};
+
+// Save data to JSON file
+const saveData = (data) => {
+  try {
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error("Failed to save data to JSON file:", error);
+  }
+};
 
 // Load dummy data if needed
-let dummyData = {};
-if (useDummyData) {
-  try {
-    const data = fs.readFileSync(path.join(__dirname, "dummy_data.json"));
-    dummyData = JSON.parse(data);
-    console.log("Dummy data loaded successfully.");
-  } catch (error) {
-    console.error("Failed to load dummy data:", error);
-  }
-}
+let dummyData = loadData();
 
 // Middleware to serve dummy data for specific endpoints
 const serveDummyData = (dataKey) => (req, res, next) => {
@@ -45,76 +50,117 @@ const serveDummyData = (dataKey) => (req, res, next) => {
   }
 };
 
-// Serve dummy data or database data for each endpoint
-app.get("/hotel_chains", serveDummyData("hotel_chains"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM hotel_chain");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching hotel chains", err);
-    res.status(500).send("Server Error");
+// Serve dummy data or manipulate data for each endpoint
+app.get("/hotel_chains", serveDummyData("hotel_chains"));
+
+app.get("/hotels", serveDummyData("hotels"));
+
+app.get("/employees", serveDummyData("employees"));
+
+app.get("/customers", serveDummyData("customers"));
+
+app.get("/rooms", serveDummyData("rooms"));
+
+app.get("/bookings", serveDummyData("bookings"));
+
+// CRUD Endpoints
+// Create new entry
+app.post("/:dataKey", (req, res) => {
+  const { dataKey } = req.params;
+  const newData = req.body;
+
+  if (useDummyData) {
+    if (!dummyData[dataKey]) {
+      dummyData[dataKey] = [];
+    }
+    dummyData[dataKey].push(newData);
+    saveData(dummyData);
+    res.status(201).send(`New entry added to ${dataKey}.`);
+  } else {
+    res.status(403).send("Data update not allowed in production mode.");
   }
 });
 
-app.get("/hotels", serveDummyData("hotels"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM hotel");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching hotels", err);
-    res.status(500).send("Server Error");
+// Read an entry by ID
+app.get("/:dataKey/:id", (req, res) => {
+  const { dataKey, id } = req.params;
+
+  if (useDummyData) {
+    const data = dummyData[dataKey];
+    if (data) {
+      const entry = data.find((item) => item.id == id);
+      if (entry) {
+        res.json(entry);
+      } else {
+        res.status(404).send(`Entry with ID ${id} not found in ${dataKey}.`);
+      }
+    } else {
+      res.status(404).send(`Data key ${dataKey} not found.`);
+    }
+  } else {
+    res.status(403).send("Data retrieval not allowed in production mode.");
   }
 });
 
-app.get("/employees", serveDummyData("employees"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM employee");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching employees", err);
-    res.status(500).send("Server Error");
+// Update an entry by ID
+app.put("/:dataKey/:id", (req, res) => {
+  const { dataKey, id } = req.params;
+  const updatedData = req.body;
+
+  if (useDummyData) {
+    const data = dummyData[dataKey];
+    if (data) {
+      const index = data.findIndex((item) => item.id == id);
+      if (index !== -1) {
+        dummyData[dataKey][index] = {
+          ...dummyData[dataKey][index],
+          ...updatedData,
+        };
+        saveData(dummyData);
+        res.send(`Entry with ID ${id} updated in ${dataKey}.`);
+      } else {
+        res.status(404).send(`Entry with ID ${id} not found in ${dataKey}.`);
+      }
+    } else {
+      res.status(404).send(`Data key ${dataKey} not found.`);
+    }
+  } else {
+    res.status(403).send("Data update not allowed in production mode.");
   }
 });
 
-app.get("/customers", serveDummyData("customers"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM customer");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching customers", err);
-    res.status(500).send("Server Error");
+// Delete an entry by ID
+app.delete("/:dataKey/:id", (req, res) => {
+  const { dataKey, id } = req.params;
+  const data = dummyData[dataKey];
+  console.log(data, id);
+  if (data) {
+    const index = data.findIndex((item) => item.id == id);
+    console.log(index);
+    if (index !== -1) {
+      dummyData[dataKey].splice(index, 1);
+      console.log(dummyData);
+      saveData(dummyData);
+      res.send(`Entry with ID ${id} deleted from ${dataKey}.`);
+    } else {
+      res.status(404).send(`Entry with ID ${id} not found in ${dataKey}.`);
+    }
+  } else {
+    res.status(404).send(`Data key ${dataKey} not found.`);
   }
 });
 
-app.get("/rooms", serveDummyData("rooms"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM room");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching rooms", err);
-    res.status(500).send("Server Error");
-  }
-});
+// Endpoint to update data (for demonstration purposes)
+app.post("/update/:dataKey", (req, res) => {
+  const { dataKey } = req.params;
+  const newData = req.body;
 
-app.get("/bookings", serveDummyData("bookings"), async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query("SELECT * FROM book");
-    res.json(result.rows);
-    client.release();
-  } catch (err) {
-    console.error("Error fetching bookings", err);
-    res.status(500).send("Server Error");
+  if (useDummyData) {
+    dummyData[dataKey] = newData;
+    saveData(dummyData);
+    res.send(`Data for ${dataKey} updated successfully.`);
+  } else {
+    res.status(403).send("Data update not allowed in production mode.");
   }
 });
 

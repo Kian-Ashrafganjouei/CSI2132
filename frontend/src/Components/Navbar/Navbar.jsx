@@ -8,15 +8,17 @@ const NavBar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/icons/hotel.svg`}
-          alt="HotelHub"
-        />
+        <Link to="/">
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/icons/hotel.svg`}
+            alt="HotelHub"
+          />
+        </Link>
+        <h2 className="nav-company-title">
+          H<span>H</span>
+        </h2>
       </div>
       <ul className="nav-links">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
         <li>
           <Link to="/customers">Customer Registration</Link>
         </li>

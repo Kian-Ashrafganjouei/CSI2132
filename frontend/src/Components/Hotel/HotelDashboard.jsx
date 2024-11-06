@@ -6,15 +6,15 @@ import { AggregatedCapacity } from "../../Utils/Utils";
 import "./Hotel.css";
 
 const tableColumns = [
-  { header: "Hotel ID", accessor: "hotel_id" },
+  { header: "Hotel ID", accessor: "id" },
   { header: "Hotel Chain", accessor: "chain_name" },
   { header: "Category (Stars)", accessor: "category" },
   { header: "Number of Rooms", accessor: "number_of_rooms" },
-  { header: "Street Name", accessor: "streetName" },
-  { header: "Street Number", accessor: "streetNumber" },
-  { header: "Postal Code", accessor: "postalCode" },
-  { header: "City", accessor: "cityName" },
-  { header: "Country", accessor: "countryName" },
+  { header: "Street Name", accessor: "street_name" },
+  { header: "Street Number", accessor: "street_number" },
+  { header: "Postal Code", accessor: "postal_code" },
+  { header: "City", accessor: "city" },
+  { header: "Country", accessor: "country" },
 ];
 
 const HotelDashboard = () => {
@@ -27,6 +27,7 @@ const HotelDashboard = () => {
   const formConfig = [
     {
       label: "Hotel Chain",
+      id: "chain_name",
       accessor: "chain_name",
       type: "select",
       options: hotelChains.map((chain) => ({
@@ -35,6 +36,7 @@ const HotelDashboard = () => {
       })),
     },
     {
+      id: "category",
       label: "Category (1-5)",
       accessor: "category",
       type: "select",
@@ -43,17 +45,59 @@ const HotelDashboard = () => {
         value: i + 1,
       })),
     },
-    { label: "Number of Rooms", accessor: "numberOfRooms", type: "number" },
-    { label: "Street Name", accessor: "streetName", type: "text" },
-    { label: "Street Number", accessor: "streetNumber", type: "text" },
-    { label: "Postal Code", accessor: "postalCode", type: "text" },
-    { label: "Unit Number", accessor: "unitNumber", type: "text" },
-    { label: "City", accessor: "cityName", type: "text" },
-    { label: "Country", accessor: "countryName", type: "text" },
+    {
+      id: "number_of_rooms",
+      label: "Number of Rooms",
+      accessor: "number_of_rooms",
+      type: "number",
+    },
+    {
+      type: "subform",
+      id: "address",
+      subfields: [
+        {
+          id: "street_name",
+          label: "Street Name",
+          accessor: "address.streetName",
+          type: "text",
+        },
+        {
+          id: "street_number",
+          label: "Street Number",
+          accessor: "address.streetNumber",
+          type: "text",
+        },
+        {
+          id: "postal_code",
+          label: "Postal Code",
+          accessor: "address.postalCode",
+          type: "text",
+        },
+        {
+          id: "unit_number",
+          label: "Unit Number",
+          accessor: "address.unitNumber",
+          type: "text",
+        },
+        {
+          id: "city",
+          label: "City",
+          accessor: "address.cityName",
+          type: "text",
+        },
+        {
+          id: "country",
+          label: "Country",
+          accessor: "address.countryName",
+          type: "text",
+        },
+      ],
+    },
   ];
 
   useEffect(() => {
     fetchData();
+    console.log("hotelChains", hotels);
   }, []);
 
   const fetchData = async (url, setter) => {
@@ -75,6 +119,7 @@ const HotelDashboard = () => {
     try {
       const response = await fetch("/hotels");
       const data = await response.json();
+      console.log(data);
       setHotels(data);
     } catch (error) {
       console.error("Error fetching hotels:", error);
@@ -103,6 +148,7 @@ const HotelDashboard = () => {
   };
 
   const handleAddHotel = async (hotelData) => {
+    hotelData.id = hotels.length + 1;
     try {
       const response = await fetch("/hotels", {
         method: "POST",
@@ -136,7 +182,8 @@ const HotelDashboard = () => {
     }
   };
 
-  const handleDeleteHotel = async (hotelId) => {
+  const handleDeleteHotel = async (hotel) => {
+    const hotelId = hotel.id;
     try {
       const response = await fetch(`/hotels/${hotelId}`, {
         method: "DELETE",
