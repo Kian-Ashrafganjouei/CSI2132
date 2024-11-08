@@ -148,7 +148,10 @@ const HotelDashboard = () => {
   };
 
   const handleAddHotel = async (hotelData) => {
-    hotelData.id = hotels.length + 1;
+    // Find the maximum existing ID
+    const maxId = hotels.length > 0 ? Math.max(...hotels.map(hotel => hotel.id)) : 0;
+    hotelData.id = maxId + 1; // Assign a new unique ID based on the highest current ID
+  
     try {
       const response = await fetch("/hotels", {
         method: "POST",
@@ -164,7 +167,7 @@ const HotelDashboard = () => {
       console.error("Error adding hotel:", error);
     }
   };
-
+  
   const handleUpdateHotel = async (hotelId, hotelData) => {
     try {
       const response = await fetch(`/hotels/${hotelId}`, {

@@ -38,23 +38,23 @@
       }
     },
     {
-      "chain_name": "LuxuryStays",
-      "category": 1,
-      "number_of_rooms": "2",
+      "chain_name": "EcoLodge",
+      "category": "4",
+      "number_of_rooms": "196",
       "address": {
-        "street_name": "2",
-        "street_number": "2",
-        "postal_code": "2",
-        "unit_number": "2",
-        "city": "2",
-        "country": "2"
+        "street_name": "Tetris",
+        "street_number": "23",
+        "postal_code": "TS245",
+        "unit_number": "4",
+        "city": "Ottawa",
+        "country": "Canada"
       },
-      "id": 4
+      "id": 3
     }
   ],
   "employees": [
     {
-      "id": 1,
+      "id": "1",
       "employeeName": "Alice Johnson",
       "role": "Receptionist",
       "isManager": false,
@@ -69,7 +69,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "employeeName": "Bob Smith",
       "role": "Custodian",
       "isManager": true,
@@ -84,20 +84,48 @@
       }
     },
     {
-      "employeeName": "2",
-      "role": "Receptionist",
-      "isManager": "True",
-      "ssnNumber": "2",
-      "streetName": "2",
+      "employeeName": "Diana Prince",
+      "role": "room service",
+      "isManager": "true",
+      "ssnNumber": "444-55-6666",
+      "streetName": "Elvis",
+      "streetNumber": "4",
+      "postalCode": "GNSA24",
+      "unitNumber": "5",
+      "cityName": "Edmond",
+      "countryName": "US",
+      "id": 3
+    },
+    {
+      "employeeName": "Evan Williams",
+      "role": "cook",
+      "isManager": "",
+      "ssnNumber": "777-88-9999",
+      "streetName": "Johan",
       "streetNumber": "2",
-      "postalCode": "2",
-      "unitNumber": "2",
-      "cityName": "2",
-      "countryName": "2"
+      "postalCode": "TA4F42",
+      "unitNumber": "9",
+      "cityName": "Salt Lake",
+      "countryName": "US",
+      "id": 4
+    },
+    {
+      "employeeName": "Joe Smith",
+      "role": "valet",
+      "isManager": "",
+      "ssnNumber": "111-22-3333",
+      "streetName": "Smyth",
+      "streetNumber": "123",
+      "postalCode": "123AFS",
+      "unitNumber": "55",
+      "cityName": "Ottawa",
+      "countryName": "Canada",
+      "id": 5
     }
   ],
   "customers": [
     {
+      "id": "1",
       "customerName": "Charlie Davis",
       "emailAddress": "charlie@example.com",
       "phoneNumber": "555-123-4567",
@@ -114,38 +142,69 @@
       }
     },
     {
-      "customerName": "Diana Lee",
-      "emailAddress": "diana@example.com",
-      "phoneNumber": "555-987-6543",
-      "cardNumber": "4222-2222-2222-2222",
-      "idType": "Driver Licence",
-      "dateOfRegistration": "2023-01-10",
-      "address": {
-        "streetName": "Spruce St",
-        "streetNumber": "456",
-        "postalCode": "20001",
-        "unitNumber": "204",
-        "cityName": "Washington",
-        "countryName": "USA"
-      }
+      "customerName": "John Doe",
+      "emailAddress": "john.doe@gmail.com",
+      "phoneNumber": "555-123-4567",
+      "cardNumber": "4111-1111-1111-1111",
+      "idType": "SSN/SIN",
+      "dateOfRegistration": "2024-11-11",
+      "streetName": "Albi",
+      "streetNumber": "2",
+      "postalCode": "GE2FS2",
+      "unitNumber": "2",
+      "cityName": "Ottawa",
+      "countryName": "Canada",
+      "id": 2
     },
     {
-      "customerName": "2",
-      "emailAddress": "2@2",
-      "phoneNumber": "222-222-2222",
-      "cardNumber": "2",
-      "idType": "Driver Licence",
-      "dateOfRegistration": "2024-10-29",
-      "streetName": "2",
+      "customerName": "Jane Smith",
+      "emailAddress": "jane.smith@yahoo.com",
+      "phoneNumber": "555-987-6543",
+      "cardNumber": "5500-0000-0000-0004",
+      "idType": "Passport",
+      "dateOfRegistration": "2024-11-15",
+      "streetName": "Jane",
+      "streetNumber": "21",
+      "postalCode": "SD2F23",
+      "unitNumber": "3",
+      "cityName": "Denver",
+      "countryName": "US",
+      "id": 3
+    },
+    {
+      "customerName": "Alice Johnson",
+      "emailAddress": "alice.johnson@outlook.com",
+      "phoneNumber": "555-234-5678",
+      "cardNumber": "3400-0000-0000-009",
+      "idType": "Health Card",
+      "dateOfRegistration": "2024-11-15",
+      "streetName": "May",
       "streetNumber": "2",
-      "postalCode": "2",
-      "unitNumber": "2",
-      "cityName": "2",
-      "countryName": "2"
+      "postalCode": "GNG23G",
+      "unitNumber": "5",
+      "cityName": "Toronto",
+      "countryName": "Canada",
+      "id": 4
+    },
+    {
+      "customerName": "Bob Brown",
+      "emailAddress": "bob.brown@aol.com",
+      "phoneNumber": "555-456-7890",
+      "cardNumber": "6011-1111-1111-1117",
+      "idType": "SSN/SIN",
+      "dateOfRegistration": "2024-11-12",
+      "streetName": "Blake",
+      "streetNumber": "43",
+      "postalCode": "FAS232",
+      "unitNumber": "6",
+      "cityName": "San Hose",
+      "countryName": "US",
+      "id": 5
     }
   ],
   "rooms": [
     {
+      "id": 1,
       "roomNumber": 101,
       "floorNumber": 1,
       "hotelID": 1,
@@ -160,26 +219,11 @@
       "canBeExtended": true,
       "stringComment": "Corner room with a view",
       "isRenting": false
-    },
-    {
-      "roomNumber": 202,
-      "floorNumber": 2,
-      "hotelID": 2,
-      "amenities": [
-        "WiFi",
-        "Air Conditioning"
-      ],
-      "viewType": "Sea",
-      "price": 200,
-      "capacity": "single",
-      "canBeExtended": false,
-      "stringComment": "Sea view with private balcony",
-      "isRenting": true
     }
   ],
   "bookings": [
     {
-      "bookingID": 1,
+      "id": "1",
       "startDate": "2023-10-01",
       "endDate": "2023-10-05",
       "customerName": "Charlie Davis",
@@ -190,15 +234,41 @@
       "hotelID": 1
     },
     {
-      "bookingID": 2,
-      "startDate": "2023-11-15",
-      "endDate": "2023-11-20",
-      "customerName": "Diana Lee",
-      "emailAddress": "diana@example.com",
-      "phoneNumber": "555-987-6543",
-      "roomNumber": 202,
-      "floorNumber": 2,
-      "hotelID": 2
+      "customerName": "John Doe",
+      "emailAddress": "john.doe@gmail.com",
+      "phoneNumber": "123-456-7891",
+      "roomNumber": "42",
+      "floorNumber": "4",
+      "hotelID": "2",
+      "startDate": "2024-11-14",
+      "endDate": "2024-11-15",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "name": "kian",
+      "email": "kian@gmail.com",
+      "password": "213",
+      "role": "customer"
+    },
+    {
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "role": "admin"
+    },
+    {
+      "name": "joe",
+      "email": "joe@gmail.com",
+      "password": "123",
+      "role": "customer"
+    },
+    {
+      "name": "Tami",
+      "email": "Tami@gmail.com",
+      "password": "123",
+      "role": "customer"
     }
   ]
 }

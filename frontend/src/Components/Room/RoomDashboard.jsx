@@ -1,33 +1,7 @@
 // RoomDashboard.js
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
-import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Room.css";
-
-const tableColumns = [
-  { header: "Room Number", accessor: "roomNumber" },
-  { header: "Floor Number", accessor: "floorNumber" },
-  { header: "Hotel ID", accessor: "hotelID" },
-  {
-    header: "Amenities",
-    accessor: "amenities",
-    transform: (value) => value.join(", "),
-  },
-  { header: "View Type", accessor: "viewType" },
-  { header: "Price", accessor: "price" },
-  { header: "Capacity", accessor: "capacity" },
-  {
-    header: "Can Be Extended",
-    accessor: "canBeExtended",
-    transform: (value) => (value ? "Yes" : "No"),
-  },
-  { header: "Comments", accessor: "stringComment" },
-  {
-    header: "Is Renting",
-    accessor: "isRenting",
-    transform: (value) => (value ? "Yes" : "No"),
-  },
-];
 
 const RoomDashboard = () => {
   const [rooms, setRooms] = useState([]);
@@ -57,7 +31,7 @@ const RoomDashboard = () => {
       options: hotelIds.map((hotel) => ({
         label: hotel,
         value: hotel,
-      })), // Dynamically populated from state
+      })),
       required: true,
     },
     {
@@ -71,23 +45,11 @@ const RoomDashboard = () => {
       id: "viewType",
       type: "select",
       options: [
-        {
-          label: "City",
-          value: "City",
-        },
-        {
-          label: "Mountain",
-          value: "Mountain",
-        },
-        {
-          label: "Sea",
-          value: "Sea",
-        },
-        {
-          label: "Garden",
-          value: "Garden",
-        },
-      ], // Customize as needed
+        { label: "City", value: "City" },
+        { label: "Mountain", value: "Mountain" },
+        { label: "Sea", value: "Sea" },
+        { label: "Garden", value: "Garden" },
+      ],
       required: true,
     },
     {
@@ -102,23 +64,11 @@ const RoomDashboard = () => {
       id: "capacity",
       type: "select",
       options: [
-        {
-          value: "Single",
-          label: "Single",
-        },
-        {
-          value: "Double",
-          label: "Double",
-        },
-        {
-          value: "Suite",
-          label: "Suite",
-        },
-        {
-          value: "Penthouse",
-          label: "Penthouse",
-        },
-      ], // Customize as needed
+        { value: "Single", label: "Single" },
+        { value: "Double", label: "Double" },
+        { value: "Suite", label: "Suite" },
+        { value: "Penthouse", label: "Penthouse" },
+      ],
       required: true,
     },
     {
@@ -154,8 +104,7 @@ const RoomDashboard = () => {
 
   const fetchData = async () => {
     try {
-      fetchRooms();
-      fetchHotelIds();
+      await Promise.all([fetchRooms(), fetchHotelIds()]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -177,14 +126,17 @@ const RoomDashboard = () => {
     try {
       const response = await fetch("/hotels");
       const data = await response.json();
-      setHotelIds(data.map((hotel) => hotel.hotel_id));
-      console.log("Hotel IDs:", hotelIds);
+      setHotelIds(data.map((hotel) => hotel.id));
     } catch (error) {
       console.error("Error fetching hotel ids:", error);
     }
   };
 
   const handleAddRoom = async (roomData) => {
+    // Find the maximum existing id
+    const maxid = rooms.length > 0 ? Math.max(...rooms.map(room => room.id)) : 0;
+    roomData.id = maxid + 1; // Assign a new unique id based on the highest current id
+  
     try {
       const response = await fetch("/rooms", {
         method: "POST",
@@ -202,22 +154,15 @@ const RoomDashboard = () => {
       console.error("Error adding room:", error);
     }
   };
+  
 
-  const handleUpdateRoom = async (
-    roomNumber,
-    floorNumber,
-    hotelID,
-    roomData
-  ) => {
+  const handleUpdateRoom = async (id, roomData) => {
     try {
-      const response = await fetch(
-        `/rooms/${roomNumber}/${floorNumber}/${hotelID}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(roomData),
-        }
-      );
+      const response = await fetch(`/rooms/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(roomData),
+      });
       if (response.ok) {
         fetchRooms();
         setSuccessMessage("Room successfully updated");
@@ -228,14 +173,11 @@ const RoomDashboard = () => {
     }
   };
 
-  const handleDeleteRoom = async (roomNumber, floorNumber, hotelID) => {
+  const handleDeleteRoom = async (id) => {
     try {
-      const response = await fetch(
-        `/rooms/${roomNumber}/${floorNumber}/${hotelID}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`/rooms/${id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         fetchRooms();
         setSuccessMessage("Room successfully deleted");
@@ -255,20 +197,55 @@ const RoomDashboard = () => {
           onSubmit={handleAddRoom}
           title="Add a Room"
         />
-        <ResuableTable
-          columns={tableColumns}
-          data={rooms}
-          title="Room List"
-          options={{
-            onDelete: handleDeleteRoom,
-            onUpdate: handleUpdateRoom,
-          }}
-        />
+        
+        <div className="room-table">
+          <h2>Room List</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Room ID</th>
+                <th>Room Number</th>
+                <th>Floor Number</th>
+                <th>Hotel ID</th>
+                <th>Amenities</th>
+                <th>View Type</th>
+                <th>Price</th>
+                <th>Capacity</th>
+                <th>Can Be Extended</th>
+                <th>Comments</th>
+                <th>Is Renting</th>
+                <th>Delete</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rooms.map((room) => (
+                <tr key={room.id}>
+                  <td>{room.id}</td>
+                  <td>{room.roomNumber}</td>
+                  <td>{room.floorNumber}</td>
+                  <td>{room.hotelID}</td>
+                  <td>{Array.isArray(room.amenities) ? room.amenities.join(", ") : room.amenities}</td>
+                  <td>{room.viewType}</td>
+                  <td>{room.price}</td>
+                  <td>{room.capacity}</td>
+                  <td>{room.canBeExtended ? "Yes" : "No"}</td>
+                  <td>{room.stringComment}</td>
+                  <td>{room.isRenting ? "Yes" : "No"}</td>
+                  <td>
+                    <button onClick={() => handleDeleteRoom(room.id)}>Delete</button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleUpdateRoom(room.id, room)}>Update</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {successMessage && (
-        <div className="alert success-alert">{successMessage}</div>
-      )}
+      {successMessage && <div className="alert success-alert">{successMessage}</div>}
     </div>
   );
 };

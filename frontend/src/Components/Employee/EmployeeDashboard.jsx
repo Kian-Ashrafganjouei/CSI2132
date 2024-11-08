@@ -1,21 +1,7 @@
 // EmployeeDashboard.js
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
-import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Employee.css";
-
-// const [formData, setFormData] = useState({
-//     employeeName: "",
-//     role: "receptionist",
-//     isManager: "false",
-//     ssnNumber: "",
-//     streetName: "",
-//     streetNumber: "",
-//     postalCode: "",
-//     unitNumber: "",
-//     cityName: "",
-//     countryName: "",
-//   });
 
 const formConfig = [
   {
@@ -91,19 +77,6 @@ const formConfig = [
   },
 ];
 
-const tableColumns = [
-  { header: "Employee Name", accessor: "employeeName" },
-  { header: "Role", accessor: "role" },
-  { header: "Manager", accessor: "isManager" },
-  { header: "SSN Number", accessor: "ssnNumber" },
-  { header: "Street Name", accessor: "streetName" },
-  { header: "Street Number", accessor: "streetNumber" },
-  { header: "Postal Code", accessor: "postalCode" },
-  { header: "Unit Number", accessor: "unitNumber" },
-  { header: "City Name", accessor: "cityName" },
-  { header: "Country Name", accessor: "countryName" },
-];
-
 const EmployeeDashboard = () => {
   const [employees, setEmployees] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
@@ -127,6 +100,10 @@ const EmployeeDashboard = () => {
   };
 
   const handleAddEmployee = async (employeeData) => {
+    // Calculate the next id based on the highest existing id
+    const maxId = employees.length > 0 ? Math.max(...employees.map(emp => emp.id)) : 0;
+    employeeData.id = maxId + 1;
+
     try {
       const response = await fetch("/employees", {
         method: "POST",
@@ -143,9 +120,9 @@ const EmployeeDashboard = () => {
     }
   };
 
-  const handleUpdateEmployee = async (employeeId, employeeData) => {
+  const handleUpdateEmployee = async (id, employeeData) => {
     try {
-      const response = await fetch(`/employees/${employeeId}`, {
+      const response = await fetch(`/employees/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(employeeData),
@@ -160,9 +137,9 @@ const EmployeeDashboard = () => {
     }
   };
 
-  const handleDeleteEmployee = async (employeeId) => {
+  const handleDeleteEmployee = async (id) => {
     try {
-      const response = await fetch(`/employees/${employeeId}`, {
+      const response = await fetch(`/employees/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -184,16 +161,38 @@ const EmployeeDashboard = () => {
           onSubmit={handleAddEmployee}
           title="Add An Employee"
         />
-        <ResuableTable
-          data={employees}
-          columns={tableColumns}
-          options={{
-            onDelete: handleDeleteEmployee,
-            onUpdate: handleUpdateEmployee,
-          }}
-          title="Employee List"
-          loading={loading}
-        />
+        
+        <div className="employee-table">
+          <h2>Employee List</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Role</th>
+                <th>Manager</th>
+                <th>SSN Number</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((employee) => (
+                <tr key={employee.id}>
+                  <td>{employee.id}</td>
+                  <td>{employee.employeeName}</td>
+                  <td>{employee.role}</td>
+                  <td>{employee.isManager === "true" ? "Yes" : "No"}</td>
+                  <td>{employee.ssnNumber}</td>
+                  <td>
+                    <button onClick={() => handleDeleteEmployee(employee.id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {successMessage && (

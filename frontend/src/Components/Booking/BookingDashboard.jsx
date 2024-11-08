@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
-import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import Input from "../../DevComponents/Input/Input";
 import "./Booking.css";
-
-const tableColumns = [
-  { header: "Booking ID", accessor: "bookingID" },
-  { header: "Start Date", accessor: "startDate" },
-  { header: "End Date", accessor: "endDate" },
-  { header: "Customer Name", accessor: "customerName" },
-  { header: "Email", accessor: "emailAddress" },
-  { header: "Phone", accessor: "phoneNumber" },
-  { header: "Room Number", accessor: "roomNumber" },
-  { header: "Floor Number", accessor: "floorNumber" },
-  { header: "Hotel ID", accessor: "hotelID" },
-];
 
 const BookingDashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -22,6 +9,7 @@ const BookingDashboard = () => {
   const [hotelIds, setHotelIds] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(null);
 
   const formConfig = [
     {
@@ -66,7 +54,7 @@ const BookingDashboard = () => {
       options: hotelIds.map((hotel) => ({
         label: hotel,
         value: hotel,
-      })), // Dynamically populated from state
+      })),
       required: true,
     },
     { label: "Start Date", id: "startDate", type: "date", required: true },
@@ -75,12 +63,16 @@ const BookingDashboard = () => {
 
   useEffect(() => {
     fetchData();
+    // Retrieve user role from localStorage
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (authData) {
+      setUserRole(authData.role);
+    }
   }, []);
 
   const fetchData = async () => {
     try {
-      fetchBookings();
-      fetchHotelIds();
+      await Promise.all([fetchBookings(), fetchHotelIds()]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -94,7 +86,7 @@ const BookingDashboard = () => {
       const data = await response.json();
       setBookings(data);
     } catch (error) {
-      console.error("Error fetching booking options:", error);
+      console.error("Error fetching bookings:", error);
     }
   };
 
@@ -102,46 +94,41 @@ const BookingDashboard = () => {
     try {
       const response = await fetch("/hotels");
       const data = await response.json();
-      setHotelIds(data.map((hotel) => hotel.hotel_id));
+      setHotelIds(data.map((hotel) => hotel.id));
     } catch (error) {
       console.error("Error fetching hotel ids:", error);
     }
   };
 
-  const handleAddRenting = async (formData) => {
-    // Add new booking/renting logic here
-  };
-
-  const handleConvertBooking = async () => {
-    const [bookingId, roomNumber, floorNumber, hotelID] =
-      selectedBooking.split("-");
-    const convertData = { roomNumber, floorNumber, hotelID };
+  const handleAddBooking = async (formData) => {
+    // Calculate new booking ID based on max existing ID
+    const maxId = bookings.length > 0 ? Math.max(...bookings.map((b) => b.id)) : 0;
+    formData.id = maxId + 1;
 
     try {
-      const response = await fetch("/convert", {
+      const response = await fetch("/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(convertData),
+        body: JSON.stringify(formData),
       });
       if (response.ok) {
-        setSuccessMessage("Successfully Converted");
+        fetchBookings();
+        setSuccessMessage("Booking successfully added");
         setTimeout(() => setSuccessMessage(""), 3000);
       }
     } catch (error) {
-      console.error("Error converting:", error);
+      console.error("Error adding booking:", error);
     }
   };
 
-  const handleDeleteBooking = async (bookingId) => {
+  const handleDeleteBooking = async (id) => {
     try {
-      const response = await fetch(`/bookings/${bookingId}`, {
+      const response = await fetch(`/bookings/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        setBookings(
-          bookings.filter((booking) => booking.bookingid !== bookingId)
-        );
+        setBookings(bookings.filter((booking) => booking.id !== id));
         setSuccessMessage("Booking successfully removed");
         setTimeout(() => setSuccessMessage(""), 3000);
       }
@@ -152,41 +139,64 @@ const BookingDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="select-wrapper">
-        <h1>Convert Renting / Not Renting</h1>
+      <h1>Manage Bookings</h1>
 
-        <Input
-          id={"bookingID"}
-          value={selectedBooking}
-          label={"Select a Booking"}
-          type="select"
-          options={bookings.map((booking) => ({
-            label: `${booking.customerName} Booking ${booking.bookingID} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
-            value: `${booking.bookingID}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
-          }))}
-          onInputChange={(value) => setSelectedBooking(value)}
-        />
-        <button onClick={handleConvertBooking}>
-          Convert Renting/Not Renting
-        </button>
-      </div>
       <div className="dashboard-main">
         <ReusableForm
           formConfig={formConfig}
-          title="Add An Immediate Renting"
-          onSubmit={handleAddRenting}
+          title="Add An Immediate Booking"
+          onSubmit={handleAddBooking}
         />
-        <ReusableTable
-          columns={tableColumns}
-          data={bookings}
-          actions={{ onEdit: () => {}, onDelete: handleDeleteBooking }}
-          title="Booking List"
-          loading={loading}
-        />
+
+        {/* Show the booking table only if the user is an admin */}
+        {userRole === "admin" && (
+          <div className="booking-table">
+            <h2>Booking List</h2>
+            {loading ? (
+              <p>Loading bookings...</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Booking ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Room Number</th>
+                    <th>Floor Number</th>
+                    <th>Hotel ID</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bookings.map((booking) => (
+                    <tr key={booking.id}>
+                      <td>{booking.id}</td>
+                      <td>{booking.startDate}</td>
+                      <td>{booking.endDate}</td>
+                      <td>{booking.customerName}</td>
+                      <td>{booking.emailAddress}</td>
+                      <td>{booking.phoneNumber}</td>
+                      <td>{booking.roomNumber}</td>
+                      <td>{booking.floorNumber}</td>
+                      <td>{booking.hotelID}</td>
+                      <td>
+                        <button onClick={() => handleDeleteBooking(booking.id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
       </div>
-      {successMessage && (
-        <div className="alert success-alert">{successMessage}</div>
-      )}
+
+      {successMessage && <div className="alert success-alert">{successMessage}</div>}
     </div>
   );
 };

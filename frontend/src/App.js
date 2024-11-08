@@ -10,6 +10,9 @@ import NavBar from "./Components/Navbar/Navbar";
 import Footer from "./DevComponents/Footer/Footer";
 import "./App.css";
 import CustomerDashboard from "./Components/Customer/CustomerDashboard";
+import SignupPage from "./Components/signup/SignupPage";
+import SignInPage from "./Components/signin/SignInPage";
+import UserDashboard from "./Components/userdashboard/UserDashboard";
 
 const App = () => {
   return (
@@ -24,6 +27,9 @@ const App = () => {
             <Route path="/hotels" element={<HotelDashboard />} />
             <Route path="/rooms" element={<RoomDashboard />} />
             <Route path="/bookings" element={<BookingDashboard />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/userdash" element={<UserDashboard />} />
             <Route path="*" element={<h1>Page Not Found</h1>} />
           </Routes>
         </div>

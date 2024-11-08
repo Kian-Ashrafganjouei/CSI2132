@@ -1,10 +1,10 @@
-/* Employee.css */
-
 .employee-dashboard {
   margin: 2rem auto;
   padding: 1rem;
   background: #fff;
   border-radius: 8px;
+  max-width: 1200px; /* Restrict max width */
+  overflow: hidden;
 }
 
 .employee-form {
@@ -40,10 +40,15 @@
   background-color: #2c3e50;
 }
 
+.employee-table {
+  margin-top: 1rem;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
 .employee-table table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  min-width: 800px; /* Prevent columns from squishing too much */
 }
 
 .employee-table th,
@@ -65,4 +70,30 @@
   text-align: center;
   border-radius: 5px;
   margin-top: 1rem;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .employee-dashboard {
+    padding: 0.5rem;
+  }
+
+  .employee-form h2 {
+    font-size: 1.2rem;
+  }
+
+  .employee-form input,
+  .employee-form select,
+  .employee-form button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .employee-table {
+    overflow-x: scroll; /* Horizontal scroll for small screens */
+  }
+
+  .employee-table table {
+    min-width: 600px; /* Allow enough space for table columns */
+  }
 }

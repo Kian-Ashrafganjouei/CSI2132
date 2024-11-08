@@ -1,6 +1,8 @@
+
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -38,6 +40,8 @@ let dummyData = loadData();
 
 // Middleware to serve dummy data for specific endpoints
 const serveDummyData = (dataKey) => (req, res, next) => {
+  console.log("IN FETCh")
+
   if (useDummyData) {
     if (dummyData[dataKey]) {
       return res.json(dummyData[dataKey]);
@@ -64,11 +68,69 @@ app.get("/rooms", serveDummyData("rooms"));
 app.get("/bookings", serveDummyData("bookings"));
 
 // CRUD Endpoints
+
+// Authentication route
+app.post("/auth/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (useDummyData) {
+    const user = dummyData.users?.find((u) => u.email === email);
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Check password (in real applications, passwords should be hashed)
+    const passwordMatch = password;
+    if (!passwordMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    // Respond with role for frontend to redirect accordingly
+    res.json({ role: user.role });
+    console.log(user.role)
+  } else {
+    res.status(403).send("Login not allowed in production mode.");
+  }
+});
+
+// Get all users
+app.get("/users", (req, res) => {
+  if (useDummyData) {
+    if (dummyData.users) {
+      res.json(dummyData.users);
+    } else {
+      console.error("No user data found.");
+      res.status(404).send("No users found.");
+    }
+  } else {
+    res.status(403).send("Data retrieval not allowed in production mode.");
+  }
+});
+
+
+// Add a User
+app.post("/users", (req, res) => {
+  const newUser = { ...req.body, role: "customer" }; // Add default role as 'customer'
+  console.log("New user data with default role:", newUser);
+
+  if (useDummyData) {
+    if (!dummyData.users) {
+      dummyData.users = [];
+    }
+    dummyData.users.push(newUser);
+    saveData(dummyData);
+    res.status(201).send("New user entry added with default role.");
+  } else {
+    res.status(403).send("Data update not allowed in production mode.");
+  }
+});
+
+
 // Create new entry
 app.post("/:dataKey", (req, res) => {
   const { dataKey } = req.params;
   const newData = req.body;
-
+  console.log(newData)
   if (useDummyData) {
     if (!dummyData[dataKey]) {
       dummyData[dataKey] = [];
@@ -84,6 +146,8 @@ app.post("/:dataKey", (req, res) => {
 // Read an entry by ID
 app.get("/:dataKey/:id", (req, res) => {
   const { dataKey, id } = req.params;
+  console.log(dataKey)
+  console.log("IN READ")
 
   if (useDummyData) {
     const data = dummyData[dataKey];
@@ -131,6 +195,7 @@ app.put("/:dataKey/:id", (req, res) => {
 
 // Delete an entry by ID
 app.delete("/:dataKey/:id", (req, res) => {
+  console.log("IN DELETE")
   const { dataKey, id } = req.params;
   const data = dummyData[dataKey];
   console.log(data, id);

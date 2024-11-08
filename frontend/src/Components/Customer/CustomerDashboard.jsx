@@ -4,6 +4,16 @@ import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
 import "./Customer.css";
 
+const tableColumns = [
+  { header: "Customer ID", accessor: "id" },
+  { header: "Customer Name", accessor: "customerName" },
+  { header: "Email Address", accessor: "emailAddress" },
+  { header: "Phone Number", accessor: "phoneNumber" },
+  { header: "Card Number", accessor: "cardNumber" },
+  { header: "ID Type", accessor: "idType" },
+  { header: "Date of Registration", accessor: "dateOfRegistration" },
+];
+
 const formConfig = [
   {
     id: "customerName",
@@ -95,15 +105,6 @@ const formConfig = [
   },
 ];
 
-const tableColumns = [
-  { header: "Customer Name", accessor: "customerName" },
-  { header: "Email Address", accessor: "emailAddress" },
-  { header: "Phone Number", accessor: "phoneNumber" },
-  { header: "Card Number", accessor: "cardNumber" },
-  { header: "ID Type", accessor: "idType" },
-  { header: "Date of Registration", accessor: "dateOfRegistration" },
-];
-
 const CustomerDashboard = () => {
   const [customers, setCustomers] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
@@ -114,9 +115,12 @@ const CustomerDashboard = () => {
   }, []);
 
   const fetchCustomers = async () => {
+    setLoading(true);
     try {
       const response = await fetch("/customers");
-      const data = await response.json();
+      const text = await response.text(); // Read the response as plain text
+      console.log("Raw response:", text); // Log raw response to see its format
+      const data = JSON.parse(text); // Then parse it as JSON
       setCustomers(data);
     } catch (error) {
       console.error("Error fetching customers:", error);
@@ -126,6 +130,10 @@ const CustomerDashboard = () => {
   };
 
   const handleAddCustomer = async (customerData) => {
+    // Find the maximum existing ID
+    const maxId = customers.length > 0 ? Math.max(...customers.map(c => c.id)) : 0;
+    customerData.id = maxId + 1; // Assign a new unique ID
+  
     try {
       const response = await fetch("/customers", {
         method: "POST",
@@ -141,10 +149,11 @@ const CustomerDashboard = () => {
       console.error("Error adding customer:", error);
     }
   };
+  
 
-  const handleUpdateCustomer = async (customerData) => {
+  const handleUpdateCustomer = async (customerId, customerData) => {
     try {
-      const response = await fetch("/customers", {
+      const response = await fetch(`/customers/${customerId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(customerData),
@@ -160,11 +169,10 @@ const CustomerDashboard = () => {
   };
 
   const handleDeleteCustomer = async (customer) => {
+    const customerId = customer.id;
     try {
-      const response = await fetch("/customers", {
+      const response = await fetch(`/customers/${customerId}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(customer),
       });
       if (response.ok) {
         fetchCustomers();
@@ -189,7 +197,7 @@ const CustomerDashboard = () => {
           columns={tableColumns}
           data={customers}
           actions={{
-            onEdit: handleUpdateCustomer,
+            onEdit: (customer) => handleUpdateCustomer(customer.id, customer),
             onDelete: handleDeleteCustomer,
           }}
           title="Customers"

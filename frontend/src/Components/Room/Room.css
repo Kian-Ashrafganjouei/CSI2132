@@ -1,10 +1,10 @@
-/* Room.css */
-
 .dashboard {
   margin: 2rem auto;
   padding: 1rem;
   background: #fff;
   border-radius: 8px;
+  max-width: 1200px; /* Restrict max width for better layout */
+  overflow: hidden; /* Prevent content overflow */
 }
 
 .room-form,
@@ -27,6 +27,7 @@
 .room-form button {
   background-color: #4caf50;
   color: white;
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -35,9 +36,14 @@
   background-color: #45a049;
 }
 
+.room-table {
+  overflow-x: auto; /* Enable horizontal scrolling for smaller screens */
+}
+
 .room-table table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 800px; /* Prevent squishing on small screens */
 }
 
 .room-table th,
@@ -50,4 +56,24 @@
 .room-table th {
   background-color: #34495e;
   color: white;
+  text-align: left;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0.5rem;
+  }
+
+  .room-form input,
+  .room-form select,
+  .room-form button,
+  .room-form textarea {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  .room-table table {
+    min-width: 600px; /* Adjust for smaller screen widths */
+  }
 }
