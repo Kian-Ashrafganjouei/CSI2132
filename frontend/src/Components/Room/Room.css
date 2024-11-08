@@ -1,12 +1,5 @@
 /* Room.css */
 
-.dashboard {
-  margin: 2rem auto;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 8px;
-}
-
 .room-form,
 .room-table {
   margin-bottom: 2rem;

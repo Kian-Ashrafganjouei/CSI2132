@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Modal from "../../DevComponents/Modal/Modal";
+import Button from "../../DevComponents/Button/Button";
 import "./Room.css";
 
 const tableColumns = [
@@ -34,6 +36,7 @@ const RoomDashboard = () => {
   const [hotelIds, setHotelIds] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
 
   const formConfig = [
     {
@@ -177,7 +180,7 @@ const RoomDashboard = () => {
     try {
       const response = await fetch("/hotels");
       const data = await response.json();
-      setHotelIds(data.map((hotel) => hotel.hotel_id));
+      setHotelIds(data.map((hotel) => hotel.chain_name + hotel.id));
       console.log("Hotel IDs:", hotelIds);
     } catch (error) {
       console.error("Error fetching hotel ids:", error);
@@ -185,6 +188,7 @@ const RoomDashboard = () => {
   };
 
   const handleAddRoom = async (roomData) => {
+    roomData.id = roomData.roomNumber + roomData.floorNumber + roomData.hotelID;
     try {
       const response = await fetch("/rooms", {
         method: "POST",
@@ -192,9 +196,9 @@ const RoomDashboard = () => {
         body: JSON.stringify(roomData),
       });
       if (response.ok) {
-        fetchRooms();
         setSuccessMessage("Room successfully added");
         setTimeout(() => setSuccessMessage(""), 3000);
+        fetchRooms();
       } else {
         throw new Error("Failed to add room");
       }
@@ -228,14 +232,11 @@ const RoomDashboard = () => {
     }
   };
 
-  const handleDeleteRoom = async (roomNumber, floorNumber, hotelID) => {
+  const handleDeleteRoom = async (room) => {
     try {
-      const response = await fetch(
-        `/rooms/${roomNumber}/${floorNumber}/${hotelID}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`/rooms/${room.id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         fetchRooms();
         setSuccessMessage("Room successfully deleted");
@@ -248,22 +249,30 @@ const RoomDashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Manage Rooms</h1>
+      <h1>
+        Manage Rooms{" "}
+        <Button className="modal-button" onClick={() => setIsOpened(true)}>
+          Add Renting
+        </Button>
+      </h1>
       <div className="dashboard-main">
-        <ReusableForm
-          formConfig={formConfig}
-          onSubmit={handleAddRoom}
-          title="Add a Room"
-        />
         <ResuableTable
           columns={tableColumns}
           data={rooms}
           title="Room List"
-          options={{
+          actions={{
             onDelete: handleDeleteRoom,
-            onUpdate: handleUpdateRoom,
+            onEdit: handleUpdateRoom,
           }}
         />
+
+        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+          <ReusableForm
+            formConfig={formConfig}
+            onSubmit={handleAddRoom}
+            title="Add a Room"
+          />
+        </Modal>
       </div>
 
       {successMessage && (

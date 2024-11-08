@@ -22,6 +22,7 @@
 .table-main {
   max-height: 65vh !important;
   overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 
 .table {
@@ -56,14 +57,20 @@
   font-size: 0.9rem;
   border: none;
   cursor: pointer;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.table-button:hover {
+  transform: scale(1.05);
 }
 
 .edit-button {
-  background-color: #3498db;
+  background-color: var(--primary-dark);
   color: white;
 }
 
 .delete-button {
-  background-color: #e74c3c;
+  background-color: var(--secondary);
   color: white;
 }

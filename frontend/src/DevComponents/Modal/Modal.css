@@ -14,9 +14,8 @@
 .modal-content {
   position: relative;
   background-color: var(--bg-secondary);
-  padding: 20px 30px;
-  width: 80%;
-  max-width: 500px; /* Adjust width for smaller screens */
+  width: 100%;
+  max-width: 700px; /* Adjust width for smaller screens */
   max-height: calc(90%) !important;
   color: var(--white);
   border-radius: 10px;
@@ -43,10 +42,10 @@
   cursor: pointer;
 }
 
-.modal-content form {
+/* .modal-content form {
   display: flex;
   flex-direction: column;
-}
+} */
 
 /* .modal-content label {
   margin-top: 10px;

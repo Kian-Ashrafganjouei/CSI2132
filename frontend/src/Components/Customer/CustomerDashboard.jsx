@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Modal from "../../DevComponents/Modal/Modal";
+import Button from "../../DevComponents/Button/Button";
 import "./Customer.css";
 
 const formConfig = [
@@ -108,6 +110,7 @@ const CustomerDashboard = () => {
   const [customers, setCustomers] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     fetchCustomers();
@@ -177,14 +180,15 @@ const CustomerDashboard = () => {
   };
 
   return (
-    <div className="customer-dashboard">
-      <h1>Manage Customers</h1>
+    <div className="dashboard">
+      <h1>
+        Manage Customers{" "}
+        <Button className="modal-button" onClick={() => setIsOpened(true)}>
+          Add Customer
+        </Button>
+      </h1>
+
       <div className="dashboard-main">
-        <ReusableForm
-          formConfig={formConfig}
-          onSubmit={handleAddCustomer}
-          title="Customer Registration"
-        />
         <ReusableTable
           columns={tableColumns}
           data={customers}
@@ -195,6 +199,14 @@ const CustomerDashboard = () => {
           title="Customers"
           loading={loading}
         />
+
+        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+          <ReusableForm
+            formConfig={formConfig}
+            onSubmit={handleAddCustomer}
+            title="Customer Registration"
+          />
+        </Modal>
       </div>
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>

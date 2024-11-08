@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ResuableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Modal from "../../DevComponents/Modal/Modal";
+import Button from "../../DevComponents/Button/Button";
 import "./Employee.css";
 
 // const [formData, setFormData] = useState({
@@ -108,6 +110,7 @@ const EmployeeDashboard = () => {
   const [employees, setEmployees] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     fetchEmployees();
@@ -127,6 +130,7 @@ const EmployeeDashboard = () => {
   };
 
   const handleAddEmployee = async (employeeData) => {
+    employeeData.id = employees.length + 1;
     try {
       const response = await fetch("/employees", {
         method: "POST",
@@ -160,7 +164,9 @@ const EmployeeDashboard = () => {
     }
   };
 
-  const handleDeleteEmployee = async (employeeId) => {
+  const handleDeleteEmployee = async (employee) => {
+    console.log(employee);
+    const employeeId = employee.id;
     try {
       const response = await fetch(`/employees/${employeeId}`, {
         method: "DELETE",
@@ -176,24 +182,31 @@ const EmployeeDashboard = () => {
   };
 
   return (
-    <div className="employee-dashboard">
-      <h1>Manage Employees</h1>
+    <div className="dashboard">
+      <h1>
+        Manage Employees{" "}
+        <Button className="modal-button" onClick={() => setIsOpened(true)}>
+          Add Customer
+        </Button>
+      </h1>
       <div className="dashboard-main">
-        <ReusableForm
-          formConfig={formConfig}
-          onSubmit={handleAddEmployee}
-          title="Add An Employee"
-        />
         <ResuableTable
           data={employees}
           columns={tableColumns}
-          options={{
+          actions={{
             onDelete: handleDeleteEmployee,
-            onUpdate: handleUpdateEmployee,
+            onEdit: handleUpdateEmployee,
           }}
           title="Employee List"
-          loading={loading}
         />
+
+        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+          <ReusableForm
+            formConfig={formConfig}
+            onSubmit={handleAddEmployee}
+            title="Add An Employee"
+          />
+        </Modal>
       </div>
 
       {successMessage && (

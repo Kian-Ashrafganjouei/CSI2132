@@ -1,7 +1,7 @@
 /* App.css */
 :root {
   --primary: #34495e;
-  --primary-dark: #3a3a3a;
+  --primary-dark: #31455a;
   --secondary: #ee8484;
   --light-grey: #727272;
   --olive: #3f3f3f;
@@ -59,14 +59,38 @@ html {
   min-height: var(--main-height);
 }
 
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.dashboard > h1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  font-family: var(--font-secondary);
+  font-size: 2rem;
+  font-weight: 1000;
+  margin: 1em auto;
+  color: var(--primary);
+}
+
 .dashboard-main {
   display: flex;
+  flex-direction: column;
   gap: 2rem;
 }
 
 .dashboard-main > * {
-  width: 45%;
   flex: 1;
+}
+
+.dashboard-main:first-child {
+  width: 20%;
 }
 
 h1 {
@@ -83,4 +107,28 @@ h1 {
 
 .company-title > span {
   color: var(--secondary);
+}
+
+.modal-button {
+  width: fit-content;
+  padding: 1em 4em;
+  border: 2px solid var(--secondary) !important;
+  background-color: var(--secondary) !important;
+  color: white;
+  -webkit-mask: conic-gradient(
+        from 90deg at bottom 8px right 8px,
+        var(--secondary) 90deg,
+        #000 0
+      )
+      var(--_i, 200%) 0 /200% var(--_i, 8px) border-box no-repeat,
+    conic-gradient(at bottom 8px left 8px, #0000 90deg, #000 0) 0
+      var(--_i, 200%) / var(--_i, 8px) 200% border-box no-repeat,
+    linear-gradient(#000 0 0) padding-box no-repeat;
+  transition: 0.3s, -webkit-mask-position 0.3s 0.3s;
+  transition: all 0.4s;
+}
+.modal-button:hover {
+  --_i: 100%;
+  color: var(--secondary);
+  background-color: white !important;
 }

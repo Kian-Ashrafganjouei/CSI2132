@@ -131,9 +131,10 @@ app.put("/:dataKey/:id", (req, res) => {
 
 // Delete an entry by ID
 app.delete("/:dataKey/:id", (req, res) => {
+  console.log(req.params);
   const { dataKey, id } = req.params;
   const data = dummyData[dataKey];
-  console.log(data, id);
+  console.log(id);
   if (data) {
     const index = data.findIndex((item) => item.id == id);
     console.log(index);

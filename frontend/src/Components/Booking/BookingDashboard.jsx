@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Modal from "../../DevComponents/Modal/Modal";
 import Input from "../../DevComponents/Input/Input";
+import Button from "../../DevComponents/Button/Button";
 import "./Booking.css";
 
 const tableColumns = [
-  { header: "Booking ID", accessor: "bookingID" },
+  { header: "Booking ID", accessor: "id" },
   { header: "Start Date", accessor: "startDate" },
   { header: "End Date", accessor: "endDate" },
   { header: "Customer Name", accessor: "customerName" },
@@ -22,6 +24,7 @@ const BookingDashboard = () => {
   const [hotelIds, setHotelIds] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
 
   const formConfig = [
     {
@@ -84,6 +87,9 @@ const BookingDashboard = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
+      setSelectedBooking(
+        `${bookings[0]?.id}-${bookings[0]?.roomNumber}-${bookings[0]?.floorNumber}-${bookings[0]?.hotelID}`
+      );
       setLoading(false);
     }
   };
@@ -102,14 +108,28 @@ const BookingDashboard = () => {
     try {
       const response = await fetch("/hotels");
       const data = await response.json();
-      setHotelIds(data.map((hotel) => hotel.hotel_id));
+      setHotelIds(data.map((hotel) => hotel.chain_name + hotel.id));
     } catch (error) {
       console.error("Error fetching hotel ids:", error);
     }
   };
 
   const handleAddRenting = async (formData) => {
-    // Add new booking/renting logic here
+    formData.id = bookings.length + 1;
+    try {
+      const response = await fetch("/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setSuccessMessage("Successfully Added Renting");
+        setTimeout(() => setSuccessMessage(""), 3000);
+        fetchBookings();
+      }
+    } catch (error) {
+      console.error("Error adding renting:", error);
+    }
   };
 
   const handleConvertBooking = async () => {
@@ -132,7 +152,8 @@ const BookingDashboard = () => {
     }
   };
 
-  const handleDeleteBooking = async (bookingId) => {
+  const handleDeleteBooking = async (booking) => {
+    const bookingId = booking.id;
     try {
       const response = await fetch(`/bookings/${bookingId}`, {
         method: "DELETE",
@@ -151,7 +172,13 @@ const BookingDashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard">
+      <h1>
+        Manage Bookings{" "}
+        <Button className="modal-button" onClick={() => setIsOpened(true)}>
+          Add Renting
+        </Button>
+      </h1>
       <div className="select-wrapper">
         <h1>Convert Renting / Not Renting</h1>
 
@@ -161,8 +188,8 @@ const BookingDashboard = () => {
           label={"Select a Booking"}
           type="select"
           options={bookings.map((booking) => ({
-            label: `${booking.customerName} Booking ${booking.bookingID} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
-            value: `${booking.bookingID}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
+            label: `${booking.customerName} Booking ${booking.id} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
+            value: `${booking.id}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
           }))}
           onInputChange={(value) => setSelectedBooking(value)}
         />
@@ -171,18 +198,20 @@ const BookingDashboard = () => {
         </button>
       </div>
       <div className="dashboard-main">
-        <ReusableForm
-          formConfig={formConfig}
-          title="Add An Immediate Renting"
-          onSubmit={handleAddRenting}
-        />
         <ReusableTable
           columns={tableColumns}
           data={bookings}
           actions={{ onEdit: () => {}, onDelete: handleDeleteBooking }}
           title="Booking List"
-          loading={loading}
         />
+
+        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+          <ReusableForm
+            formConfig={formConfig}
+            title="Add An Immediate Renting"
+            onSubmit={handleAddRenting}
+          />
+        </Modal>
       </div>
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>

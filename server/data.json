@@ -36,20 +36,6 @@
         "city": "Washington",
         "country": "USA"
       }
-    },
-    {
-      "chain_name": "LuxuryStays",
-      "category": 1,
-      "number_of_rooms": "2",
-      "address": {
-        "street_name": "2",
-        "street_number": "2",
-        "postal_code": "2",
-        "unit_number": "2",
-        "city": "2",
-        "country": "2"
-      },
-      "id": 4
     }
   ],
   "employees": [
@@ -82,18 +68,6 @@
         "cityName": "Washington",
         "countryName": "USA"
       }
-    },
-    {
-      "employeeName": "2",
-      "role": "Receptionist",
-      "isManager": "True",
-      "ssnNumber": "2",
-      "streetName": "2",
-      "streetNumber": "2",
-      "postalCode": "2",
-      "unitNumber": "2",
-      "cityName": "2",
-      "countryName": "2"
     }
   ],
   "customers": [
@@ -179,7 +153,7 @@
   ],
   "bookings": [
     {
-      "bookingID": 1,
+      "id": 1,
       "startDate": "2023-10-01",
       "endDate": "2023-10-05",
       "customerName": "Charlie Davis",
@@ -190,7 +164,7 @@
       "hotelID": 1
     },
     {
-      "bookingID": 2,
+      "id": 2,
       "startDate": "2023-11-15",
       "endDate": "2023-11-20",
       "customerName": "Diana Lee",
@@ -199,6 +173,18 @@
       "roomNumber": 202,
       "floorNumber": 2,
       "hotelID": 2
+    }
+  ],
+  "convert": [
+    {
+      "roomNumber": "101",
+      "floorNumber": "1",
+      "hotelID": "1"
+    },
+    {
+      "roomNumber": "101",
+      "floorNumber": "1",
+      "hotelID": "1"
     }
   ]
 }

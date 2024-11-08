@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
+import Modal from "../../DevComponents/Modal/Modal";
+import Button from "../../DevComponents/Button/Button";
 import { AggregatedCapacity } from "../../Utils/Utils";
 import "./Hotel.css";
 
@@ -23,6 +25,7 @@ const HotelDashboard = () => {
   const [aggregatedCapacity, setAggregatedCapacity] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
   const formConfig = [
     {
@@ -199,14 +202,14 @@ const HotelDashboard = () => {
   };
 
   return (
-    <div className="hotel-dashboard">
-      <h1>Manage Hotels</h1>
+    <div className="dashboard">
+      <h1>
+        Manage Hotels{" "}
+        <Button className="modal-button" onClick={() => setIsOpened(true)}>
+          Add Renting
+        </Button>
+      </h1>
       <div className="dashboard-main">
-        <ReusableForm
-          formConfig={formConfig}
-          onSubmit={handleAddHotel}
-          title="Add A Hotel"
-        />
         <ReusableTable
           columns={tableColumns}
           data={hotels}
@@ -214,6 +217,14 @@ const HotelDashboard = () => {
           loading={loading}
           title="Hotel List"
         />
+
+        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+          <ReusableForm
+            formConfig={formConfig}
+            onSubmit={handleAddHotel}
+            title="Add A Hotel"
+          />
+        </Modal>
       </div>
 
       <AggregatedCapacity capacityData={aggregatedCapacity} />

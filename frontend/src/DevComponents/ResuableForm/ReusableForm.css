@@ -34,13 +34,15 @@
   width: 100%;
   font-weight: bold;
   color: white;
-  background-color: #4caf50;
-  border: none;
+  background-color: var(--secondary);
+  border: 2px solid var(--secondary);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .reusable-form button:hover {
-  background-color: #45a049;
+  background-color: var(--primary-hover);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
 }
