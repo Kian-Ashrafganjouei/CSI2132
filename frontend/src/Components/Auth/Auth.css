@@ -1,0 +1,20 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container button {
+  background-color: transparent;
+  padding: 10px;
+}
+
+.login-container button i {
+  font-size: 1.5rem;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.login-container button i:hover {
+  scale: 1.1;
+}

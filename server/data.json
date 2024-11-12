@@ -41,9 +41,10 @@
   "employees": [
     {
       "id": 1,
+      "email": "xcdhaldane@gmail.com",
       "employeeName": "Alice Johnson",
       "role": "Receptionist",
-      "isManager": false,
+      "isManager": true,
       "ssnNumber": "123-45-6789",
       "address": {
         "streetName": "Pine Ave",

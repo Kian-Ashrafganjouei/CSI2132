@@ -165,6 +165,38 @@ app.post("/update/:dataKey", (req, res) => {
   }
 });
 
+app.get("/users/role/:email", (req, res) => {
+  const { email } = req.params;
+  console.log(email);
+
+  if (useDummyData) {
+    // Check user role from dummy data
+    const user =
+      dummyData.employees.find((user) => user.email === email) ||
+      dummyData.customers.find((user) => user.email === email);
+
+    if (user) {
+      let role = "customer"; // default role
+      if (dummyData.employees.find((user) => user.email === email)) {
+        role = "employee";
+      }
+
+      if (
+        dummyData.employees.find((user) => user.email === email) &&
+        dummyData.employees.find((user) => user.email === email).isManager
+      ) {
+        role = "manager";
+      }
+      console.log(role);
+      res.json({ role });
+    } else {
+      res.status(404).send(`No user found with email ${email}`);
+    }
+  } else {
+    res.status(403).send("Role check not allowed in production mode.");
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

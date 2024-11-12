@@ -1,10 +1,11 @@
 // components/NavBar.js
 import React from "react";
 import "./Navbar.css";
+import Login from "../Auth/Login";
 
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ role = "Customer" }) => {
   return (
     <nav className="navbar">
       <div className="logo">
@@ -22,17 +23,20 @@ const NavBar = () => {
         <li>
           <Link to="/customers">Customer Registration</Link>
         </li>
-        <li>
+        <li hidden={role !== "Manager"}>
           <Link to="/employees">Manage Employees</Link>
         </li>
-        <li>
+        <li hidden={role !== "Manager"}>
           <Link to="/hotels">Manage Hotels</Link>
         </li>
-        <li>
+        <li hidden={role === "Customer"}>
           <Link to="/rooms">Manage Rooms</Link>
         </li>
-        <li>
+        <li hidden={role === "Customer"}>
           <Link to="/bookings">Manage Bookings</Link>
+        </li>
+        <li>
+          <Login />
         </li>
       </ul>
     </nav>
