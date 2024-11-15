@@ -55,7 +55,8 @@ const Dropdown = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef]);
   const handleClick = (option) => {
-    onClick(option);
+    option.onClick && option.onClick();
+
     setIsOpen(false);
   };
 
@@ -88,8 +89,8 @@ const Dropdown = ({
           {options.map((option, index) => (
             <div
               key={index}
-              className="dropdown-item"
-              onClick={() => handleClick(option.label || option)}
+              className={`dropdown-item ${option.type || "button"}`}
+              onClick={() => handleClick(option)}
             >
               {option.icon && <i className={option.icon}></i>}
               {option.label || option}

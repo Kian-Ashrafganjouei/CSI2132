@@ -52,7 +52,7 @@
   top: 130%;
   left: 0px;
   z-index: 10001;
-  width: 200px;
+  width: 150px;
   background-color: var(--bg-primary);
   border: 1px solid var(--primary);
   color: var(--bg-primary);
@@ -77,7 +77,7 @@
 }
 
 .dropdown-menu.left {
-  transform: translateX(-70%);
+  transform: translateX(-73%);
 }
 
 .dropdown-menu-enter {
@@ -108,11 +108,11 @@
   width: 20%;
 }
 
-.dropdown-item:hover i {
+.dropdown-item.button:hover i {
   margin-left: 3%;
 }
 
-.dropdown-item:hover {
+.dropdown-item.button:hover {
   background-color: var(--primary);
   color: var(--bg-primary);
   cursor: pointer;

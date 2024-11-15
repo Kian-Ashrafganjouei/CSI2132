@@ -156,9 +156,9 @@ const RoomDashboard = () => {
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      fetchRooms();
-      fetchHotelIds();
+      await Promise.all([fetchRooms(), fetchHotelIds()]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -264,6 +264,7 @@ const RoomDashboard = () => {
             onDelete: handleDeleteRoom,
             onEdit: handleUpdateRoom,
           }}
+          loading={loading}
         />
 
         <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>

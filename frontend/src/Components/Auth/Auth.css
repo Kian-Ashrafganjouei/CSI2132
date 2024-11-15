@@ -18,3 +18,24 @@
 .login-container button i:hover {
   scale: 1.1;
 }
+
+.login-container button > span {
+  font-size: 1.5rem;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.user-avatar {
+  position: relative !important;
+  right: 0 !important;
+  padding: 0 !important;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 2em !important;
+  color: var(--primary);
+}
+
+.user-avatar:hover {
+  cursor: pointer;
+}

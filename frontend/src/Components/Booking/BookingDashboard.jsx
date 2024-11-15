@@ -18,7 +18,30 @@ const tableColumns = [
   { header: "Hotel ID", accessor: "hotelID" },
 ];
 
-const BookingDashboard = () => {
+// Define permissions for different user roles
+const rolePermissions = {
+  Manager: {
+    canViewTable: true,
+    canAddRenting: true,
+    canConvertBooking: true,
+    canDeleteBooking: false,
+  },
+  Employee: {
+    canViewTable: true,
+    canAddRenting: true,
+    canConvertBooking: true,
+    canDeleteBooking: false,
+  },
+  Customer: {
+    canViewTable: false,
+    canAddRenting: true,
+    canConvertBooking: false,
+    canDeleteBooking: false,
+  },
+};
+
+const BookingDashboard = ({ userRole }) => {
+  const permissions = rolePermissions[userRole] || {};
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState("");
   const [hotelIds, setHotelIds] = useState([]);
@@ -81,9 +104,9 @@ const BookingDashboard = () => {
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      fetchBookings();
-      fetchHotelIds();
+      Promise.all([fetchBookings(), fetchHotelIds()]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -173,45 +196,67 @@ const BookingDashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>
-        Manage Bookings{" "}
-        <Button className="modal-button" onClick={() => setIsOpened(true)}>
-          Add Renting
-        </Button>
-      </h1>
-      <div className="select-wrapper">
-        <h1>Convert Renting / Not Renting</h1>
-
-        <Input
-          id={"bookingID"}
-          value={selectedBooking}
-          label={"Select a Booking"}
-          type="select"
-          options={bookings.map((booking) => ({
-            label: `${booking.customerName} Booking ${booking.id} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
-            value: `${booking.id}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
-          }))}
-          onInputChange={(value) => setSelectedBooking(value)}
-        />
-        <button onClick={handleConvertBooking}>
-          Convert Renting/Not Renting
-        </button>
-      </div>
-      <div className="dashboard-main">
-        <ReusableTable
-          columns={tableColumns}
-          data={bookings}
-          actions={{ onEdit: () => {}, onDelete: handleDeleteBooking }}
-          title="Booking List"
-        />
-
-        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
-          <ReusableForm
-            formConfig={formConfig}
-            title="Add An Immediate Renting"
-            onSubmit={handleAddRenting}
+      {!permissions.canViewTable && permissions.canAddRenting ? (
+        <h1>Add a Booking</h1>
+      ) : (
+        <h1>
+          Manage Bookings{" "}
+          <Button className="modal-button" onClick={() => setIsOpened(true)}>
+            Add Renting
+          </Button>
+        </h1>
+      )}
+      {permissions.canConvertBooking && (
+        <div className="select-wrapper">
+          <h1>Convert Renting / Not Renting</h1>
+          <Input
+            id={"bookingID"}
+            value={selectedBooking}
+            label={"Select a Booking"}
+            type="select"
+            options={bookings.map((booking) => ({
+              label: `${booking.customerName} Booking ${booking.id} Room ${booking.roomNumber}, Floor ${booking.floorNumber}, Hotel ${booking.hotelID}`,
+              value: `${booking.id}-${booking.roomNumber}-${booking.floorNumber}-${booking.hotelID}`,
+            }))}
+            onInputChange={(value) => setSelectedBooking(value)}
           />
-        </Modal>
+          <button onClick={handleConvertBooking}>
+            Convert Renting/Not Renting
+          </button>
+        </div>
+      )}
+      <div className="dashboard-main">
+        {permissions.canViewTable && (
+          <>
+            <ReusableTable
+              columns={tableColumns}
+              data={bookings}
+              actions={
+                permissions.canDeleteBooking
+                  ? { onEdit: () => {}, onDelete: handleDeleteBooking }
+                  : {}
+              }
+              title="Booking List"
+              loading={loading}
+            />
+            <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+              <ReusableForm
+                formConfig={formConfig}
+                title="Add An Immediate Renting"
+                onSubmit={handleAddRenting}
+              />
+            </Modal>
+          </>
+        )}
+        {!permissions.canViewTable && permissions.canAddRenting && (
+          <div className="customer-table-view">
+            <ReusableForm
+              formConfig={formConfig}
+              title="Add An Immediate Renting"
+              onSubmit={handleAddRenting}
+            />
+          </div>
+        )}
       </div>
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>

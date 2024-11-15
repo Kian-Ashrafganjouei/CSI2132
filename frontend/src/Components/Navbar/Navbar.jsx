@@ -6,6 +6,7 @@ import Login from "../Auth/Login";
 import { Link } from "react-router-dom";
 
 const NavBar = ({ role = "Customer" }) => {
+  console.log("Role in Navbar:", role);
   return (
     <nav className="navbar">
       <div className="logo">
@@ -32,11 +33,11 @@ const NavBar = ({ role = "Customer" }) => {
         <li hidden={role === "Customer"}>
           <Link to="/rooms">Manage Rooms</Link>
         </li>
-        <li hidden={role === "Customer"}>
+        <li>
           <Link to="/bookings">Manage Bookings</Link>
         </li>
         <li>
-          <Login />
+          <Login role={role} />
         </li>
       </ul>
     </nav>

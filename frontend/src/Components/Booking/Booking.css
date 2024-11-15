@@ -54,3 +54,11 @@
   background-color: #34495e;
   color: #fff;
 }
+
+.customer-table-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}

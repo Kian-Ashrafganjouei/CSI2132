@@ -32,13 +32,12 @@ const Footer = ({ company = "" }) => {
       //   backgroundColor: isCalendar ? "var(--bg-primary)" : "var(--bg-primary)",
       // }}
     >
-      <div className="footer-links">
-        {/* <div className="footer-logo">
-          <Clock offset={5} color={"bg-primary"} />
+      {/* <div className="footer-links">
+        <div className="footer-logo">
           <h1 className="timeslot-title">
-            TIME<span>SLOT</span>
+            {company}
           </h1>
-        </div> */}
+        </div>
         <div className="footer-links-column">
           <h2>Company</h2>
           <hr />
@@ -71,7 +70,7 @@ const Footer = ({ company = "" }) => {
           <a href="/instagram">Instagram</a>
           <a href="/linkedin">LinkedIn</a>
         </div>
-      </div>
+      </div> */}
       <div className="footer-foot">
         <p>© 2024 {company}. All rights reserved.</p>
       </div>

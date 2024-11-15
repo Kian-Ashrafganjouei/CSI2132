@@ -1,4 +1,3 @@
-// CustomerDashboard.js
 import React, { useEffect, useState } from "react";
 import ReusableForm from "../../DevComponents/ResuableForm/ResuableForm";
 import ReusableTable from "../../DevComponents/ReusableTable/ReusableTable";
@@ -106,7 +105,30 @@ const tableColumns = [
   { header: "Date of Registration", accessor: "dateOfRegistration" },
 ];
 
-const CustomerDashboard = () => {
+// Define permissions for each user role
+const rolePermissions = {
+  Manager: {
+    canAddCustomer: true,
+    canEditCustomer: true,
+    canDeleteCustomer: true,
+    canViewTable: true,
+  },
+  Employee: {
+    canAddCustomer: true,
+    canEditCustomer: true,
+    canDeleteCustomer: false,
+    canViewTable: true,
+  },
+  Customer: {
+    canAddCustomer: true,
+    canEditCustomer: false,
+    canDeleteCustomer: false,
+    canViewTable: false,
+  },
+};
+
+const CustomerDashboard = ({ userRole }) => {
+  const permissions = rolePermissions[userRole] || {};
   const [customers, setCustomers] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -117,10 +139,12 @@ const CustomerDashboard = () => {
   }, []);
 
   const fetchCustomers = async () => {
+    setLoading(true);
     try {
-      const response = await fetch("/customers");
-      const data = await response.json();
-      setCustomers(data);
+      const response = await Promise.all([fetch("/customers")]);
+      const data = await Promise.all(response.map((res) => res.json()));
+      console.log(data);
+      setCustomers(data[0]);
     } catch (error) {
       console.error("Error fetching customers:", error);
     } finally {
@@ -129,6 +153,7 @@ const CustomerDashboard = () => {
   };
 
   const handleAddCustomer = async (customerData) => {
+    if (!permissions.canAddCustomer) return;
     try {
       const response = await fetch("/customers", {
         method: "POST",
@@ -146,6 +171,7 @@ const CustomerDashboard = () => {
   };
 
   const handleUpdateCustomer = async (customerData) => {
+    if (!permissions.canEditCustomer) return;
     try {
       const response = await fetch("/customers", {
         method: "PUT",
@@ -163,6 +189,7 @@ const CustomerDashboard = () => {
   };
 
   const handleDeleteCustomer = async (customer) => {
+    if (!permissions.canDeleteCustomer) return;
     try {
       const response = await fetch("/customers", {
         method: "DELETE",
@@ -181,33 +208,55 @@ const CustomerDashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>
-        Manage Customers{" "}
-        <Button className="modal-button" onClick={() => setIsOpened(true)}>
-          Add Customer
-        </Button>
-      </h1>
+      {!permissions.canViewTable && permissions.canAddCustomer ? (
+        <h1>Add a Customer</h1>
+      ) : (
+        <h1>
+          Manage Customers{" "}
+          <Button className="modal-button" onClick={() => setIsOpened(true)}>
+            Add Customer
+          </Button>
+        </h1>
+      )}
 
       <div className="dashboard-main">
-        <ReusableTable
-          columns={tableColumns}
-          data={customers}
-          actions={{
-            onEdit: handleUpdateCustomer,
-            onDelete: handleDeleteCustomer,
-          }}
-          title="Customers"
-          loading={loading}
-        />
+        {permissions.canViewTable && (
+          <>
+            <ReusableTable
+              columns={tableColumns}
+              data={customers}
+              actions={{
+                onEdit: permissions.canEditCustomer
+                  ? handleUpdateCustomer
+                  : null,
+                onDelete: permissions.canDeleteCustomer
+                  ? handleDeleteCustomer
+                  : null,
+              }}
+              title="Customers"
+              loading={loading}
+            />
+            <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
+              <ReusableForm
+                formConfig={formConfig}
+                onSubmit={handleAddCustomer}
+                title="Customer Registration"
+              />
+            </Modal>
+          </>
+        )}
 
-        <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
-          <ReusableForm
-            formConfig={formConfig}
-            onSubmit={handleAddCustomer}
-            title="Customer Registration"
-          />
-        </Modal>
+        {permissions.canViewTabl && permissions.canAddCustomer && (
+          <div className="customer-table-view">
+            <ReusableForm
+              formConfig={formConfig}
+              onSubmit={handleAddCustomer}
+              title="Customer Registration"
+            />
+          </div>
+        )}
       </div>
+
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>
       )}

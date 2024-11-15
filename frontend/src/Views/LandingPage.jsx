@@ -3,8 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 import Button from "../DevComponents/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="landing-page">
       {/* <h1>Welcome to E-Hotels Management System</h1>
@@ -138,7 +140,12 @@ const LandingPage = () => {
               HOTEL<span>HOMIES</span>
             </h2>
             <p>Experience the finest in hospitality.</p>
-            <Button className="landing-button">Book Now</Button>
+            <Button
+              className="landing-button"
+              onClick={() => navigate("/bookings")}
+            >
+              Book Now
+            </Button>
           </span>
         </section>
         <section className="cards">

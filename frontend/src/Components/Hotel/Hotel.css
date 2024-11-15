@@ -57,6 +57,13 @@
   color: #fff;
 }
 
+.aggregated-capacity {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5%;
+}
+
 .aggregated-capacity .grid-container {
   display: flex;
   flex-wrap: wrap;
@@ -65,8 +72,34 @@
 
 .aggregated-capacity .grid-item {
   background-color: #ecf0f1;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex: 1 1 calc(50% - 1rem);
+}
+
+.grid-item h2,
+.grid-item h3,
+.grid-item p {
+  margin-inline-start: 5px;
+  margin-inline-end: 5px;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1300px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .aggregated-capacity {
+    margin: 0 auto;
+    margin-left: 50px;
+  }
 }

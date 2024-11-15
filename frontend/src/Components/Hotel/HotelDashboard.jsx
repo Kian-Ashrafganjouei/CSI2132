@@ -100,11 +100,10 @@ const HotelDashboard = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("hotelChains", hotels);
   }, []);
 
   const fetchData = async (url, setter) => {
-    setLoading(true); // Start spinner before fetching
+    setLoading(true);
     try {
       await Promise.all([
         fetchHotels(),
@@ -114,7 +113,7 @@ const HotelDashboard = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); // Stop spinner after fetching
+      setLoading(false);
     }
   };
 
@@ -210,13 +209,16 @@ const HotelDashboard = () => {
         </Button>
       </h1>
       <div className="dashboard-main">
-        <ReusableTable
-          columns={tableColumns}
-          data={hotels}
-          actions={{ onEdit: handleUpdateHotel, onDelete: handleDeleteHotel }}
-          loading={loading}
-          title="Hotel List"
-        />
+        <div className="row">
+          <ReusableTable
+            columns={tableColumns}
+            data={hotels}
+            actions={{ onEdit: handleUpdateHotel, onDelete: handleDeleteHotel }}
+            loading={loading}
+            title="Hotel List"
+          />
+          <AggregatedCapacity capacityData={aggregatedCapacity} />
+        </div>
 
         <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>
           <ReusableForm
@@ -227,7 +229,6 @@ const HotelDashboard = () => {
         </Modal>
       </div>
 
-      <AggregatedCapacity capacityData={aggregatedCapacity} />
       {successMessage && (
         <div className="alert success-alert">{successMessage}</div>
       )}

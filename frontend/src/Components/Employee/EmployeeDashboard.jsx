@@ -119,11 +119,11 @@ const EmployeeDashboard = () => {
   const fetchEmployees = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/employees");
-      const data = await response.json();
-      setEmployees(data);
+      const response = await Promise.all([fetch("/employees")]);
+      const data = await Promise.all(response.map((res) => res.json()));
+      setEmployees(data[0]);
     } catch (error) {
-      console.error("Error fetching employees:", error);
+      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
@@ -198,6 +198,7 @@ const EmployeeDashboard = () => {
             onEdit: handleUpdateEmployee,
           }}
           title="Employee List"
+          loading={loading}
         />
 
         <Modal isOpen={isOpened} onClose={() => setIsOpened(false)}>

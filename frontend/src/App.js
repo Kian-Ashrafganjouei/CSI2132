@@ -71,10 +71,10 @@ const App = () => {
               path="/customers"
               element={
                 <ProtectedRoute
-                  allowedRoles={["Customer", "Manager"]}
+                  allowedRoles={["Customer", "Manager", "Employee"]}
                   userRole={role}
                 >
-                  <CustomerDashboard />
+                  <CustomerDashboard userRole={role} />
                 </ProtectedRoute>
               }
             />
@@ -112,10 +112,10 @@ const App = () => {
               path="/bookings"
               element={
                 <ProtectedRoute
-                  allowedRoles={["Manager", "Employee"]}
+                  allowedRoles={["Manager", "Employee", "Customer"]}
                   userRole={role}
                 >
-                  <BookingDashboard />
+                  <BookingDashboard userRole={role} />
                 </ProtectedRoute>
               }
             />
