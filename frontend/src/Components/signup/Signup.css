@@ -34,4 +34,11 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .invalid {
+    border: solid red 1px;
+  }
   
+  .valid {
+    border: solid green 1px;
+  }

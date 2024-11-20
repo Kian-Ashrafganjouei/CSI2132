@@ -19,6 +19,21 @@ const SignupPage = () => {
     }));
   };
 
+  const verifyPassword = (e) => {
+    const password = document.querySelector('input[id=password]');
+    const passwordConfirm = document.querySelector('input[id=passwordConfirm]');
+
+    if (password.value === passwordConfirm.value) {
+      passwordConfirm.setCustomValidity('');
+      passwordConfirm.classList.remove('invalid');
+      passwordConfirm.classList.add('valid');
+    } else {
+      passwordConfirm.setCustomValidity('Passwords do not match');
+      passwordConfirm.classList.remove('valid');
+      passwordConfirm.classList.add("invalid");
+    }
+  }
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
@@ -80,6 +95,15 @@ const SignupPage = () => {
             id="password"
             value={formData.password}
             onChange={handleInputChange}
+            required
+          />
+        </label>
+        <label>
+          Re-enter Password:
+          <input
+            type="password"
+            id="passwordConfirm"
+            onKeyUp={verifyPassword}
             required
           />
         </label>

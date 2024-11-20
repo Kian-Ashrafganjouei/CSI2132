@@ -269,6 +269,12 @@
       "email": "Tami@gmail.com",
       "password": "123",
       "role": "customer"
+    },
+    {
+      "name": "asdf",
+      "email": "asdf@asdf",
+      "password": "asdf",
+      "role": "customer"
     }
   ]
 }
