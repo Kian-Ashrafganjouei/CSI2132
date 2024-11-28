@@ -143,10 +143,8 @@ const CustomerDashboard = ({ userRole }) => {
     try {
       const response = await Promise.all([fetch("/customers")]);
       const data = await Promise.all(response.map((res) => res.json()));
-      console.log(data);
       setCustomers(data[0]);
     } catch (error) {
-      console.error("Error fetching customers:", error);
     } finally {
       setLoading(false);
     }
@@ -246,7 +244,7 @@ const CustomerDashboard = ({ userRole }) => {
           </>
         )}
 
-        {permissions.canViewTabl && permissions.canAddCustomer && (
+        {!permissions.canViewTable && permissions.canAddCustomer && (
           <div className="customer-table-view">
             <ReusableForm
               formConfig={formConfig}

@@ -6,9 +6,9 @@ import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 const ProtectedRoute = ({ children, allowedRoles, userRole }) => {
   const { isAuthenticated } = useKindeAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/" />;
-  }
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/" />;
+  // }
 
   if (!allowedRoles.includes(userRole)) {
     return <Navigate to="/" />;

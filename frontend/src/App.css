@@ -132,3 +132,11 @@ h1 {
   color: var(--secondary);
   background-color: white !important;
 }
+
+.role-cycle {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  height: 50px;
+  border-radius: 50%;
+}

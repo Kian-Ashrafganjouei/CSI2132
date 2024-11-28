@@ -205,7 +205,7 @@ const HotelDashboard = () => {
       <h1>
         Manage Hotels{" "}
         <Button className="modal-button" onClick={() => setIsOpened(true)}>
-          Add Renting
+          Add Hotel
         </Button>
       </h1>
       <div className="dashboard-main">

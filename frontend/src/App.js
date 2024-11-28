@@ -8,6 +8,7 @@ import BookingDashboard from "./Components/Booking/BookingDashboard";
 import LandingPage from "./Views/LandingPage";
 import NavBar from "./Components/Navbar/Navbar";
 import Footer from "./DevComponents/Footer/Footer";
+import Admin from "./Views/Admin";
 import "./App.css";
 import CustomerDashboard from "./Components/Customer/CustomerDashboard";
 
@@ -60,9 +61,22 @@ const App = () => {
     }
   }, [isAuthenticated, user]);
 
+  const cycleRole = () => {
+    if (role === "Customer") {
+      setRole("Employee");
+    } else if (role === "Employee") {
+      setRole("Manager");
+    } else {
+      setRole("Customer");
+    }
+  };
+
   return (
     <Router>
       <div className="app">
+        <div className="role-cycle">
+          <button onClick={() => cycleRole()}>{role}</button>
+        </div>
         <NavBar role={role} />
         <div className="content">
           <Routes>
@@ -71,7 +85,7 @@ const App = () => {
               path="/customers"
               element={
                 <ProtectedRoute
-                  allowedRoles={["Customer", "Manager", "Employee"]}
+                  allowedRoles={["Guest", "Customer", "Manager", "Employee"]}
                   userRole={role}
                 >
                   <CustomerDashboard userRole={role} />
@@ -112,10 +126,18 @@ const App = () => {
               path="/bookings"
               element={
                 <ProtectedRoute
-                  allowedRoles={["Manager", "Employee", "Customer"]}
+                  allowedRoles={["Guest", "Manager", "Employee", "Customer"]}
                   userRole={role}
                 >
                   <BookingDashboard userRole={role} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute allowedRoles={["Manager"]} userRole={role}>
+                  <Admin userRole={role} />
                 </ProtectedRoute>
               }
             />

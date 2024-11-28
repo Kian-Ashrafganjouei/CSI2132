@@ -252,7 +252,7 @@ const RoomDashboard = () => {
       <h1>
         Manage Rooms{" "}
         <Button className="modal-button" onClick={() => setIsOpened(true)}>
-          Add Renting
+          Add Room
         </Button>
       </h1>
       <div className="dashboard-main">

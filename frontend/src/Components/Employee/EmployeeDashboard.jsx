@@ -186,7 +186,7 @@ const EmployeeDashboard = () => {
       <h1>
         Manage Employees{" "}
         <Button className="modal-button" onClick={() => setIsOpened(true)}>
-          Add Customer
+          Add Employee
         </Button>
       </h1>
       <div className="dashboard-main">
@@ -205,7 +205,7 @@ const EmployeeDashboard = () => {
           <ReusableForm
             formConfig={formConfig}
             onSubmit={handleAddEmployee}
-            title="Add An Employee"
+            title="Add an Employee"
           />
         </Modal>
       </div>

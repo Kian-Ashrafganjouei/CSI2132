@@ -36,6 +36,9 @@ const NavBar = ({ role = "Customer" }) => {
         <li>
           <Link to="/bookings">Manage Bookings</Link>
         </li>
+        {/* <li>
+          <Link to="/admin">Admin</Link>
+        </li> */}
         <li>
           <Login role={role} />
         </li>
